@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             HomeSectionSeeder::class,
             ContactInfoSeeder::class,
             ServiceSeeder::class,
+            EmployeeSeeder::class,
         ]);
     }
 }

@@ -1,21 +1,25 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 
 interface CompanyInfo {
     id: number;
     background: string;
     vision: string;
     mission: string;
-    organization_structure: string[];
     is_visible: boolean;
 }
 
 const { companyInfo } = usePage().props as unknown as {
     companyInfo: CompanyInfo[];
 };
-</script>
 
+function handleDelete(id: number) {
+    if (confirm('Are you sure you want to delete this company info?')) {
+        router.delete(`/admin/company-info/${id}`);
+    }
+}
+</script>
 
 <template>
     <AppLayout>
@@ -37,7 +41,6 @@ const { companyInfo } = usePage().props as unknown as {
                             <th class="px-4 py-3">Background</th>
                             <th class="px-4 py-3">Vision</th>
                             <th class="px-4 py-3">Mission</th>
-                            <th class="px-4 py-3">Organization Structure</th>
                             <th class="px-4 py-3">Visible</th>
                             <th class="px-4 py-3 text-center">Actions</th>
                         </tr>
@@ -48,12 +51,6 @@ const { companyInfo } = usePage().props as unknown as {
                             <td class="px-4 py-2 max-w-xs whitespace-pre-wrap">{{ info.background }}</td>
                             <td class="px-4 py-2 max-w-xs whitespace-pre-wrap">{{ info.vision }}</td>
                             <td class="px-4 py-2 max-w-xs whitespace-pre-wrap">{{ info.mission }}</td>
-                            <td class="px-4 py-2 whitespace-pre-wrap">
-                                <ul class="list-disc list-inside space-y-1">
-                                    <li v-for="(item, index) in info.organization_structure" :key="index">{{ item }}
-                                    </li>
-                                </ul>
-                            </td>
                             <td class="px-4 py-2">
                                 <span
                                     :class="info.is_visible ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">
@@ -65,14 +62,10 @@ const { companyInfo } = usePage().props as unknown as {
                                     class="inline-flex items-center px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded mr-2 transition">
                                     Edit
                                 </a>
-                                <form :action="`/admin/company-info/${info.id}`" method="POST" class="inline">
-                                    <input type="hidden" name="_method" value="DELETE" />
-                                    <button type="submit"
-                                        class="inline-flex items-center px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded transition"
-                                        @click.prevent="$event.target.closest('form').submit()">
-                                        Delete
-                                    </button>
-                                </form>
+                                <button @click="handleDelete(info.id)"
+                                    class="inline-flex items-center px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded transition">
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     </tbody>

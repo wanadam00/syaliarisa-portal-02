@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 
 interface Employee {
     id: number;
@@ -9,6 +9,13 @@ interface Employee {
     photo: string | null;
     is_visible: boolean;
 }
+
+function deleteEmployee(id: number) {
+    if (confirm('Are you sure you want to delete this employee?')) {
+        router.delete(`/admin/employees/${id}`);
+    }
+}
+
 
 const { employees } = usePage().props as unknown as { employees: Employee[] };
 </script>
@@ -58,9 +65,8 @@ const { employees } = usePage().props as unknown as { employees: Employee[] };
                                 </a>
                                 <form :action="`/admin/employees/${employee.id}`" method="POST" class="inline">
                                     <input type="hidden" name="_method" value="DELETE" />
-                                    <button type="submit"
-                                        class="inline-flex items-center px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded transition"
-                                        @click.prevent="$event.target.closest('form').submit()">
+                                    <button @click="deleteEmployee(employee.id)"
+                                        class="inline-flex items-center px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded transition">
                                         Delete
                                     </button>
                                 </form>

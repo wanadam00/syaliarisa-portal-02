@@ -20,11 +20,11 @@ import { type NavItem } from '@/types';
 
 // Main admin sections
 const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: route('dashboard'),
-        icon: LayoutGrid,
-    },
+    // {
+    //     title: 'Dashboard',
+    //     href: route('dashboard'),
+    //     icon: LayoutGrid,
+    // },
     {
         title: 'Home',
         href: route('admin.home-sections.index'),
@@ -33,6 +33,11 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Company Info',
         href: route('admin.company-info.index'),
+        icon: Users,
+    },
+    {
+        title: 'Employees',
+        href: route('admin.employees.index'),
         icon: Users,
     },
     {
@@ -75,7 +80,7 @@ const footerNavItems: NavItem[] = [
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
                         <Link :href="route('dashboard')">
-                        <AppLogo class="w-8 h-8" />
+                        <AppLogo />
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -89,7 +94,7 @@ const footerNavItems: NavItem[] = [
 
         <!-- Footer Nav & User -->
         <SidebarFooter>
-            <NavFooter :items="footerNavItems" />
+            <!-- <NavFooter :items="footerNavItems" /> -->
             <NavUser />
         </SidebarFooter>
     </Sidebar>

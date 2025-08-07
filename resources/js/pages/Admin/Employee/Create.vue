@@ -1,27 +1,39 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
+import { useForm } from '@inertiajs/vue3';
+
+const form = useForm({
+    name: '',
+    position: '',
+    photo: '',
+    is_visible: true
+});
+
+function submit() {
+    form.post(route('admin.employees.store'));
+}
 </script>
 
 <template>
     <AppLayout>
         <div class="p-6 max-w-xl mx-auto">
             <h1 class="text-2xl font-bold mb-6">Add Employee</h1>
-            <form method="POST" action="/admin/employees">
+            <form @submit.prevent="submit" class="space-y-4 max-w-2xl">
                 <div class="mb-4">
                     <label class="block mb-1 font-medium">Name</label>
-                    <input type="text" name="name" class="w-full px-3 py-2 border rounded-lg" required />
+                    <input v-model="form.name" type="text" name="name" class="w-full px-3 py-2 border rounded-lg" required />
                 </div>
                 <div class="mb-4">
                     <label class="block mb-1 font-medium">Position</label>
-                    <input type="text" name="position" class="w-full px-3 py-2 border rounded-lg" required />
+                    <input v-model="form.position" type="text" name="position" class="w-full px-3 py-2 border rounded-lg" required />
                 </div>
                 <div class="mb-4">
                     <label class="block mb-1 font-medium">Photo URL</label>
-                    <input type="text" name="photo" class="w-full px-3 py-2 border rounded-lg" />
+                    <input v-model="form.photo" type="text" name="photo" class="w-full px-3 py-2 border rounded-lg" />
                 </div>
                 <div class="mb-4">
                     <label class="inline-flex items-center">
-                        <input type="checkbox" name="is_visible" class="mr-2" checked />
+                        <input v-model="form.is_visible" type="checkbox" name="is_visible" class="mr-2" checked />
                         Visible
                     </label>
                 </div>

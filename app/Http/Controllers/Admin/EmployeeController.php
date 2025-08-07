@@ -27,6 +27,7 @@ class EmployeeController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'position' => 'required|string',
+            'department' => 'nullable|string',
             'photo' => 'nullable|string',
             'is_visible' => 'boolean',
         ]);
@@ -46,6 +47,7 @@ class EmployeeController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'position' => 'required|string',
+            'department' => 'nullable|string',
             'photo' => 'nullable|string',
             'is_visible' => 'boolean',
         ]);

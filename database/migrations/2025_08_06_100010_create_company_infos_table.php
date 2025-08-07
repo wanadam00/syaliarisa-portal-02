@@ -13,7 +13,6 @@ return new class extends Migration
             $table->text('background')->nullable();
             $table->text('vision')->nullable();
             $table->text('mission')->nullable();
-            $table->json('organization_structure')->nullable();
             $table->boolean('is_visible')->default(true);
             $table->timestamps();
         });

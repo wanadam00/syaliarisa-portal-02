@@ -6,22 +6,11 @@ const form = useForm({
     background: '',
     vision: '',
     mission: '',
-    organization_structure: [] as string[],
     is_visible: true
 });
 
 function submit() {
     form.post(route('admin.company-info.store'));
-}
-
-function handleStructureChange(e: Event) {
-    const target = e.target as HTMLInputElement | null;
-    if (target) {
-        form.organization_structure = target.value
-            .split(',')
-            .map((i) => i.trim())
-            .filter(Boolean);
-    }
 }
 </script>
 
@@ -47,14 +36,6 @@ function handleStructureChange(e: Event) {
                 <div>
                     <label class="block mb-1 font-medium">Mission</label>
                     <textarea v-model="form.mission" class="w-full border rounded-md p-2" rows="3" />
-                </div>
-
-                <!-- Organization Structure (JSON input as string array for now) -->
-                <div>
-                    <label class="block mb-1 font-medium">Organization Structure (comma separated)</label>
-                    <input type="text" :value="form.organization_structure.join(', ')" @change="handleStructureChange"
-                        class="w-full border rounded-md p-2" placeholder="e.g. CEO, Manager, Engineer" />
-
                 </div>
 
                 <!-- Is Visible -->

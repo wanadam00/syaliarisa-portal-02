@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('position');
+            $table->string('department')->nullable();
             $table->string('photo')->nullable();
             $table->boolean('is_visible')->default(true);
             $table->timestamps();

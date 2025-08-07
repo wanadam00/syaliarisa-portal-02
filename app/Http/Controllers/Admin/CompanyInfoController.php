@@ -28,7 +28,6 @@ class CompanyInfoController extends Controller
             'background' => 'nullable|string',
             'vision' => 'nullable|string',
             'mission' => 'nullable|string',
-            'organization_structure' => 'nullable|array',
             'is_visible' => 'boolean',
         ]);
         CompanyInfo::create($data);
@@ -49,7 +48,6 @@ class CompanyInfoController extends Controller
             'background' => 'nullable|string',
             'vision' => 'nullable|string',
             'mission' => 'nullable|string',
-            'organization_structure' => 'nullable|array',
             'is_visible' => 'boolean',
         ]);
         $companyInfo = CompanyInfo::first();

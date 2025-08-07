@@ -3,7 +3,11 @@
         <nav class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
                 <a href="/" class="flex items-center">
-                    <img src="/images/primary-logo.png" alt="Syaliarisa Services" class="h-16" />
+                    <!-- Light mode logo (shown by default) -->
+                    <img src="/images/primary-logo.png" alt="Syaliarisa Services" class="h-16 block dark:hidden" />
+
+                    <!-- Dark mode logo (hidden by default, shown in dark mode) -->
+                    <img src="/images/secondary-logo.png" alt="Syaliarisa Services" class="h-16 hidden dark:block" />
                 </a>
 
                 <!-- Desktop Menu -->
@@ -24,8 +28,6 @@
                         <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-md py-2 opacity-0 invisible
                 transition-all duration-200 transform -translate-y-1
                 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
-                            <a href="/about-us/organization"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Organization</a>
                             <a href="#"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Standards</a>
                             <a href="#"
@@ -92,8 +94,8 @@
                         <div v-if="openDropdown === 'about'" class="pl-4">
                             <a href="/about-us/organization"
                                 class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Organization</a>
-                            <a href="#"
-                                class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Client List</a>
+                            <a href="#" class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Client
+                                List</a>
                             <a href="#"
                                 class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Standards</a>
                             <a href="#"

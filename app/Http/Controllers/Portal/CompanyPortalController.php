@@ -8,6 +8,7 @@ use App\Models\AboutUsContent;
 use App\Models\Service;
 use App\Models\ContactInfo;
 use App\Models\HomeSection;
+use App\Models\Employee;
 use Inertia\Inertia;
 
 class CompanyPortalController extends Controller
@@ -19,7 +20,6 @@ class CompanyPortalController extends Controller
                 'background',
                 'vision',
                 'mission',
-                'organization_structure',
                 'is_visible',
             ]),
             'aboutUsContents' => AboutUsContent::all([
@@ -53,7 +53,7 @@ class CompanyPortalController extends Controller
         $contactInfo = ContactInfo::first();
         $homeSections = HomeSection::all();
 
-        return Inertia::render('Portal/Company', [
+        return Inertia::render('Portal/Home', [
             'companyInfo' => $companyInfo,
             'aboutUs' => $aboutUs,
             'services' => $services,
@@ -61,24 +61,31 @@ class CompanyPortalController extends Controller
             'homeSections' => $homeSections,
         ]);
     }
+
     public function companyInfo()
     {
         $companyInfo = CompanyInfo::first();
+        $employees = Employee::all();
         return Inertia::render('Portal/CompanyInfo', [
             'companyInfo' => [
                 'background' => $companyInfo->background,
                 'vision' => $companyInfo->vision,
                 'mission' => $companyInfo->mission,
-                'organization_structure' => $companyInfo->organization_structure, // JSON array
                 'is_visible' => $companyInfo->is_visible,
             ],
+            'employees' => $employees,
         ]);
     }
 
+
     public function aboutUsOrganization()
     {
-        $aboutUsContents = AboutUsContent::all();
+        $companyInfo = CompanyInfo::first();
+        $employees = Employee::where('is_visible', true)->get();
+        $aboutUsContents = AboutUsContent::where('section', 'organization')->get();
         return Inertia::render('Portal/AboutUsOrganization', [
+            'companyInfo' => $companyInfo,
+            'employees' => $employees,
             'aboutUsContents' => $aboutUsContents,
         ]);
     }

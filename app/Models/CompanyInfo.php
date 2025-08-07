@@ -14,11 +14,6 @@ class CompanyInfo extends Model
         'background',
         'vision',
         'mission',
-        'organization_structure',
         'is_visible',
-    ];
-
-    protected $casts = [
-        'organization_structure' => 'array',
     ];
 }

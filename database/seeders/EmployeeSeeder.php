@@ -14,18 +14,21 @@ class EmployeeSeeder extends Seeder
             [
                 'name' => 'John Doe',
                 'position' => 'Chief Executive Officer',
+                'department' => 'Management',
                 'photo' => null,
                 'is_visible' => true,
             ],
             [
                 'name' => 'Jane Smith',
                 'position' => 'Operations Manager',
+                'department' => 'Operations',
                 'photo' => null,
                 'is_visible' => true,
             ],
             [
                 'name' => 'Emily Johnson',
                 'position' => 'Finance Staff',
+                'department' => 'Finance',
                 'photo' => null,
                 'is_visible' => true,
             ],

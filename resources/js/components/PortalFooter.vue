@@ -4,7 +4,14 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Column 1: Company Info -->
                 <div>
-                    <img src="/images/secondary-logo.png" alt="Syaliarisa Services" class="h-16 mb-6" />
+                    <a href="/" class="flex items-center mb-6">
+                        <!-- Light mode logo (shown by default) -->
+                        <img src="/images/primary-logo.png" alt="Syaliarisa Services" class="h-16 block dark:hidden" />
+
+                        <!-- Dark mode logo (hidden by default, shown in dark mode) -->
+                        <img src="/images/secondary-logo.png" alt="Syaliarisa Services"
+                            class="h-16 hidden dark:block" />
+                    </a>
                     <p class="mb-6 text-gray-300">
                         Syaliarisa Services Sdn. Bhd. is an environmental, industrial hygiene and safety consulting,
                         monitoring & training firm operating for Malaysia and the regions.

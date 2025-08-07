@@ -14,7 +14,6 @@ class CompanyInfoSeeder extends Seeder
             'background' => 'Leading provider of integrated solutions.',
             'vision' => 'To be the most trusted company in our field.',
             'mission' => 'Delivering excellence and innovation.',
-            'organization_structure' => 'CEO > Managers > Staff',
             'is_visible' => true,
         ]);
     }
