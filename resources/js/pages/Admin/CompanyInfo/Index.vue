@@ -1,0 +1,83 @@
+<script setup lang="ts">
+import AppLayout from '@/layouts/AppLayout.vue';
+import { usePage } from '@inertiajs/vue3';
+
+interface CompanyInfo {
+    id: number;
+    background: string;
+    vision: string;
+    mission: string;
+    organization_structure: string[];
+    is_visible: boolean;
+}
+
+const { companyInfo } = usePage().props as unknown as {
+    companyInfo: CompanyInfo[];
+};
+</script>
+
+
+<template>
+    <AppLayout>
+        <div class="p-6">
+            <h1 class="text-2xl font-bold mb-6">Company Info List</h1>
+
+            <div class="flex justify-end mb-4">
+                <a href="/admin/company-info/create"
+                    class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition">
+                    + Create
+                </a>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+                <table class="min-w-full bg-white dark:bg-gray-900 text-sm text-left">
+                    <thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                        <tr>
+                            <th class="px-4 py-3">ID</th>
+                            <th class="px-4 py-3">Background</th>
+                            <th class="px-4 py-3">Vision</th>
+                            <th class="px-4 py-3">Mission</th>
+                            <th class="px-4 py-3">Organization Structure</th>
+                            <th class="px-4 py-3">Visible</th>
+                            <th class="px-4 py-3 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-800 dark:text-gray-100 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tr v-for="info in companyInfo" :key="info.id">
+                            <td class="px-4 py-2">{{ info.id }}</td>
+                            <td class="px-4 py-2 max-w-xs whitespace-pre-wrap">{{ info.background }}</td>
+                            <td class="px-4 py-2 max-w-xs whitespace-pre-wrap">{{ info.vision }}</td>
+                            <td class="px-4 py-2 max-w-xs whitespace-pre-wrap">{{ info.mission }}</td>
+                            <td class="px-4 py-2 whitespace-pre-wrap">
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li v-for="(item, index) in info.organization_structure" :key="index">{{ item }}
+                                    </li>
+                                </ul>
+                            </td>
+                            <td class="px-4 py-2">
+                                <span
+                                    :class="info.is_visible ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">
+                                    {{ info.is_visible ? 'Yes' : 'No' }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-2 text-center">
+                                <a :href="`/admin/company-info/${info.id}/edit`"
+                                    class="inline-flex items-center px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded mr-2 transition">
+                                    Edit
+                                </a>
+                                <form :action="`/admin/company-info/${info.id}`" method="POST" class="inline">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    <button type="submit"
+                                        class="inline-flex items-center px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded transition"
+                                        @click.prevent="$event.target.closest('form').submit()">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </AppLayout>
+</template>

@@ -1,0 +1,99 @@
+<script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+import { LayoutGrid, Building2, Users, BookText, Briefcase, Phone, Folder, BookOpen } from 'lucide-vue-next';
+
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem
+} from '@/components/ui/sidebar';
+
+import NavMain from '@/components/NavMain.vue';
+import NavFooter from '@/components/NavFooter.vue';
+import NavUser from '@/components/NavUser.vue';
+import AppLogo from './AppLogo.vue';
+import { type NavItem } from '@/types';
+
+// Main admin sections
+const mainNavItems: NavItem[] = [
+    {
+        title: 'Dashboard',
+        href: route('dashboard'),
+        icon: LayoutGrid,
+    },
+    {
+        title: 'Home',
+        href: route('admin.home-sections.index'),
+        icon: Building2,
+    },
+    {
+        title: 'Company Info',
+        href: route('admin.company-info.index'),
+        icon: Users,
+    },
+    {
+        title: 'About Us',
+        href: route('admin.about-us-contents.index'),
+        icon: BookText,
+    },
+    {
+        title: 'Services',
+        href: route('admin.services.index'),
+        icon: Briefcase,
+    },
+    {
+        title: 'Contact Us',
+        href: route('admin.contact-info.index'),
+        icon: Phone,
+    },
+];
+
+// Footer items (external)
+const footerNavItems: NavItem[] = [
+    {
+        title: 'Github Repo',
+        href: 'https://github.com/laravel/vue-starter-kit',
+        icon: Folder,
+    },
+    {
+        title: 'Documentation',
+        href: 'https://laravel.com/docs/starter-kits#vue',
+        icon: BookOpen,
+    },
+];
+</script>
+
+<template>
+    <Sidebar collapsible="icon" variant="inset" class="h-screen border-r shadow-sm">
+        <!-- Header with Logo -->
+        <SidebarHeader>
+            <SidebarMenu>
+                <SidebarMenuItem>
+                    <SidebarMenuButton size="lg" as-child>
+                        <Link :href="route('dashboard')">
+                        <AppLogo class="w-8 h-8" />
+                        </Link>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarMenu>
+        </SidebarHeader>
+
+        <!-- Main Nav Items -->
+        <SidebarContent>
+            <NavMain :items="mainNavItems" />
+        </SidebarContent>
+
+        <!-- Footer Nav & User -->
+        <SidebarFooter>
+            <NavFooter :items="footerNavItems" />
+            <NavUser />
+        </SidebarFooter>
+    </Sidebar>
+
+    <!-- Page Content -->
+    <slot />
+</template>
