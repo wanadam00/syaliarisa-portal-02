@@ -6,8 +6,9 @@ use App\Http\Controllers\Admin\CompanyInfoController;
 use App\Http\Controllers\Admin\AboutUsContentController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ContactInfoController;
-use App\Http\Controllers\Portal\CompanyPortalController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Portal\CompanyPortalController;
+
 use Inertia\Inertia;
 
 // Route::get('/', function () {
@@ -62,12 +63,10 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/contact/{contactInfo}/edit', [ContactInfoController::class, 'edit'])->name('admin.contact-info.edit');
     Route::put('/contact/{contactInfo}', [ContactInfoController::class, 'update'])->name('admin.contact-info.update');
     Route::delete('/contact/{contactInfo}', [ContactInfoController::class, 'destroy'])->name('admin.contact-info.destroy');
-
 });
 
 // Route::prefix('company')->group(function () {
 Route::get('/', [CompanyPortalController::class, 'home'])->name('portal.home');
-// Route::get('/', [CompanyPortalController::class, 'show'])->name('portal.company');
 Route::get('/company-info', [CompanyPortalController::class, 'companyInfo'])->name('portal.company-info');
 Route::get('/about-us/organization', [CompanyPortalController::class, 'aboutUsOrganization'])->name('portal.about-us.organization');
 Route::get('/about-us/standards', [CompanyPortalController::class, 'aboutUsStandards'])->name('portal.about-us.standards');
@@ -81,3 +80,6 @@ Route::get('/contact', [CompanyPortalController::class, 'contact'])->name('porta
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
+// #2262ae
+// #3da948
+// #48b2e5

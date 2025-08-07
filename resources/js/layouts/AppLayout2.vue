@@ -12,23 +12,17 @@ withDefaults(defineProps<Props>(), {
     breadcrumbs: () => [],
 });
 
-const colorScheme = ref('light');
+const colorScheme = ref('light'); // Default to light mode
 
 // Initialize color scheme
 onMounted(() => {
     const savedScheme = localStorage.getItem('color-scheme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    colorScheme.value = savedScheme || (systemPrefersDark ? 'dark' : 'light');
+    // Only use saved preference if exists, otherwise default to light
+    colorScheme.value = savedScheme || 'light';
     applyColorScheme();
 
-    // Watch for system changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        if (!localStorage.getItem('color-scheme')) {
-            colorScheme.value = e.matches ? 'dark' : 'light';
-            applyColorScheme();
-        }
-    });
+    // Remove the system preference listener since we're forcing light mode
 });
 
 const toggleColorScheme = () => {
@@ -47,9 +41,11 @@ const applyColorScheme = () => {
 </script>
 
 <template>
-    <PortalHeader />
-    <slot />
-    <PortalFooter />
+    <div class="flex flex-col min-h-screen bg-white dark:bg-background text-white dark:text-[#212323]">
+        <PortalHeader />
+        <slot />
+        <PortalFooter />
+    </div>
 
     <!-- Floating Theme Toggle with SVG Icons -->
     <button @click="toggleColorScheme"

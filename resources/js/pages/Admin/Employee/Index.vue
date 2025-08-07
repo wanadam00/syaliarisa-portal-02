@@ -31,7 +31,7 @@ const { employees } = usePage().props as unknown as { employees: Employee[] };
                 </a>
             </div>
             <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
-                <table class="min-w-full bg-white dark:bg-gray-900 text-sm text-left">
+                <table class="min-w-full text-sm text-left">
                     <thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                         <tr>
                             <th class="px-4 py-3">ID</th>

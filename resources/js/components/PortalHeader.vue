@@ -1,5 +1,5 @@
 <template>
-    <header class="fixed top-0 w-full bg-white/95 dark:bg-gray-900/95 shadow-sm z-50 backdrop-blur-md">
+    <header class="fixed top-0 w-full bg-white dark:bg-background/80 shadow-sm z-50">
         <nav class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
                 <a href="/" class="flex items-center">
@@ -25,7 +25,7 @@
                             <i
                                 class="bi bi-chevron-down ml-1 transition-transform duration-200 group-hover:rotate-180"></i>
                         </button>
-                        <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-md py-2 opacity-0 invisible
+                        <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-background shadow-lg rounded-md py-2 opacity-0 invisible border
                 transition-all duration-200 transform -translate-y-1
                 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
                             <a href="#"
@@ -43,7 +43,7 @@
                             <i
                                 class="bi bi-chevron-down ml-1 transition-transform duration-200 group-hover:rotate-180"></i>
                         </button>
-                        <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-md py-2 opacity-0 invisible
+                        <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-background shadow-lg rounded-md py-2 opacity-0 invisible border
                 transition-all duration-200 transform -translate-y-1
                 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
                             <a href="/services/health-safety"
@@ -64,8 +64,22 @@
                 </div>
 
                 <!-- Mobile Toggle -->
-                <button @click="toggleMobileMenu" class="lg:hidden text-gray-800 dark:text-white text-2xl">
-                    <i :class="mobileMenuOpen ? 'bi bi-x' : 'bi bi-list'"></i>
+                <!-- Mobile Toggle Button - Made more prominent -->
+                <button @click="toggleMobileMenu" class="lg:hidden p-2 focus:outline-none" aria-label="Toggle menu">
+                    <div class="w-6 h-6 relative">
+                        <!-- Top bar -->
+                        <span
+                            class="block absolute h-0.5 w-6 bg-gray-800 dark:bg-white transition-all duration-300 ease-out"
+                            :class="{ 'transform rotate-45 translate-y-1.5': mobileMenuOpen, 'top-0': !mobileMenuOpen }"></span>
+                        <!-- Middle bar -->
+                        <span
+                            class="block absolute h-0.5 w-6 bg-gray-800 dark:bg-white transition-all duration-300 ease-out"
+                            :class="{ 'opacity-0': mobileMenuOpen, 'top-1.5': !mobileMenuOpen }"></span>
+                        <!-- Bottom bar -->
+                        <span
+                            class="block absolute h-0.5 w-6 bg-gray-800 dark:bg-white transition-all duration-300 ease-out"
+                            :class="{ 'transform -rotate-45 translate-y-1.5': mobileMenuOpen, 'top-3': !mobileMenuOpen }"></span>
+                    </div>
                 </button>
             </div>
 
@@ -140,6 +154,7 @@ const openDropdown = ref('');
 const toggleMobileMenu = () => {
     mobileMenuOpen.value = !mobileMenuOpen.value;
     openDropdown.value = '';
+    document.body.style.overflow = mobileMenuOpen.value ? 'hidden' : '';
 };
 
 const toggleDropdown = (menu) => {
