@@ -13,13 +13,6 @@ interface CompanyInfo {
     is_visible: boolean;
 }
 
-interface AboutUsContent {
-    section: string;
-    title: string;
-    content: string;
-    is_visible: boolean;
-}
-
 interface Service {
     type: string;
     title: string;
@@ -29,24 +22,21 @@ interface Service {
     is_visible: boolean;
 }
 
-interface ContactInfo {
-    address: string;
-    phone: string;
-    email: string;
-    map_embed: string;
-    is_visible: boolean;
+interface HomeSection {
+    top_details: string;
+    top_image: string;
+    bottom_details: string;
+    bottom_image: string;
 }
 
 const {
     companyInfo,
-    aboutUsContents,
     services,
-    contactInfo
+    homeSections,
 } = usePage().props as unknown as {
     companyInfo: CompanyInfo[];
-    aboutUsContents: AboutUsContent[];
     services: Service[];
-    contactInfo: ContactInfo[];
+    homeSections: HomeSection[];
 };
 </script>
 
@@ -66,7 +56,7 @@ const {
                 <div class="max-w-2xl p-8 rounded-lg">
                     <h1 class="text-5xl font-bold mb-6">Expert Environmental & Safety Consulting</h1>
                     <p class="text-xl mb-8">
-                        {{ companyInfo[0]?.background }}
+                        {{ homeSections[0]?.top_details }}
                     </p>
                     <div class="flex flex-wrap gap-4">
                         <a href="#contact"
@@ -120,8 +110,8 @@ const {
                 <div class="lg:w-1/2">
                     <h2 class="text-3xl font-bold mb-6 text-primary dark:text-secondary">About Syaliarisa Services
                     </h2>
-                    <p class="text-xl mb-4">{{ companyInfo[0]?.vision }}</p>
-                    <p class="mb-4">{{ companyInfo[0]?.mission }}</p>
+                    <p class="text-xl mb-4">{{ homeSections[0]?.bottom_details }}</p>
+                    <!-- <p class="mb-4">{{ companyInfo[0]?.mission }}</p> -->
                     <a href="/company-info"
                         class="inline-block bg-primary hover:bg-secondary text-white font-medium px-6 py-3 rounded transition">
                         Learn More About Us

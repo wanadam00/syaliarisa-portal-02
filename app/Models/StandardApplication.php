@@ -2,21 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-
-class Service extends Model
+class StandardApplication extends Model
 {
-    use HasFactory;
 
+    use HasFactory;
     protected $fillable = [
-        'type',
         'title',
-        'summary',
-        'details',
-        'image',
+        'description',
+        'logo',
         'link',
         'is_visible',
     ];
+    //
 }

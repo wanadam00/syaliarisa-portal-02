@@ -12,14 +12,10 @@ class HomeSectionSeeder extends Seeder
         HomeSection::truncate();
         HomeSection::insert([
             [
-                'title' => 'Welcome',
-                'content' => 'Welcome to our company portal!',
-                'is_visible' => true,
-            ],
-            [
-                'title' => 'Our Values',
-                'content' => 'Integrity, Innovation, Excellence.',
-                'is_visible' => true,
+                'top_details' => 'Welcome to Our Company',
+                'top_image' => 'welcome-image.jpg',
+                'bottom_details' => 'We provide top-notch services to our clients.',
+                'bottom_image' => 'services-image.jpg',
             ],
         ]);
     }

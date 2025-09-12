@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->text('map_embed')->nullable();
+            $table->text('business_hours')->nullable();
             $table->boolean('is_visible')->default(true);
             $table->timestamps();
         });

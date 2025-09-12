@@ -6,14 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('legislations', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['health_safety', 'training', 'engineering', 'environmental']);
             $table->string('title');
-            $table->text('summary');
-            $table->longText('details');
+            $table->text('description')->nullable();
+            $table->string('type')->nullable();
+            $table->text('details')->nullable();
             $table->string('image')->nullable();
             $table->string('link')->nullable();
             $table->boolean('is_visible')->default(true);
@@ -21,8 +24,11 @@ return new class extends Migration
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('legislations');
     }
 };

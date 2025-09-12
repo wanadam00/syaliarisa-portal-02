@@ -14,34 +14,49 @@
                 <div class="hidden lg:flex items-center space-x-8">
                     <a href="/"
                         class="text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium">Home</a>
-                    <a href="/company-info"
+                    <!-- <a href="/company-info"
                         class="text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium">Company
-                        Info</a>
+                        Info</a> -->
+
                     <!-- About Us Dropdown -->
-                    <div class="relative group">
+                    <div class="relative group inline-block">
+                        <!-- Button -->
                         <button
-                            class="text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium flex items-center">
+                            class="flex items-center gap-1 text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium transition-colors duration-200">
                             About Us
-                            <i
-                                class="bi bi-chevron-down ml-1 transition-transform duration-200 group-hover:rotate-180"></i>
+                            <!-- Arrow SVG -->
+                            <svg class="w-5 h-5 text-gray-800 group-hover:text-blue-600 dark:text-white transform transition-transform duration-300 group-hover:rotate-180"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7" />
+                            </svg>
                         </button>
-                        <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-background shadow-lg rounded-md py-2 opacity-0 invisible border
-                transition-all duration-200 transform -translate-y-1
-                group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
-                            <a href="#"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Standards</a>
-                            <a href="#"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Legislation</a>
+
+                        <!-- Dropdown -->
+                        <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-background shadow-lg rounded-md py-2 border
+           opacity-0 invisible transform -translate-y-2 transition-all duration-300 ease-out
+           group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
+                            <a href="/about-us/company-info"
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 transition-colors">Company
+                                Info</a>
+                            <a href="/about-us/standards"
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 transition-colors">Standards</a>
+                            <a href="/about-us/legislation"
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 transition-colors">Legislation</a>
                         </div>
                     </div>
 
                     <!-- Services Dropdown -->
-                    <div class="relative group">
+                    <div class="relative group inline-block">
                         <button
-                            class="text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium flex items-center">
+                            class="text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium flex items-center gap-1">
                             Services
-                            <i
-                                class="bi bi-chevron-down ml-1 transition-transform duration-200 group-hover:rotate-180"></i>
+                            <!-- Arrow SVG -->
+                            <svg class="w-5 h-5 text-gray-800 group-hover:text-blue-600 dark:text-white transform transition-transform duration-300 group-hover:rotate-180"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7" />
+                            </svg>
                         </button>
                         <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-background shadow-lg rounded-md py-2 opacity-0 invisible border
                 transition-all duration-200 transform -translate-y-1
@@ -49,11 +64,11 @@
                             <a href="/services/health-safety"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Health
                                 & Safety</a>
-                            <a href="#"
+                            <a href="/services/training"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Training</a>
-                            <a href="#"
+                            <a href="/services/engineering"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Engineering</a>
-                            <a href="#"
+                            <a href="/services/environmental"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Environmental</a>
                         </div>
                     </div>
@@ -86,59 +101,80 @@
             <!-- Mobile Menu -->
             <div v-if="mobileMenuOpen" class="lg:hidden pt-4">
                 <div class="flex flex-col space-y-2">
-                    <a href="/"
-                        class="block py-2 text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium">Home</a>
-                    <a href="/company-info"
-                        class="block py-2 text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium">Company
-                        Info</a>
-                    <a href="/our-brand"
-                        class="block py-2 text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium">Our
-                        Brand</a>
-                    <a href="/store-location"
-                        class="block py-2 text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium">Our
-                        Location</a>
 
-                    <!-- Mobile Dropdowns -->
+                    <!-- Home -->
+                    <a href="/"
+                        class="block py-2 text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium">
+                        Home
+                    </a>
+
+                    <!-- About Us Dropdown (toggle on mobile) -->
                     <div>
                         <button @click="toggleDropdown('about')"
-                            class="flex justify-between w-full py-2 text-gray-800 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
+                            class="flex justify-between items-center w-full py-2 text-gray-800 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
                             About Us
-                            <i :class="openDropdown === 'about' ? 'bi bi-chevron-up' : 'bi bi-chevron-down'"></i>
+                            <svg class="w-5 h-5 transform transition-transform duration-300"
+                                :class="openDropdown === 'about' ? 'rotate-180 text-blue-600 dark:text-blue-400' : 'rotate-0 text-gray-800 dark:text-gray-100'"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7" />
+                            </svg>
                         </button>
-                        <div v-if="openDropdown === 'about'" class="pl-4">
-                            <a href="/about-us/organization"
-                                class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Organization</a>
-                            <a href="#" class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Client
-                                List</a>
-                            <a href="#"
-                                class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Standards</a>
-                            <a href="#"
-                                class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Legislation</a>
-                        </div>
+
+                        <!-- Transition wrapper -->
+                        <transition enter-active-class="transition-all duration-300 ease-out"
+                            enter-from-class="opacity-0 -translate-y-2" enter-to-class="opacity-100 translate-y-0"
+                            leave-active-class="transition-all duration-200 ease-in"
+                            leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 -translate-y-2">
+                            <div v-if="openDropdown === 'about'" class="pl-4">
+                                <a href="/about-us/company-info"
+                                    class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Company
+                                    Info</a>
+                                <a href="/about-us/standards"
+                                    class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Standards</a>
+                                <a href="/about-us/legislation"
+                                    class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Legislation</a>
+                            </div>
+                        </transition>
                     </div>
 
+                    <!-- Services Dropdown (toggle on mobile) -->
                     <div>
                         <button @click="toggleDropdown('services')"
-                            class="flex justify-between w-full py-2 text-gray-800 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
+                            class="flex justify-between items-center w-full py-2 text-gray-800 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
                             Services
-                            <i :class="openDropdown === 'services' ? 'bi bi-chevron-up' : 'bi bi-chevron-down'"></i>
+                            <svg class="w-5 h-5 transform transition-transform duration-300" :class="openDropdown === 'services'
+                                ? 'rotate-180 text-blue-600 dark:text-blue-400'
+                                : 'rotate-0 text-gray-800 dark:text-gray-100'" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7" />
+                            </svg>
                         </button>
-                        <div v-if="openDropdown === 'services'" class="pl-4">
-                            <a href="/services/health-safety"
-                                class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Health &
-                                Safety</a>
-                            <a href="#"
-                                class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Training</a>
-                            <a href="#"
-                                class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Engineering</a>
-                            <a href="#"
-                                class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Environmental</a>
-                        </div>
+
+                        <!-- Animated Dropdown -->
+                        <transition enter-active-class="transition-all duration-300 ease-out"
+                            enter-from-class="opacity-0 -translate-y-2" enter-to-class="opacity-100 translate-y-0"
+                            leave-active-class="transition-all duration-200 ease-in"
+                            leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 -translate-y-2">
+                            <div v-if="openDropdown === 'services'" class="pl-4 overflow-hidden">
+                                <a href="/services/health-safety"
+                                    class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Health &
+                                    Safety</a>
+                                <a href="/services/training"
+                                    class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Training</a>
+                                <a href="/services/engineering"
+                                    class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Engineering</a>
+                                <a href="/services/environmental"
+                                    class="block py-2 text-gray-700 dark:text-gray-200 hover:text-primary">Environmental</a>
+                            </div>
+                        </transition>
                     </div>
 
+                    <!-- Contact -->
                     <a href="/contact-us"
-                        class="block py-2 text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium">Contact
-                        Us</a>
+                        class="block py-2 text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium">
+                        Contact Us
+                    </a>
                 </div>
             </div>
         </nav>

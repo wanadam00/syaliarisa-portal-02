@@ -4,9 +4,10 @@ import { Link, usePage } from '@inertiajs/vue3';
 
 interface HomeSection {
     id: number;
-    order: number;
-    section_type: string;
-    title: string;
+    top_details: string;
+    top_image: string | null;
+    bottom_details: string | null;
+    bottom_image: string | null;
     is_visible: boolean;
 }
 
@@ -24,11 +25,13 @@ const { sections } = usePage().props as unknown as { sections: HomeSection[] };
                     <thead class="[&_tr]:border-b">
                         <tr>
                             <th class="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                                Order</th>
+                                Top Details</th>
                             <th class="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                                Type</th>
+                                Top Background</th>
                             <th class="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
-                                Title</th>
+                                Bottom Details</th>
+                            <th class="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
+                                Bottom Image</th>
                             <th class="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
                                 Visible</th>
                             <th class="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap">
@@ -38,9 +41,10 @@ const { sections } = usePage().props as unknown as { sections: HomeSection[] };
                     <tbody>
                         <tr v-for="section in sections" :key="section.id"
                             class="hover:bg-muted/50 border-b transition-colors">
-                            <td class="p-2 align-middle whitespace-nowrap">{{ section.order }}</td>
-                            <td class="p-2 align-middle whitespace-nowrap">{{ section.section_type }}</td>
-                            <td class="p-2 align-middle whitespace-nowrap">{{ section.title }}</td>
+                            <td class="p-2 align-middle whitespace-nowrap">{{ section.top_details }}</td>
+                            <td class="p-2 align-middle whitespace-nowrap">{{ section.top_image }}</td>
+                            <td class="p-2 align-middle whitespace-nowrap">{{ section.bottom_details }}</td>
+                            <td class="p-2 align-middle whitespace-nowrap">{{ section.bottom_image }}</td>
                             <td class="p-2 align-middle whitespace-nowrap">{{ section.is_visible ? 'Yes' : 'No' }}</td>
                             <td class="p-2 align-middle whitespace-nowrap">
                                 <Link :href="route('admin.home-sections.edit', section.id)"

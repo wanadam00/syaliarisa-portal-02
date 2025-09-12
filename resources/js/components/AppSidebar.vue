@@ -40,11 +40,11 @@ const mainNavItems: NavItem[] = [
         href: route('admin.employees.index'),
         icon: Users,
     },
-    {
-        title: 'About Us',
-        href: route('admin.about-us-contents.index'),
-        icon: BookText,
-    },
+    // {
+    //     title: 'About Us',
+    //     href: route('admin.about-us-contents.index'),
+    //     icon: BookText,
+    // },
     {
         title: 'Services',
         href: route('admin.services.index'),
@@ -79,7 +79,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="route('dashboard')">
+                        <Link :href="route('admin.home-sections.index')">
                         <AppLogo />
                         </Link>
                     </SidebarMenuButton>

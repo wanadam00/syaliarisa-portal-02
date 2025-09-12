@@ -11,7 +11,7 @@ class HomeSectionController extends Controller
 {
     public function index()
     {
-        $sections = HomeSection::orderBy('order')->get();
+        $sections = HomeSection::all();
         return Inertia::render('Admin/HomeSection/Index', [
             'sections' => $sections,
         ]);
@@ -25,12 +25,11 @@ class HomeSectionController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'nullable|string',
-            'hero_image' => 'nullable|string',
+            'top_details' => 'required|string|max:255',
+            'top_image' => 'nullable|string|max:255',
+            'bottom_details' => 'nullable|string|max:255',
+            'bottom_image' => 'nullable|string|max:255',
             'is_visible' => 'boolean',
-            'section_type' => 'required|string',
-            'order' => 'integer',
         ]);
         HomeSection::create($data);
         return redirect()->route('admin.home-sections.index')->with('success', 'Section created successfully.');
@@ -46,12 +45,11 @@ class HomeSectionController extends Controller
     public function update(Request $request, HomeSection $homeSection)
     {
         $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'nullable|string',
-            'hero_image' => 'nullable|string',
+            'top_details' => 'required|string|max:255',
+            'top_image' => 'nullable|string|max:255',
+            'bottom_details' => 'nullable|string|max:255',
+            'bottom_image' => 'nullable|string|max:255',
             'is_visible' => 'boolean',
-            'section_type' => 'required|string',
-            'order' => 'integer',
         ]);
         $homeSection->update($data);
         return redirect()->route('admin.home-sections.index')->with('success', 'Section updated successfully.');

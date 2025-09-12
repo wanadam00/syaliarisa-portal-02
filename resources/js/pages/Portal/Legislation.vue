@@ -4,23 +4,18 @@
     <AppLayout2>
         <section class="bg-[#2262ae] dark:bg-background dark:border-b py-12 text-white pt-32">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 dark:text-white">Legislations</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 dark:text-white">Legislation</h1>
             </div>
         </section>
 
         <section class="py-16">
             <div class="container mx-auto px-4">
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div v-for="law in legislations" :key="law.title"
+                    <div v-for="law in legislation" :key="law.title"
                         class="bg-white dark:bg-background p-6 rounded-lg shadow-md">
                         <h2 class="text-2xl font-bold mb-4 text-primary">{{ law.title }}</h2>
                         <p class="text-gray-700 dark:text-gray-300">{{ law.description }}</p>
                         <p class="text-sm text-gray-500 dark:text-gray-400">Type: {{ law.type }}</p>
-                        <p v-if="law.details" class="text-gray-600 dark:text-gray-400 mt-2">{{ law.details }}</p>
-                        <a v-if="law.link" :href="law.link" target="_blank"
-                            class="text-blue-600 dark:text-blue-400 hover:underline mt-4 inline-block">Read more</a>
-                        <img v-if="law.image" :src="law.image" alt="Legislation Image"
-                            class="mt-4 w-full h-auto rounded-lg shadow-sm">
                     </div>
                 </div>
             </div>
@@ -32,16 +27,13 @@
 import { Head, usePage } from '@inertiajs/vue3';
 import AppLayout2 from '@/layouts/AppLayout2.vue';
 
-interface AboutUsLegislation {
-    id: number;
+interface Legislation {
     title: string;
     description: string;
     type: string;
-    details: string;
-    image: string | null;
-    link: string | null;
 }
 
-const { aboutUsLegislations } = usePage().props as unknown as { aboutUsLegislations: AboutUsLegislation[] };
-const legislations = aboutUsLegislations.filter(a => a.title.toLowerCase());
+const { legislation } = usePage().props as unknown as {
+    legislation: Legislation[];
+};
 </script>

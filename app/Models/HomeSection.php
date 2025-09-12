@@ -10,11 +10,9 @@ class HomeSection extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'content',
-        'hero_image',
-        'is_visible',
-        'section_type',
-        'order',
+        'top_details',
+        'top_image',
+        'bottom_details',
+        'bottom_image',
     ];
 }

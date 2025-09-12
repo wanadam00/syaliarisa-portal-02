@@ -9,6 +9,8 @@ use App\Models\Service;
 use App\Models\ContactInfo;
 use App\Models\HomeSection;
 use App\Models\Employee;
+use App\Models\StandardApplication;
+use App\Models\Legislation;
 use Inertia\Inertia;
 
 class CompanyPortalController extends Controller
@@ -22,12 +24,6 @@ class CompanyPortalController extends Controller
                 'mission',
                 'is_visible',
             ]),
-            'aboutUsContents' => AboutUsContent::all([
-                'section',
-                'title',
-                'content',
-                'is_visible',
-            ]),
             'services' => Service::all([
                 'type',
                 'title',
@@ -36,26 +32,25 @@ class CompanyPortalController extends Controller
                 'image',
                 'is_visible',
             ]),
-            'contactInfo' => ContactInfo::all([
-                'address',
-                'phone',
-                'email',
-                'map_embed',
-                'is_visible',
+            'homeSections' => HomeSection::all([
+                'top_details',
+                'top_image',
+                'bottom_details',
+                'bottom_image',
             ]),
         ]);
     }
     public function show()
     {
         $companyInfo = CompanyInfo::first();
-        $aboutUs = AboutUsContent::all();
+        // $aboutUs = AboutUsContent::all();
         $services = Service::all();
         $contactInfo = ContactInfo::first();
         $homeSections = HomeSection::all();
 
         return Inertia::render('Portal/Home', [
             'companyInfo' => $companyInfo,
-            'aboutUs' => $aboutUs,
+            // 'aboutUs' => $aboutUs,
             'services' => $services,
             'contactInfo' => $contactInfo,
             'homeSections' => $homeSections,
@@ -82,27 +77,28 @@ class CompanyPortalController extends Controller
     {
         $companyInfo = CompanyInfo::first();
         $employees = Employee::where('is_visible', true)->get();
-        $aboutUsContents = AboutUsContent::where('section', 'organization')->get();
+        // $aboutUsContents = AboutUsContent::where('section', 'organization')->get();
         return Inertia::render('Portal/AboutUsOrganization', [
             'companyInfo' => $companyInfo,
             'employees' => $employees,
-            'aboutUsContents' => $aboutUsContents,
+            // 'aboutUsContents' => $aboutUsContents,
         ]);
     }
 
     public function aboutUsStandards()
     {
-        $aboutUsContents = AboutUsContent::all();
+        $standards = StandardApplication::all();
+        // dd($standards);
         return Inertia::render('Portal/AboutUsStandards', [
-            'aboutUsContents' => $aboutUsContents,
+            'aboutUsStandards' => $standards,
         ]);
     }
 
     public function aboutUsLegislation()
     {
-        $aboutUsContents = AboutUsContent::all();
+        $legislations = Legislation::all();
         return Inertia::render('Portal/AboutUsLegislation', [
-            'aboutUsContents' => $aboutUsContents,
+            'aboutUsLegislations' => $legislations,
         ]);
     }
 

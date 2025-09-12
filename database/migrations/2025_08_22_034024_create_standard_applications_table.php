@@ -6,23 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('standard_applications', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['health_safety', 'training', 'engineering', 'environmental']);
-            $table->string('title');
-            $table->text('summary');
-            $table->longText('details');
-            $table->string('image')->nullable();
+            $table->string('title')->nullable();
+            $table->string('description')->nullable();
+            $table->string('logo')->nullable();
             $table->string('link')->nullable();
             $table->boolean('is_visible')->default(true);
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('standard_applications');
     }
 };

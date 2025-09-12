@@ -28,12 +28,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            AboutUsContentSeeder::class,
             CompanyInfoSeeder::class,
             HomeSectionSeeder::class,
             ContactInfoSeeder::class,
             ServiceSeeder::class,
             EmployeeSeeder::class,
+            LegislationSeeder::class,
+            StandardApplicationSeeder::class,
         ]);
     }
 }

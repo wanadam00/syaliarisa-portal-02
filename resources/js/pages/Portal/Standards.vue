@@ -4,7 +4,7 @@
     <AppLayout2>
         <section class="bg-[#2262ae] dark:bg-background dark:border-b py-12 text-white pt-32">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 dark:text-white">Standards Application</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 dark:text-white">Standards</h1>
             </div>
         </section>
 
@@ -26,14 +26,12 @@
 import { Head, usePage } from '@inertiajs/vue3';
 import AppLayout2 from '@/layouts/AppLayout2.vue';
 
-interface AboutUsStandard {
-    id: number;
+interface Standard {
     title: string;
     description: string;
-    logo: string | null;
-    link: string | null;
 }
 
-const { aboutUsStandards } = usePage().props as unknown as { aboutUsStandards: AboutUsStandard[] };
-const standards = aboutUsStandards.filter(a => a.title.toLowerCase());
+const { standards } = usePage().props as unknown as {
+    standards: Standard[];
+};
 </script>

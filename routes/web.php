@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\AboutUsContentController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ContactInfoController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\LegislationController;
+use App\Http\Controllers\Admin\StandardApplicationController;
 use App\Http\Controllers\Portal\CompanyPortalController;
 
 use Inertia\Inertia;
@@ -15,9 +17,9 @@ use Inertia\Inertia;
 //     return Inertia::render('Welcome');
 // })->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
@@ -35,13 +37,6 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/company-info/{companyInfo}/edit', [CompanyInfoController::class, 'edit'])->name('admin.company-info.edit');
     Route::put('/company-info/{companyInfo}', [CompanyInfoController::class, 'update'])->name('admin.company-info.update');
     Route::delete('/company-info/{companyInfo}', [CompanyInfoController::class, 'destroy'])->name('admin.company-info.destroy');
-    // About Us
-    Route::get('/about-us', [AboutUsContentController::class, 'index'])->name('admin.about-us-contents.index');
-    Route::get('/about-us/create', [AboutUsContentController::class, 'create'])->name('admin.about-us-contents.create');
-    Route::post('/about-us', [AboutUsContentController::class, 'store'])->name('admin.about-us-contents.store');
-    Route::get('/about-us/{aboutUsContent}/edit', [AboutUsContentController::class, 'edit'])->name('admin.about-us-contents.edit');
-    Route::put('/about-us/{aboutUsContent}', [AboutUsContentController::class, 'update'])->name('admin.about-us-contents.update');
-    Route::delete('/about-us/{aboutUsContent}', [AboutUsContentController::class, 'destroy'])->name('admin.about-us-contents.destroy');
     // Services
     Route::get('/services', [ServiceController::class, 'index'])->name('admin.services.index');
     Route::get('/services/create', [ServiceController::class, 'create'])->name('admin.services.create');
@@ -63,20 +58,35 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/contact/{contactInfo}/edit', [ContactInfoController::class, 'edit'])->name('admin.contact-info.edit');
     Route::put('/contact/{contactInfo}', [ContactInfoController::class, 'update'])->name('admin.contact-info.update');
     Route::delete('/contact/{contactInfo}', [ContactInfoController::class, 'destroy'])->name('admin.contact-info.destroy');
+    // Legislations
+    Route::get('/legislations', [LegislationController::class, 'index'])->name('admin.legislations.index');
+    Route::get('/legislations/create', [LegislationController::class, 'create'])->name('admin.legislations.create');
+    Route::post('/legislations', [LegislationController::class, 'store'])->name('admin.legislations.store');
+    Route::get('/legislations/{legislation}/edit', [LegislationController::class, 'edit'])->name('admin.legislations.edit');
+    Route::put('/legislations/{legislation}', [LegislationController::class, 'update'])->name('admin.legislations.update');
+    Route::delete('/legislations/{legislation}', [LegislationController::class, 'destroy'])->name('admin.legislations.destroy');
+
+    // Standard Applications
+    Route::get('/standard-applications', [StandardApplicationController::class, 'index'])->name('admin.standard-applications.index');
+    Route::get('/standard-applications/create', [StandardApplicationController::class, 'create'])->name('admin.standard-applications.create');
+    Route::post('/standard-applications', [StandardApplicationController::class, 'store'])->name('admin.standard-applications.store');
+    Route::get('/standard-applications/{standardApplication}/edit', [StandardApplicationController::class, 'edit'])->name('admin.standard-applications.edit');
+    Route::put('/standard-applications/{standardApplication}', [StandardApplicationController::class, 'update'])->name('admin.standard-applications.update');
+    Route::delete('/standard-applications/{standardApplication}', [StandardApplicationController::class, 'destroy'])->name('admin.standard-applications.destroy');
 });
 
-// Route::prefix('company')->group(function () {
-Route::get('/', [CompanyPortalController::class, 'home'])->name('portal.home');
-Route::get('/company-info', [CompanyPortalController::class, 'companyInfo'])->name('portal.company-info');
-Route::get('/about-us/organization', [CompanyPortalController::class, 'aboutUsOrganization'])->name('portal.about-us.organization');
-Route::get('/about-us/standards', [CompanyPortalController::class, 'aboutUsStandards'])->name('portal.about-us.standards');
-Route::get('/about-us/legislation', [CompanyPortalController::class, 'aboutUsLegislation'])->name('portal.about-us.legislation');
-Route::get('/services/health-safety', [CompanyPortalController::class, 'servicesHealthSafety'])->name('portal.services.health-safety');
-Route::get('/services/training', [CompanyPortalController::class, 'servicesTraining'])->name('portal.services.training');
-Route::get('/services/engineering', [CompanyPortalController::class, 'servicesEngineering'])->name('portal.services.engineering');
-Route::get('/services/environmental', [CompanyPortalController::class, 'servicesEnvironmental'])->name('portal.services.environmental');
-Route::get('/contact', [CompanyPortalController::class, 'contact'])->name('portal.contact');
-// });
+Route::prefix('/')->group(function () {
+    Route::get('/', [CompanyPortalController::class, 'home'])->name('portal.home');
+    Route::get('/about-us/company-info', [CompanyPortalController::class, 'companyInfo'])->name('portal.company-info');
+    Route::get('/about-us/organization', [CompanyPortalController::class, 'aboutUsOrganization'])->name('portal.about-us.organization');
+    Route::get('/about-us/standards', [CompanyPortalController::class, 'aboutUsStandards'])->name('portal.about-us.standards');
+    Route::get('/about-us/legislation', [CompanyPortalController::class, 'aboutUsLegislation'])->name('portal.about-us.legislation');
+    Route::get('/services/health-safety', [CompanyPortalController::class, 'servicesHealthSafety'])->name('portal.services.health-safety');
+    Route::get('/services/training', [CompanyPortalController::class, 'servicesTraining'])->name('portal.services.training');
+    Route::get('/services/engineering', [CompanyPortalController::class, 'servicesEngineering'])->name('portal.services.engineering');
+    Route::get('/services/environmental', [CompanyPortalController::class, 'servicesEnvironmental'])->name('portal.services.environmental');
+    Route::get('/contact-us', [CompanyPortalController::class, 'contact'])->name('portal.contact');
+});
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

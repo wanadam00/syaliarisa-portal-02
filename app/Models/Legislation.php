@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-
-class AboutUsContent extends Model
+class Legislation extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'section',
         'title',
-        'content',
+        'description',
+        'type',
+        'details',
+        'image',
+        'link',
         'is_visible',
     ];
 }
