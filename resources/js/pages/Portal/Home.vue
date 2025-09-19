@@ -53,14 +53,14 @@ const {
 
             <!-- Content container -->
             <div class="container mx-auto px-4 py-20 relative z-10 text-white">
-                <div class="max-w-2xl p-8 rounded-lg">
-                    <h1 class="text-5xl font-bold mb-6">Expert Environmental & Safety Consulting</h1>
+                <div class="max-w-3xl p-8 rounded-lg">
+                    <h1 class="text-5xl font-bold mb-6">Expert Safety Consulting & Environmental Monitoring</h1>
                     <p class="text-xl mb-8">
                         {{ homeSections[0]?.top_details }}
                     </p>
                     <div class="flex flex-wrap gap-4">
-                        <a href="#contact"
-                            class="bg-secondary hover:bg-primary text-white font-medium px-6 py-3 rounded transition">
+                        <a href="/contact-us"
+                            class="bg-[#2262ae] hover:bg-white hover:text-primary text-white font-medium px-6 py-3 rounded transition">
                             Get a Consultation
                         </a>
                         <a href="#services"
@@ -83,16 +83,62 @@ const {
 
                 <div class="overflow-x-auto">
                     <div class="flex space-x-6 pb-4">
-                        <div v-for="service in services.filter(s => s.is_visible)" :key="service.title"
+                        <!-- Health & Safety -->
+                        <div
+                            class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col">
+                            <div
+                                class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                <i class="bi bi-shield"></i>
+                            </div>
+                            <h3 class="text-xl font-medium mb-3">Health & Safety</h3>
+                            <p class="mb-5 flex-grow">Explore our professional Health & Safety solutions.</p>
+                            <a href="/services/health-safety"
+                                class="inline-block border border-primary text-primary hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
+                                Learn More
+                            </a>
+                        </div>
+
+                        <!-- Training -->
+                        <div
+                            class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col">
+                            <div
+                                class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                <i class="bi bi-book"></i>
+                            </div>
+                            <h3 class="text-xl font-medium mb-3">Training</h3>
+                            <p class="mb-5 flex-grow">Comprehensive training programs for your team.</p>
+                            <a href="/services/training"
+                                class="inline-block border border-primary text-primary hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
+                                Learn More
+                            </a>
+                        </div>
+
+                        <!-- Engineering -->
+                        <div
                             class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col">
                             <div
                                 class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
                                 <i class="bi bi-gear"></i>
                             </div>
-                            <h3 class="text-xl font-medium mb-3">{{ service.title }}</h3>
-                            <p class="mb-5 flex-grow">{{ service.summary }}</p>
-                            <a :href="'/services/' + service.type"
-                                class="inline-block border border-primary text-primary hover:bg-primary hover:text-white px-4 py-2 rounded transition">
+                            <h3 class="text-xl font-medium mb-3">Engineering</h3>
+                            <p class="mb-5 flex-grow">Innovative engineering solutions tailored to your needs.</p>
+                            <a href="/services/engineering"
+                                class="inline-block border border-primary text-primary hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
+                                Learn More
+                            </a>
+                        </div>
+
+                        <!-- Environmental -->
+                        <div
+                            class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col">
+                            <div
+                                class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                <i class="bi bi-tree"></i>
+                            </div>
+                            <h3 class="text-xl font-medium mb-3">Environmental</h3>
+                            <p class="mb-5 flex-grow">Sustainable environmental solutions for your business.</p>
+                            <a href="/services/environmental"
+                                class="inline-block border border-primary text-primary hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
                                 Learn More
                             </a>
                         </div>
@@ -112,8 +158,8 @@ const {
                     </h2>
                     <p class="text-xl mb-4">{{ homeSections[0]?.bottom_details }}</p>
                     <!-- <p class="mb-4">{{ companyInfo[0]?.mission }}</p> -->
-                    <a href="/company-info"
-                        class="inline-block bg-primary hover:bg-secondary text-white font-medium px-6 py-3 rounded transition">
+                    <a href="/about-us/company-info"
+                        class="inline-block bg-[#2262ae] hover:bg-secondary hover:text-primary text-white font-medium px-6 py-3 rounded transition">
                         Learn More About Us
                     </a>
                 </div>

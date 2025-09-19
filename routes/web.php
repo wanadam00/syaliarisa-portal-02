@@ -86,6 +86,7 @@ Route::prefix('/')->group(function () {
     Route::get('/services/engineering', [CompanyPortalController::class, 'servicesEngineering'])->name('portal.services.engineering');
     Route::get('/services/environmental', [CompanyPortalController::class, 'servicesEnvironmental'])->name('portal.services.environmental');
     Route::get('/contact-us', [CompanyPortalController::class, 'contact'])->name('portal.contact');
+    Route::post('/customers', [CompanyPortalController::class, 'submitCustomerForm'])->name('portal.customers.submit');
 });
 
 require __DIR__ . '/settings.php';

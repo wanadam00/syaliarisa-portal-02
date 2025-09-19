@@ -5,18 +5,23 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\StandardApplication;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class StandardApplicationController extends Controller
 {
     public function index()
     {
         $standardApplications = StandardApplication::all();
-        return view('admin.standard_applications.index', compact('standardApplications'));
+        // return route('admin.standard-applications.index', compact('standardApplications'));
+        return Inertia::render('Admin/StandardApplication/Index', [
+            'standardApplications' => $standardApplications,
+        ]);
     }
 
     public function create()
     {
-        return view('admin.standard_applications.create');
+        // return route('admin.standard-applications.create');
+        return Inertia::render('Admin/StandardApplication/Create');
     }
 
     public function store(Request $request)
@@ -30,17 +35,20 @@ class StandardApplicationController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            $validated['logo'] = $request->file('logo')->store('standard_applications', 'public');
+            $validated['logo'] = $request->file('logo')->store('standard-applications', 'public');
         }
 
         StandardApplication::create($validated);
 
-        return redirect()->route('admin.standard_applications.index')->with('success', 'Standard Application created successfully.');
+        return redirect()->route('admin.standard-applications.index')->with('success', 'Standard Application created successfully.');
     }
 
     public function edit(StandardApplication $standardApplication)
     {
-        return view('admin.standard_applications.edit', compact('standardApplication'));
+        // return route('admin.standard-applications.edit', compact('standardApplication'));
+        return Inertia::render('Admin/StandardApplication/Edit', [
+            'standardApplication' => $standardApplication,
+        ]);
     }
 
     public function update(Request $request, StandardApplication $standardApplication)
@@ -54,18 +62,18 @@ class StandardApplicationController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            $validated['logo'] = $request->file('logo')->store('standard_applications', 'public');
+            $validated['logo'] = $request->file('logo')->store('standard-applications', 'public');
         }
 
         $standardApplication->update($validated);
 
-        return redirect()->route('admin.standard_applications.index')->with('success', 'Standard Application updated successfully.');
+        return redirect()->route('admin.standard-applications.index')->with('success', 'Standard Application updated successfully.');
     }
 
     public function destroy(StandardApplication $standardApplication)
     {
         $standardApplication->delete();
 
-        return redirect()->route('admin.standard_applications.index')->with('success', 'Standard Application deleted successfully.');
+        return redirect()->route('admin.standard-applications.index')->with('success', 'Standard Application deleted successfully.');
     }
 }

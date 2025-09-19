@@ -42,7 +42,7 @@
                             <a href="/about-us/standards"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 transition-colors">Standards</a>
                             <a href="/about-us/legislation"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 transition-colors">Legislation</a>
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 transition-colors">Legislations</a>
                         </div>
                     </div>
 

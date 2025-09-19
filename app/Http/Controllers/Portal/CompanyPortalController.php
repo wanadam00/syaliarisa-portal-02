@@ -11,7 +11,9 @@ use App\Models\HomeSection;
 use App\Models\Employee;
 use App\Models\StandardApplication;
 use App\Models\Legislation;
+use App\Models\Customer;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class CompanyPortalController extends Controller
 {
@@ -140,5 +142,20 @@ class CompanyPortalController extends Controller
         return Inertia::render('Portal/Contact', [
             'contactInfo' => $contactInfo,
         ]);
+    }
+
+    public function submitCustomerForm(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        Customer::create($validatedData);
+
+        // return response()->json(['message' => 'Your message has been sent successfully!'], 200);
+        return redirect()->back()->with('success', 'Your message has been sent successfully!');
     }
 }

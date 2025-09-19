@@ -5,18 +5,23 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Legislation;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class LegislationController extends Controller
 {
     public function index()
     {
         $legislations = Legislation::all();
-        return view('admin.legislations.index', compact('legislations'));
+        // return route('admin.legislations.index', compact('legislations'));
+        return Inertia::render('Admin/Legislation/Index', [
+            'legislations' => $legislations,
+        ]);
     }
 
     public function create()
     {
-        return view('admin.legislations.create');
+        // return route('admin.legislations.create');
+        return Inertia::render('Admin/Legislation/Create');
     }
 
     public function store(Request $request)
@@ -42,7 +47,10 @@ class LegislationController extends Controller
 
     public function edit(Legislation $legislation)
     {
-        return view('admin.legislations.edit', compact('legislation'));
+        // return route('admin.legislations.edit', compact('legislation'));
+        return Inertia::render('Admin/Legislation/Edit', [
+            'legislation' => $legislation,
+        ]);
     }
 
     public function update(Request $request, Legislation $legislation)

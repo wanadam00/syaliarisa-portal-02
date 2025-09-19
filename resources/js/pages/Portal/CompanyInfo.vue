@@ -46,12 +46,16 @@ const leadershipTeam = computed(() =>
 
     <Head title="Company Info" />
     <AppLayout2>
-        <!-- Page Header -->
+        <!-- Hero Section -->
         <section class="bg-[#2262ae] dark:bg-background dark:border-b py-12 text-white pt-32">
             <div class="container mx-auto px-4 text-center">
                 <h1
-                    class="text-4xl md:text-5xl font-bold mb-4  dark:text-white dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">
-                    Company Information</h1>
+                    class="text-4xl md:text-5xl font-bold mb-4 dark:text-white dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">
+                    Company Information
+                </h1>
+                <p class="text-lg opacity-90">
+                    Discover our vision, mission, and organizational values.
+                </p>
             </div>
         </section>
 
@@ -81,73 +85,53 @@ const leadershipTeam = computed(() =>
                     </div>
 
                     <!-- Team Structure -->
-                    <div>
+                    <div class="text-center mb-12">
                         <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Our Team Structure</h2>
-                        <p class="mb-6 text-gray-700 dark:text-gray-300">Syaliarisa Services is built on a
-                            foundation of
-                            experienced professionals dedicated to environmental, health, and safety excellence.</p>
 
                         <!-- Leadership Team -->
-                        <div class="mb-12" v-if="leadershipTeam.length > 0">
-                            <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Leadership Team</h3>
-                            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                <div v-for="member in leadershipTeam" :key="member.id"
-                                    class="bg-white dark:bg-background p-6 rounded-lg shadow-md dark:shadow-white border border-gray-100 dark:border-white text-center">
-                                    <div
-                                        class="aspect-square bg-black dark:bg-white rounded-full w-32 mx-auto mb-4 overflow-hidden">
-                                        <img v-if="member.photo" :src="member.photo" :alt="member.name"
-                                            class="w-full h-full object-cover">
-                                        <div v-else
-                                            class="w-full h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
-                                            <svg class="size-24 text-gray-800 dark:text-white fill-white dark:fill-black"
-                                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                                height="24" viewBox="0 0 24 24">
-                                                <path fill-rule="evenodd"
-                                                    d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
+                        <div class="flex justify-center gap-8 mb-12">
+                            <div v-for="member in leadershipTeam" :key="member.id"
+                                class="flex flex-col items-center relative">
+                                <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-blue-600">
+                                    <img v-if="member.photo" :src="member.photo" :alt="member.name"
+                                        class="w-full h-full object-cover">
+                                    <div v-else
+                                        class="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
+                                        <i class="bi bi-person text-3xl"></i>
                                     </div>
-                                    <h4 class="text-xl font-medium mb-2 text-gray-900 dark:text-white">{{
-                                        member.name }}
-                                    </h4>
-                                    <p class="text-primary dark:text-white font-medium mb-2">{{ member.position }} </p>
-                                    <!-- <p class="text-gray-600 dark:text-gray-400 text-sm">Experienced professional in
-                                            their field</p> -->
                                 </div>
+                                <h4 class="mt-2 font-medium text-gray-900 dark:text-white">{{ member.name }}</h4>
+                                <p class="text-sm text-primary dark:text-white">{{ member.position }}</p>
                             </div>
                         </div>
 
                         <!-- Departments -->
-                        <div class="mb-8" v-if="departments.size > 0">
-                            <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Departments</h3>
-                            <div class="space-y-4">
-                                <div v-for="[dept, members] in departments" :key="dept"
-                                    class="border-l-4 border-[#2262ae] dark:border-white pl-4 py-2 bg-white dark:bg-background rounded-r-lg shadow-md dark:shadow-white">
-                                    <h4 class="text-xl font-medium text-gray-900 dark:text-white">{{ dept }}</h4>
-                                    <p class="text-gray-600 dark:text-gray-400 mb-3">Our {{ dept.toLowerCase() }}
-                                        team
-                                        specializes in their respective fields.</p>
+                        <div class="flex justify-center gap-12 flex-wrap">
+                            <div v-for="[dept, members] in departments" :key="dept"
+                                class="flex flex-col items-center relative">
+                                <!-- Connector Line -->
+                                <div class="w-px h-8 bg-blue-600 mb-4"></div>
 
-                                    <div class="grid sm:grid-cols-2 gap-4 mt-3">
-                                        <div v-for="member in members" :key="member.id" class="flex items-center gap-3">
+                                <!-- Department Card -->
+                                <div
+                                    class="bg-white dark:bg-background rounded-lg p-4 shadow-md dark:shadow-white text-center min-w-[200px]">
+                                    <h4 class="font-semibold text-gray-900 dark:text-white mb-2">{{ dept }}</h4>
+                                    <div class="space-y-2">
+                                        <div v-for="member in members" :key="member.id"
+                                            class="flex flex-col items-center gap-1">
                                             <div
-                                                class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden flex-shrink-0">
+                                                class="w-12 h-12 rounded-full overflow-hidden border border-gray-200 dark:border-gray-600">
                                                 <img v-if="member.photo" :src="member.photo" :alt="member.name"
                                                     class="w-full h-full object-cover">
                                                 <div v-else
-                                                    class="w-full h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
+                                                    class="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
                                                     <i class="bi bi-person"></i>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <p class="font-medium text-gray-900 dark:text-white">{{ member.name
-                                                    }}
-                                                </p>
-                                                <p class="text-sm text-gray-600 dark:text-gray-400">{{
-                                                    member.position
-                                                    }}</p>
-                                            </div>
+                                            <p class="text-sm font-medium text-gray-900 dark:text-white">{{ member.name
+                                            }}</p>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">{{ member.position }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

@@ -1,16 +1,38 @@
 <script setup lang="ts">
 import { Head, usePage } from '@inertiajs/vue3';
 import AppLayout2 from '@/layouts/AppLayout2.vue';
+import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 
 interface ContactInfo {
     id: number;
     address: string;
     phone: string;
     email: string;
-    map_embed: Text;
+    is_visible: boolean;
 }
 
 const { contactInfo } = usePage().props as unknown as { contactInfo: ContactInfo[] };
+
+// Form state
+const form = useForm({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+});
+
+function submitForm() {
+    form.post('/customers', {
+        onSuccess: () => {
+            alert('Your message has been sent successfully!');
+            form.reset();
+        },
+        onError: () => {
+            alert('There was an error sending your message. Please try again.');
+        },
+    });
+}
 </script>
 
 <template>
@@ -22,7 +44,7 @@ const { contactInfo } = usePage().props as unknown as { contactInfo: ContactInfo
             <section class="bg-[#2262ae] dark:bg-background dark:border-b py-12 text-white pt-32">
                 <div class="container mx-auto px-4 text-center">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h1>
-                    <p class="text-xl text-blue-100 dark:text-gray-300 max-w-2xl mx-auto">
+                    <p class="text-lg text-blue-100 dark:text-gray-300">
                         We'd love to hear from you. Reach out to us through any of the channels below.
                     </p>
                 </div>
@@ -42,11 +64,11 @@ const { contactInfo } = usePage().props as unknown as { contactInfo: ContactInfo
                                         <!-- Address -->
                                         <div class="flex items-start gap-4">
                                             <div
-                                                class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center flex-shrink-0">
-                                                <i class="bi bi-geo-alt text-blue-600 dark:text-blue-400 text-xl"></i>
+                                                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
+                                                <i class="bi bi-geo-alt"></i>
                                             </div>
                                             <div>
-                                                <h3 class="font-semibold text-gray-900 dark:text-white">Address</h3>
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Address</h4>
                                                 <p class="text-gray-600 dark:text-gray-300">{{ info.address }}</p>
                                             </div>
                                         </div>
@@ -54,30 +76,24 @@ const { contactInfo } = usePage().props as unknown as { contactInfo: ContactInfo
                                         <!-- Phone -->
                                         <div class="flex items-start gap-4">
                                             <div
-                                                class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center flex-shrink-0">
-                                                <i class="bi bi-telephone text-blue-600 dark:text-blue-400 text-xl"></i>
+                                                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
+                                                <i class="bi bi-telephone"></i>
                                             </div>
                                             <div>
-                                                <h3 class="font-semibold text-gray-900 dark:text-white">Phone</h3>
-                                                <a :href="`tel:${info.phone}`"
-                                                    class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
-                                                    {{ info.phone }}
-                                                </a>
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Phone</h4>
+                                                <p class="text-gray-600 dark:text-gray-300">{{ info.phone }}</p>
                                             </div>
                                         </div>
 
                                         <!-- Email -->
                                         <div class="flex items-start gap-4">
                                             <div
-                                                class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center flex-shrink-0">
-                                                <i class="bi bi-envelope text-blue-600 dark:text-blue-400 text-xl"></i>
+                                                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
+                                                <i class="bi bi-envelope"></i>
                                             </div>
                                             <div>
-                                                <h3 class="font-semibold text-gray-900 dark:text-white">Email</h3>
-                                                <a :href="`mailto:${info.email}`"
-                                                    class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
-                                                    {{ info.email }}
-                                                </a>
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Email</h4>
+                                                <p class="text-gray-600 dark:text-gray-300">{{ info.email }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -114,39 +130,29 @@ const { contactInfo } = usePage().props as unknown as { contactInfo: ContactInfo
                             <div
                                 class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
                                 <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Send us a Message</h2>
-                                <form class="space-y-6">
-                                    <div class="grid md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label
-                                                class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">First
-                                                Name</label>
-                                            <input type="text"
-                                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
-                                        </div>
-                                        <div>
-                                            <label
-                                                class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Last
-                                                Name</label>
-                                            <input type="text"
-                                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
-                                        </div>
+                                <form @submit.prevent="submitForm" class="space-y-6">
+                                    <div>
+                                        <label
+                                            class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Name</label>
+                                        <input v-model="form.name" type="text"
+                                            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
                                     </div>
                                     <div>
                                         <label
                                             class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Email</label>
-                                        <input type="email"
+                                        <input v-model="form.email" type="email"
                                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
                                     </div>
                                     <div>
                                         <label
                                             class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Subject</label>
-                                        <input type="text"
+                                        <input v-model="form.subject" type="text"
                                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
                                     </div>
                                     <div>
                                         <label
                                             class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Message</label>
-                                        <textarea rows="4"
+                                        <textarea v-model="form.message" rows="4"
                                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"></textarea>
                                     </div>
                                     <button type="submit"
@@ -164,13 +170,11 @@ const { contactInfo } = usePage().props as unknown as { contactInfo: ContactInfo
                         <div
                             class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700">
                             <div class="aspect-video bg-gray-200 dark:bg-gray-700">
-                                <!-- Safely render Google Maps iframe from DB -->
-                                <div v-if="contactInfo[0]?.map_embed" class="w-full h-full">
-                                    <div v-html="contactInfo[0].map_embed"></div>
-                                </div>
-                                <div v-else class="flex items-center justify-center h-full">
-                                    <i class="bi bi-map text-4xl text-gray-400 dark:text-gray-500"></i>
-                                </div>
+                                <!-- Hardcoded Google Maps iframe -->
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.8841502568707!2d101.46685459999999!3d3.125323!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc512f9d5fa83b%3A0xcada717e2450a0cf!2sSyaliarisa%20Services%20Sdn%20Bhd%20%2F%20Syaliarisa%20Consultants!5e0!3m2!1sen!2smy!4v1755865606387!5m2!1sen!2smy"
+                                    width="1150" height="650" style="border:0;" allowfullscreen="true" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>

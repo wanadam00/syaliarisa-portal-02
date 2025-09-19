@@ -46,6 +46,16 @@ const mainNavItems: NavItem[] = [
     //     icon: BookText,
     // },
     {
+        title: 'Standards',
+        href: route('admin.standard-applications.index'),
+        icon: Briefcase,
+    },
+    {
+        title: 'Legislations',
+        href: route('admin.legislations.index'),
+        icon: Briefcase,
+    },
+    {
         title: 'Services',
         href: route('admin.services.index'),
         icon: Briefcase,

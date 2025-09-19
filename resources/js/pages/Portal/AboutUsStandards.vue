@@ -2,19 +2,50 @@
 
     <Head title="Standards" />
     <AppLayout2>
-        <section class="bg-[#2262ae] dark:bg-background dark:border-b py-12 text-white pt-32">
+        <!-- Hero Section -->
+        <section class="bg-[#2262ae] dark:bg-background py-12 text-white pt-32">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 dark:text-white">Standards Application</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Standards Application</h1>
+                <p class="text-lg opacity-90">Explore our recognized standards and guidelines</p>
             </div>
         </section>
 
+        <!-- Standards List -->
         <section class="py-16">
             <div class="container mx-auto px-4">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div v-for="standard in standards" :key="standard.title"
-                        class="bg-white dark:bg-background p-6 rounded-lg shadow-md">
-                        <h2 class="text-2xl font-bold mb-4 text-primary">{{ standard.title }}</h2>
-                        <p class="text-gray-700 dark:text-gray-300">{{ standard.description }}</p>
+                <div class="space-y-6">
+                    <div v-for="standard in standards" :key="standard.id"
+                        class="bg-white dark:bg-background rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 items-center">
+                        <h2 class="text-xl text-center font-bold text-primary dark:text-white mb-6">
+                            {{ standard.title }}
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Column 1: Logo -->
+                            <div class="flex justify-center md:justify-center">
+                                <div
+                                    class="w-20 h-20 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                                    <img v-if="standard.logo" :src="standard.logo" :alt="standard.title"
+                                        class="w-14 h-14 object-contain" />
+                                    <i v-else class="bi bi-file-earmark-text text-3xl text-gray-400"></i>
+                                </div>
+                            </div>
+
+                            <!-- Column 2: Title -->
+                            <!-- <div class="flex justify-center items-center text-center">
+                            <h2 class="text-xl font-bold text-primary dark:text-white">
+                                {{ standard.title }}
+                            </h2>
+                        </div> -->
+
+                            <!-- Column 3: Description + Link -->
+                            <div class="text-center md:text-center">
+                                <p class="text-gray-700 dark:text-gray-300 mb-3">{{ standard.description }}</p>
+                                <a v-if="standard.link" :href="standard.link" target="_blank"
+                                    class="inline-block px-4 py-2 bg-[#2262ae] text-white text-sm font-medium rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 transition">
+                                    View Standard
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -23,17 +54,20 @@
 </template>
 
 <script setup lang="ts">
-import { Head, usePage } from '@inertiajs/vue3';
-import AppLayout2 from '@/layouts/AppLayout2.vue';
+import { Head, usePage } from '@inertiajs/vue3'
+import AppLayout2 from '@/layouts/AppLayout2.vue'
 
 interface AboutUsStandard {
-    id: number;
-    title: string;
-    description: string;
-    logo: string | null;
-    link: string | null;
+    id: number
+    title: string
+    description: string
+    logo: string | null
+    link: string | null
 }
 
-const { aboutUsStandards } = usePage().props as unknown as { aboutUsStandards: AboutUsStandard[] };
-const standards = aboutUsStandards.filter(a => a.title.toLowerCase());
+const { aboutUsStandards } = usePage().props as unknown as {
+    aboutUsStandards: AboutUsStandard[]
+}
+
+const standards = aboutUsStandards
 </script>
