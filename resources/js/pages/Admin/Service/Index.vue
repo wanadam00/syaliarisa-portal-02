@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Link, usePage } from '@inertiajs/vue3';
+import { route } from 'ziggy-js'; // Corrected import for the route helper
 
 interface Service {
     id: number;

@@ -12,7 +12,14 @@ interface Employee {
 
 function deleteEmployee(id: number) {
     if (confirm('Are you sure you want to delete this employee?')) {
-        router.delete(`/admin/employees/${id}`);
+        router.delete(route('admin.employees.destroy', id), {
+            onSuccess: () => {
+                router.visit(route('admin.employees.index'));
+            },
+        });
+    } else {
+        // redirect back to index if cancel
+        router.visit(route('admin.employees.index'));
     }
 }
 
@@ -45,8 +52,8 @@ const { employees } = usePage().props as unknown as { employees: Employee[] };
                     <tbody class="text-gray-800 dark:text-gray-100 divide-y divide-gray-200 dark:divide-gray-700">
                         <tr v-for="employee in employees" :key="employee.id">
                             <td class="px-4 py-2">{{ employee.id }}</td>
-                            <td class="px-4 py-2">{{ employee.name }}</td>
-                            <td class="px-4 py-2">{{ employee.position }}</td>
+                            <td class="px-4 py-2 max-w-[200px] truncate">{{ employee.name }}</td>
+                            <td class="px-4 py-2 max-w-[200px] truncate">{{ employee.position }}</td>
                             <td class="px-4 py-2">
                                 <img v-if="employee.photo" :src="employee.photo" alt="Photo"
                                     class="h-10 w-10 rounded-full object-cover" />
@@ -63,13 +70,11 @@ const { employees } = usePage().props as unknown as { employees: Employee[] };
                                     class="inline-flex items-center px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded mr-2 transition">
                                     Edit
                                 </a>
-                                <form :action="`/admin/employees/${employee.id}`" method="POST" class="inline">
-                                    <input type="hidden" name="_method" value="DELETE" />
-                                    <button @click="deleteEmployee(employee.id)"
-                                        class="inline-flex items-center px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded transition">
-                                        Delete
-                                    </button>
-                                </form>
+
+                                <button @click="deleteEmployee(employee.id)"
+                                    class="inline-flex items-center px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded transition">
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     </tbody>

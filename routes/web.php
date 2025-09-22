@@ -49,7 +49,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/employees/create', [EmployeeController::class, 'create'])->name('admin.employees.create');
     Route::post('/employees', [EmployeeController::class, 'store'])->name('admin.employees.store');
     Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('admin.employees.edit');
-    Route::put('/employees/{employee}', [EmployeeController::class, 'update'])->name('admin.employees.update');
+    Route::post('/employees/{employee}', [EmployeeController::class, 'update'])->name('admin.employees.update');
     Route::delete('/employees/{employee}', [EmployeeController::class, 'destroy'])->name('admin.employees.destroy');
     // Contact Info
     Route::get('/contact', [ContactInfoController::class, 'index'])->name('admin.contact-info.index');

@@ -5,13 +5,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::all();
+        $employees = Employee::all()->map(function ($employee) {
+            $employee->photo = $employee->photo
+                ? asset('storage/' . $employee->photo)
+                : null;
+            return $employee;
+        });
+
         return Inertia::render('Admin/Employee/Index', [
             'employees' => $employees,
         ]);
@@ -27,9 +35,9 @@ class EmployeeController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'position' => 'required|string',
-            'department' => 'nullable|string',
-            'photo' => 'nullable|string',
-            'is_visible' => 'boolean',
+            'department' => 'required|string',
+            'photo' => 'required|string',
+            'is_visible' => 'nullable|boolean',
         ]);
         Employee::create($data);
         return redirect()->route('admin.employees.index')->with('success', 'Employee created successfully.');
@@ -45,14 +53,25 @@ class EmployeeController extends Controller
     public function update(Request $request, Employee $employee)
     {
         $data = $request->validate([
-            'name' => 'required|string',
-            'position' => 'required|string',
-            'department' => 'nullable|string',
-            'photo' => 'nullable|string',
-            'is_visible' => 'boolean',
+            'name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'department' => 'required|string|max:255',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'is_visible' => 'nullable|boolean',
         ]);
+
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('employees', 'public');
+            $data['photo'] = $path;
+        } else {
+            unset($data['photo']); // 🚀 prevents overwriting with null
+        }
+
         $employee->update($data);
-        return redirect()->route('admin.employees.index')->with('success', 'Employee updated successfully.');
+
+        return redirect()->route('admin.employees.index')
+            ->with('success', 'Employee updated successfully.');
     }
 
     public function destroy(Employee $employee)
