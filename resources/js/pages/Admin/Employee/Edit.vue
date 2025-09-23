@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 interface Employee {
     id: number;
@@ -21,9 +22,27 @@ const form = useForm({
     is_visible: employee.is_visible,
 });
 
+// 🖼️ preview state
+const preview = ref<string | null>(null);
+
+function handleFileChange(e: Event) {
+    const target = e.target as HTMLInputElement;
+    const file = target.files?.[0] || null;
+    form.photo = file;
+
+    if (file) {
+        preview.value = URL.createObjectURL(file); // Show preview
+    } else {
+        preview.value = null; // Reset if no file
+    }
+}
+
 function submit() {
     form.post(route('admin.employees.update', employee.id), {
         forceFormData: true, // 🔑 ensures file uploads
+        onSuccess: () => {
+            preview.value = null; // reset preview after successful update
+        }
     });
 }
 </script>
@@ -46,7 +65,7 @@ function submit() {
 
                 <!-- Department -->
                 <div class="flex flex-col space-y-1">
-                    <label for="department" class="font-medium">Deparment</label>
+                    <label for="department" class="font-medium">Department</label>
                     <input id="department" v-model="form.department" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.department" class="text-sm text-red-600">
@@ -57,8 +76,17 @@ function submit() {
                 <!-- Position -->
                 <div class="flex flex-col space-y-1">
                     <label for="position" class="font-medium">Position</label>
-                    <input id="position" v-model="form.position" type="text"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                    <select id="position" v-model="form.position"
+                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
+                        <option value="" disabled>-- Select Position --</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Assistant Manager">Assistant Manager</option>
+                        <option value="Chemist">Chemist</option>
+                        <option value="Admin Executive">Admin Executive</option>
+                        <option value="Environmental Executive">Environmental Executive</option>
+                        <option value="Field Executive">Field Executive</option>
+                        <option value="Field Technician">Field Technician</option>
+                    </select>
                     <span v-if="form.errors.position" class="text-sm text-red-600">
                         {{ form.errors.position }}
                     </span>
@@ -67,12 +95,21 @@ function submit() {
                 <!-- Photo Upload -->
                 <div class="flex flex-col space-y-1">
                     <label for="photo" class="font-medium">Photo</label>
-                    <input id="photo" type="file" accept="image/*"
-                        @change="e => form.photo = (e.target as HTMLInputElement).files?.[0] || null" />
+                    <input id="photo" type="file" accept="image/*" @change="handleFileChange"
+                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                     <div v-if="form.errors.photo" class="text-sm text-red-600">
                         {{ form.errors.photo }}
                     </div>
-                    <div v-if="employee.photo" class="mt-2">
+
+                    <!-- Show preview if new photo uploaded -->
+                    <div v-if="preview" class="mt-2">
+                        <p class="text-sm text-gray-500">New photo preview:</p>
+                        <img :src="preview" alt="New preview" class="h-20 rounded-md border" />
+                    </div>
+
+                    <!-- Otherwise show old photo -->
+                    <div v-else-if="employee.photo" class="mt-2">
+                        <p class="text-sm text-gray-500">Current photo:</p>
                         <img :src="`/storage/${employee.photo}`" alt="Employee photo" class="h-20 rounded-md border" />
                     </div>
                 </div>

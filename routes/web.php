@@ -28,21 +28,21 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/home/create', [HomeSectionController::class, 'create'])->name('admin.home-sections.create');
     Route::post('/home', [HomeSectionController::class, 'store'])->name('admin.home-sections.store');
     Route::get('/home/{homeSection}/edit', [HomeSectionController::class, 'edit'])->name('admin.home-sections.edit');
-    Route::put('/home/{homeSection}', [HomeSectionController::class, 'update'])->name('admin.home-sections.update');
+    Route::post('/home/{homeSection}', [HomeSectionController::class, 'update'])->name('admin.home-sections.update');
     Route::delete('/home/{homeSection}', [HomeSectionController::class, 'destroy'])->name('admin.home-sections.destroy');
     // Company Info
     Route::get('/company-info', [CompanyInfoController::class, 'index'])->name('admin.company-info.index');
     Route::get('/company-info/create', [CompanyInfoController::class, 'create'])->name('admin.company-info.create');
     Route::post('/company-info', [CompanyInfoController::class, 'store'])->name('admin.company-info.store');
     Route::get('/company-info/{companyInfo}/edit', [CompanyInfoController::class, 'edit'])->name('admin.company-info.edit');
-    Route::put('/company-info/{companyInfo}', [CompanyInfoController::class, 'update'])->name('admin.company-info.update');
+    Route::post('/company-info/{companyInfo}', [CompanyInfoController::class, 'update'])->name('admin.company-info.update');
     Route::delete('/company-info/{companyInfo}', [CompanyInfoController::class, 'destroy'])->name('admin.company-info.destroy');
     // Services
     Route::get('/services', [ServiceController::class, 'index'])->name('admin.services.index');
     Route::get('/services/create', [ServiceController::class, 'create'])->name('admin.services.create');
     Route::post('/services', [ServiceController::class, 'store'])->name('admin.services.store');
     Route::get('/services/{service}/edit', [ServiceController::class, 'edit'])->name('admin.services.edit');
-    Route::put('/services/{service}', [ServiceController::class, 'update'])->name('admin.services.update');
+    Route::post('/services/{service}', [ServiceController::class, 'update'])->name('admin.services.update');
     Route::delete('/services/{service}', [ServiceController::class, 'destroy'])->name('admin.services.destroy');
     // Employees
     Route::get('/employees', [EmployeeController::class, 'index'])->name('admin.employees.index');
@@ -56,14 +56,14 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/contact/create', [ContactInfoController::class, 'create'])->name('admin.contact-info.create');
     Route::post('/contact', [ContactInfoController::class, 'store'])->name('admin.contact-info.store');
     Route::get('/contact/{contactInfo}/edit', [ContactInfoController::class, 'edit'])->name('admin.contact-info.edit');
-    Route::put('/contact/{contactInfo}', [ContactInfoController::class, 'update'])->name('admin.contact-info.update');
+    Route::post('/contact/{contactInfo}', [ContactInfoController::class, 'update'])->name('admin.contact-info.update');
     Route::delete('/contact/{contactInfo}', [ContactInfoController::class, 'destroy'])->name('admin.contact-info.destroy');
     // Legislations
     Route::get('/legislations', [LegislationController::class, 'index'])->name('admin.legislations.index');
     Route::get('/legislations/create', [LegislationController::class, 'create'])->name('admin.legislations.create');
     Route::post('/legislations', [LegislationController::class, 'store'])->name('admin.legislations.store');
     Route::get('/legislations/{legislation}/edit', [LegislationController::class, 'edit'])->name('admin.legislations.edit');
-    Route::put('/legislations/{legislation}', [LegislationController::class, 'update'])->name('admin.legislations.update');
+    Route::post('/legislations/{legislation}', [LegislationController::class, 'update'])->name('admin.legislations.update');
     Route::delete('/legislations/{legislation}', [LegislationController::class, 'destroy'])->name('admin.legislations.destroy');
 
     // Standard Applications
@@ -71,7 +71,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/standard-applications/create', [StandardApplicationController::class, 'create'])->name('admin.standard-applications.create');
     Route::post('/standard-applications', [StandardApplicationController::class, 'store'])->name('admin.standard-applications.store');
     Route::get('/standard-applications/{standardApplication}/edit', [StandardApplicationController::class, 'edit'])->name('admin.standard-applications.edit');
-    Route::put('/standard-applications/{standardApplication}', [StandardApplicationController::class, 'update'])->name('admin.standard-applications.update');
+    Route::post('/standard-applications/{standardApplication}', [StandardApplicationController::class, 'update'])->name('admin.standard-applications.update');
     Route::delete('/standard-applications/{standardApplication}', [StandardApplicationController::class, 'destroy'])->name('admin.standard-applications.destroy');
 });
 

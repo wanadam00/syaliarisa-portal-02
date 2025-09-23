@@ -25,20 +25,31 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Employee $employee)
     {
-        return Inertia::render('Admin/Employee/Create');
+        return Inertia::render('Admin/Employee/Create', [
+            'employee' => $employee,
+        ]);
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string',
-            'position' => 'required|string',
-            'department' => 'required|string',
-            'photo' => 'required|string',
+            'name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'department' => 'required|string|max:255',
+            'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'is_visible' => 'nullable|boolean',
         ]);
+
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('employees', 'public');
+            $data['photo'] = $path;
+        } else {
+            unset($data['photo']); // 🚀 prevents overwriting with null
+        }
+
         Employee::create($data);
         return redirect()->route('admin.employees.index')->with('success', 'Employee created successfully.');
     }

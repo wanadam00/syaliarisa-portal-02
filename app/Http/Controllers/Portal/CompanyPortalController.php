@@ -62,7 +62,16 @@ class CompanyPortalController extends Controller
     public function companyInfo()
     {
         $companyInfo = CompanyInfo::first();
-        $employees = Employee::all();
+        $employees = Employee::all()->map(function ($employee) {
+            return [
+                'id' => $employee->id,
+                'name' => $employee->name,
+                'position' => $employee->position,
+                'department' => $employee->department,
+                'is_visible' => $employee->is_visible,
+                'photo' => $employee->photo_url, // send URL to frontend
+            ];
+        });
         return Inertia::render('Portal/CompanyInfo', [
             'companyInfo' => [
                 'background' => $companyInfo->background,

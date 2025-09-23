@@ -24,9 +24,9 @@ interface Service {
 
 interface HomeSection {
     top_details: string;
-    top_image: string;
+    top_image: string | null;
     bottom_details: string;
-    bottom_image: string;
+    bottom_image: string | null;
 }
 
 const {
@@ -48,8 +48,12 @@ const {
         <!-- Hero -->
         <section class="min-h-[80vh] flex items-center relative">
             <!-- Background image with dark overlay -->
-            <div class="absolute inset-0 bg-cover bg-center z-0 after:absolute after:inset-0 after:bg-black/60"
-                style="background-image: url('/images/banner-company.jpg')"></div>
+            <div class="absolute inset-0 bg-cover bg-center z-0 after:absolute after:inset-0 after:bg-black/60" :style="{
+                backgroundImage: `url(${homeSections[0]?.top_image
+                    ? '/storage/' + homeSections[0].top_image
+                    : '/images/banner-company.jpg'
+                    })`,
+            }"></div>
 
             <!-- Content container -->
             <div class="container mx-auto px-4 py-20 relative z-10 text-white">
@@ -151,7 +155,8 @@ const {
         <section id="about" class="py-16 bg-white dark:bg-gray-900">
             <div class="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-12">
                 <div class="lg:w-1/2">
-                    <img src="/images/banner-company.jpg" alt="About" class="rounded-lg shadow-md w-full" />
+                    <img :src="homeSections[0]?.bottom_image ? '/storage/' + homeSections[0].bottom_image : '/images/banner-company.jpg'"
+                        alt="About" class="rounded-lg shadow-md w-full max-h-100 object-cover" />
                 </div>
                 <div class="lg:w-1/2">
                     <h2 class="text-3xl font-bold mb-6 text-primary dark:text-secondary">About Syaliarisa Services
@@ -167,7 +172,7 @@ const {
         </section>
 
         <!-- Contact -->
-        <!-- <section id="contact" class="py-16 bg-primary text-white dark:bg-blue-800">
+        <section id="contact" class="py-16 bg-[#2262ae] text-white dark:bg-blue-800">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col lg:flex-row justify-between items-center">
                     <div class="lg:w-2/3 mb-8 lg:mb-0">
@@ -178,14 +183,13 @@ const {
                         </p>
                     </div>
                     <div class="lg:w-1/3 text-center lg:text-right">
-                        <a href="#contact"
+                        <a href="/contact-us"
                             class="inline-block bg-white hover:bg-gray-100 text-primary font-medium px-8 py-3 rounded transition">
                             Get Started
                         </a>
                     </div>
                 </div>
             </div>
-        </section> -->
-
+        </section>
     </AppLayout2>
 </template>

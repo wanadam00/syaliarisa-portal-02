@@ -23,10 +23,13 @@ const { companyInfo, employees } = usePage().props as unknown as {
     employees: Employee[];
 };
 
-// Group employees by department
+// Only employees that are visible
+const visibleEmployees = computed(() => employees.filter(e => e.is_visible));
+
+// Group employees by department but only visible ones
 const departments = computed(() => {
     const deptMap = new Map<string, Employee[]>();
-    employees.forEach(employee => {
+    visibleEmployees.value.forEach(employee => {
         if (!deptMap.has(employee.department)) {
             deptMap.set(employee.department, []);
         }
@@ -35,11 +38,30 @@ const departments = computed(() => {
     return deptMap;
 });
 
-// Filter leadership team (you might need to adjust this based on your data)
+// Leadership Team only visible
 const leadershipTeam = computed(() =>
-    employees.filter(e => e.position.toLowerCase().includes('chief') ||
-        e.position.toLowerCase().includes('director'))
+    visibleEmployees.value.filter(e =>
+        e.position.toLowerCase().includes('chief') ||
+        e.position.toLowerCase().includes('director')
+    )
 );
+
+// Organization hierarchy based on position
+const organization = computed(() => {
+    const findByPosition = (pos: string) =>
+        visibleEmployees.value.filter(e => e.position.toLowerCase() === pos.toLowerCase());
+
+    return {
+        manager: findByPosition("Manager"),
+        assistantManager: findByPosition("Assistant Manager"),
+        chemists: findByPosition("Chemist"),
+        adminExecutives: findByPosition("Admin Executive"),
+        environmentalExecutives: findByPosition("Environmental Executive"),
+        fieldExecutives: findByPosition("Field Executive"),
+        fieldTechnicians: findByPosition("Field Technician"),
+    };
+});
+
 </script>
 
 <template>
@@ -84,54 +106,131 @@ const leadershipTeam = computed(() =>
                         </div>
                     </div>
 
-                    <!-- Team Structure -->
+                    <!-- Organization Structure -->
                     <div class="text-center mb-12">
                         <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Our Team Structure</h2>
 
-                        <!-- Leadership Team -->
-                        <div class="flex justify-center gap-8 mb-12">
-                            <div v-for="member in leadershipTeam" :key="member.id"
-                                class="flex flex-col items-center relative">
-                                <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-blue-600">
-                                    <img v-if="member.photo" :src="member.photo" :alt="member.name"
-                                        class="w-full h-full object-cover">
+                        <!-- Manager -->
+                        <div v-for="manager in organization.manager" :key="manager.id"
+                            class="flex flex-col items-center">
+                            <!-- Manager -->
+                            <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-blue-600">
+                                <img v-if="manager.photo" :src="manager.photo" :alt="manager.name"
+                                    class="w-full h-full object-cover" />
+                                <div v-else
+                                    class="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-700">
+                                    <i class="bi bi-person text-3xl"></i>
+                                </div>
+                            </div>
+                            <h4 class="mt-2 font-medium text-gray-900 dark:text-white">{{ manager.name }}</h4>
+                            <p class="text-sm text-primary dark:text-white">{{ manager.position }}</p>
+
+                            <!-- Line down -->
+                            <div class="w-px h-8 bg-blue-600 my-4"></div>
+
+                            <!-- Assistant Manager -->
+                            <div v-for="am in organization.assistantManager" :key="am.id"
+                                class="flex flex-col items-center">
+                                <div class="w-28 h-28 rounded-full overflow-hidden border-2 border-green-600">
+                                    <img v-if="am.photo" :src="am.photo" :alt="am.name"
+                                        class="w-full h-full object-cover" />
                                     <div v-else
-                                        class="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
-                                        <i class="bi bi-person text-3xl"></i>
+                                        class="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-700">
+                                        <i class="bi bi-person text-2xl"></i>
                                     </div>
                                 </div>
-                                <h4 class="mt-2 font-medium text-gray-900 dark:text-white">{{ member.name }}</h4>
-                                <p class="text-sm text-primary dark:text-white">{{ member.position }}</p>
-                            </div>
-                        </div>
+                                <h4 class="mt-2 font-medium text-gray-900 dark:text-white">{{ am.name }}</h4>
+                                <p class="text-sm text-primary dark:text-white">{{ am.position }}</p>
 
-                        <!-- Departments -->
-                        <div class="flex justify-center gap-12 flex-wrap">
-                            <div v-for="[dept, members] in departments" :key="dept"
-                                class="flex flex-col items-center relative">
-                                <!-- Connector Line -->
-                                <div class="w-px h-8 bg-blue-600 mb-4"></div>
-
-                                <!-- Department Card -->
-                                <div
-                                    class="bg-white dark:bg-background rounded-lg p-4 shadow-md dark:shadow-white text-center min-w-[200px]">
-                                    <h4 class="font-semibold text-gray-900 dark:text-white mb-2">{{ dept }}</h4>
-                                    <div class="space-y-2">
-                                        <div v-for="member in members" :key="member.id"
-                                            class="flex flex-col items-center gap-1">
-                                            <div
-                                                class="w-12 h-12 rounded-full overflow-hidden border border-gray-200 dark:border-gray-600">
-                                                <img v-if="member.photo" :src="member.photo" :alt="member.name"
-                                                    class="w-full h-full object-cover">
-                                                <div v-else
-                                                    class="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
-                                                    <i class="bi bi-person"></i>
-                                                </div>
+                                <!-- Under Assistant Manager -->
+                                <div class="flex justify-center gap-8 mt-6 flex-wrap">
+                                    <!-- Chemist -->
+                                    <div v-for="c in organization.chemists" :key="c.id"
+                                        class="flex flex-col items-center">
+                                        <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-purple-600">
+                                            <img v-if="c.photo" :src="c.photo" class="w-full h-full object-cover" />
+                                            <div v-else
+                                                class="w-full h-full flex items-center justify-center bg-gray-200">
+                                                <i class="bi bi-person"></i>
                                             </div>
-                                            <p class="text-sm font-medium text-gray-900 dark:text-white">{{ member.name
-                                            }}</p>
-                                            <p class="text-xs text-gray-600 dark:text-gray-400">{{ member.position }}
-                                            </p>
+                                        </div>
+                                        <p class="text-sm mt-1 text-gray-900 dark:text-white">{{ c.name }}</p>
+                                        <p class="text-xs text-gray-500">{{ c.position }}</p>
+                                    </div>
+
+                                    <!-- Admin Executive -->
+                                    <div v-for="ae in organization.adminExecutives" :key="ae.id"
+                                        class="flex flex-col items-center">
+                                        <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-orange-600">
+                                            <img v-if="ae.photo" :src="ae.photo" class="w-full h-full object-cover" />
+                                            <div v-else
+                                                class="w-full h-full flex items-center justify-center bg-gray-200">
+                                                <i class="bi bi-person"></i>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm mt-1 text-gray-900 dark:text-white">{{ ae.name }}</p>
+                                        <p class="text-xs text-gray-500">{{ ae.position }}</p>
+                                    </div>
+
+                                    <!-- Environmental Executive + Field Techs -->
+                                    <div v-for="ee in organization.environmentalExecutives" :key="ee.id"
+                                        class="flex flex-col items-center">
+                                        <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-teal-600">
+                                            <img v-if="ee.photo" :src="ee.photo" class="w-full h-full object-cover" />
+                                            <div v-else
+                                                class="w-full h-full flex items-center justify-center bg-gray-200">
+                                                <i class="bi bi-person"></i>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm mt-1 text-gray-900 dark:text-white">{{ ee.name }}</p>
+                                        <p class="text-xs text-gray-500">{{ ee.position }}</p>
+
+                                        <!-- Under Environmental Executive -->
+                                        <div class="mt-3 flex gap-4">
+                                            <div v-for="ft in organization.fieldTechnicians" :key="ft.id"
+                                                class="flex flex-col items-center">
+                                                <div
+                                                    class="w-16 h-16 rounded-full overflow-hidden border border-blue-400">
+                                                    <img v-if="ft.photo" :src="ft.photo"
+                                                        class="w-full h-full object-cover" />
+                                                    <div v-else
+                                                        class="w-full h-full flex items-center justify-center bg-gray-200">
+                                                        <i class="bi bi-person"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="text-xs mt-1 text-gray-900 dark:text-white">{{ ft.name }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Field Executives + Field Techs -->
+                                    <div v-for="fe in organization.fieldExecutives" :key="fe.id"
+                                        class="flex flex-col items-center">
+                                        <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-pink-600">
+                                            <img v-if="fe.photo" :src="fe.photo" class="w-full h-full object-cover" />
+                                            <div v-else
+                                                class="w-full h-full flex items-center justify-center bg-gray-200">
+                                                <i class="bi bi-person"></i>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm mt-1 text-gray-900 dark:text-white">{{ fe.name }}</p>
+                                        <p class="text-xs text-gray-500">{{ fe.position }}</p>
+
+                                        <!-- Under Field Executive -->
+                                        <div class="mt-3 flex gap-4">
+                                            <div v-for="ft in organization.fieldTechnicians" :key="'fe-' + ft.id"
+                                                class="flex flex-col items-center">
+                                                <div
+                                                    class="w-16 h-16 rounded-full overflow-hidden border border-blue-400">
+                                                    <img v-if="ft.photo" :src="ft.photo"
+                                                        class="w-full h-full object-cover" />
+                                                    <div v-else
+                                                        class="w-full h-full flex items-center justify-center bg-gray-200">
+                                                        <i class="bi bi-person"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="text-xs mt-1 text-gray-900 dark:text-white">{{ ft.name }}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
