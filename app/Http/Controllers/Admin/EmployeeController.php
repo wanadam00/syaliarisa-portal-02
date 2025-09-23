@@ -39,7 +39,7 @@ class EmployeeController extends Controller
             'position' => 'required|string|max:255',
             'department' => 'required|string|max:255',
             'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'is_visible' => 'nullable|boolean',
+            'is_visible' => 'boolean',
         ]);
 
         // Handle photo upload
@@ -68,7 +68,7 @@ class EmployeeController extends Controller
             'position' => 'required|string|max:255',
             'department' => 'required|string|max:255',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'is_visible' => 'nullable|boolean',
+            'is_visible' => 'boolean',
         ]);
 
         // Handle photo upload

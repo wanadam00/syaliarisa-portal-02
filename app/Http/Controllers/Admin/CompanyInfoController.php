@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CompanyInfo;
+use Faker\Provider\ar_EG\Company;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,26 +18,28 @@ class CompanyInfoController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(CompanyInfo $companyInfo)
     {
-        return Inertia::render('Admin/CompanyInfo/Create');
+        return Inertia::render('Admin/CompanyInfo/Create', [
+            'companyInfo' => $companyInfo,
+        ]);
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'background' => 'nullable|string',
-            'vision' => 'nullable|string',
-            'mission' => 'nullable|string',
+            'background' => 'required|string',
+            'vision' => 'required|string',
+            'mission' => 'required|string',
             'is_visible' => 'boolean',
         ]);
         CompanyInfo::create($data);
         return redirect()->route('admin.company-info.index')->with('success', 'Company info created successfully.');
     }
 
-    public function edit()
+    public function edit(CompanyInfo $companyInfo)
     {
-        $companyInfo = CompanyInfo::first();
+        // $companyInfo = CompanyInfo::first();
         return Inertia::render('Admin/CompanyInfo/Edit', [
             'companyInfo' => $companyInfo,
         ]);
@@ -45,9 +48,9 @@ class CompanyInfoController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'background' => 'nullable|string',
-            'vision' => 'nullable|string',
-            'mission' => 'nullable|string',
+            'background' => 'required|string',
+            'vision' => 'required|string',
+            'mission' => 'required|string',
             'is_visible' => 'boolean',
         ]);
         $companyInfo = CompanyInfo::first();
@@ -57,5 +60,11 @@ class CompanyInfoController extends Controller
             CompanyInfo::create($data);
         }
         return redirect()->route('admin.company-info.index')->with('success', 'Company info updated successfully.');
+    }
+
+    public function destroy(CompanyInfo $companyInfo)
+    {
+        $companyInfo->delete();
+        return redirect()->route('admin.company-info.index')->with('success', 'Company info deleted successfully.');
     }
 }

@@ -58,7 +58,11 @@ onBeforeUnmount(() => {
 
 function deleteSection(id: number) {
     if (confirm('Are you sure you want to delete this section?')) {
-        router.delete(route('admin.home-sections.destroy', id));
+        router.delete(route('admin.home-sections.destroy', id), {
+            onSuccess: () => {
+                router.visit(route('admin.home-sections.index'));
+            },
+        });
     }
 }
 
@@ -69,7 +73,7 @@ sections.forEach(s => (s.showMenu = false));
 <template>
     <AppLayout>
         <div class="p-6">
-            <h1 class="text-2xl font-bold mb-6">Home Sections Management</h1>
+            <h1 class="text-2xl font-bold mb-6">Home Management</h1>
 
             <!-- Create Button -->
             <div class="flex justify-end mb-4">

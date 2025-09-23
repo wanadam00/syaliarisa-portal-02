@@ -19,7 +19,7 @@ const form = useForm({
     position: employee.position ?? '',
     department: employee.department ?? '',
     photo: null as File | null,
-    is_visible: employee.is_visible,
+    is_visible: Boolean(employee.is_visible ?? true),
 });
 
 // 🖼️ preview state
@@ -116,7 +116,7 @@ function submit() {
 
                 <!-- Visible Checkbox -->
                 <div class="flex items-center space-x-2">
-                    <input id="is_visible" v-model="form.is_visible" type="checkbox" class="h-4 w-4 border rounded" />
+                    <input id="is_visible" v-model="form.is_visible" type="checkbox" class="h-4 w-4 border rounded text-blue-600" />
                     <label for="is_visible" class="font-medium">Visible</label>
                 </div>
 

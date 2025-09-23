@@ -19,7 +19,7 @@ const form = useForm({
     position: employee.position ?? '',
     department: employee.department ?? '',
     photo: null as File | null,
-    is_visible: employee.is_visible,
+    is_visible: Boolean(employee.is_visible ?? true),
 });
 
 // 🖼️ preview state
@@ -50,7 +50,7 @@ function submit() {
 <template>
     <AppLayout>
         <div class="p-6 max-w-2xl">
-            <h1 class="text-2xl font-bold mb-6">Edit Employee</h1>
+            <h1 class="text-2xl font-bold mb-6">Create Employee</h1>
 
             <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                 <!-- Name -->

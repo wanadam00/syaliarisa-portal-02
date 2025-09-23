@@ -64,7 +64,7 @@ function submit() {
 <template>
     <AppLayout>
         <div class="p-6 max-w-2xl">
-            <h1 class="text-2xl font-bold mb-6">Edit Employee</h1>
+            <h1 class="text-2xl font-bold mb-6">Create Home</h1>
 
             <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                 <!-- Top Deatils -->
