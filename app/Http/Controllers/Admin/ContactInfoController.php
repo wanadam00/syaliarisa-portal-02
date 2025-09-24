@@ -17,27 +17,29 @@ class ContactInfoController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(ContactInfo $contactInfo)
     {
-        return Inertia::render('Admin/ContactInfo/Create');
+        return Inertia::render('Admin/ContactInfo/Create', [
+            'contactInfo' => $contactInfo,
+        ]);
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'address' => 'nullable|string',
-            'phone' => 'nullable|string',
-            'email' => 'nullable|string',
-            'map_embed' => 'nullable|string',
+            'address' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'required|string',
+            // 'map_embed' => 'nullable|string',
+            'business_hours' => 'required|string',
             'is_visible' => 'boolean',
         ]);
         ContactInfo::create($data);
         return redirect()->route('admin.contact-info.index')->with('success', 'Contact info created successfully.');
     }
 
-    public function edit()
+    public function edit(ContactInfo $contactInfo)
     {
-        $contactInfo = ContactInfo::first();
         return Inertia::render('Admin/ContactInfo/Edit', [
             'contactInfo' => $contactInfo,
         ]);
@@ -46,10 +48,11 @@ class ContactInfoController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'address' => 'nullable|string',
-            'phone' => 'nullable|string',
-            'email' => 'nullable|string',
-            'map_embed' => 'nullable|string',
+            'address' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'required|string',
+            // 'map_embed' => 'nullable|string',
+            'business_hours' => 'required|string',
             'is_visible' => 'boolean',
         ]);
         $contactInfo = ContactInfo::first();
@@ -59,5 +62,11 @@ class ContactInfoController extends Controller
             ContactInfo::create($data);
         }
         return redirect()->route('admin.contact-info.index')->with('success', 'Contact info updated successfully.');
+    }
+
+    public function destroy(ContactInfo $contactInfo)
+    {
+        $contactInfo->delete();
+        return redirect()->route('admin.contact-info.index')->with('success', 'Contact info deleted successfully.');
     }
 }

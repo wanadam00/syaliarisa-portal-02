@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 
 
 class Service extends Model
@@ -19,4 +20,16 @@ class Service extends Model
         'link',
         'is_visible',
     ];
+
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        return $this->image ? Storage::url($this->image) : null;
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ServiceImage::class);
+    }
 }

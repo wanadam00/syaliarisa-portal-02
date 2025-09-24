@@ -10,10 +10,10 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['health_safety', 'training', 'engineering', 'environmental']);
-            $table->string('title');
-            $table->text('summary');
-            $table->longText('details');
+            $table->string('type')->nullable();
+            $table->string('title')->nullable();
+            $table->text('summary')->nullable();
+            $table->longText('details')->nullable();
             $table->string('image')->nullable();
             $table->string('link')->nullable();
             $table->boolean('is_visible')->default(true);

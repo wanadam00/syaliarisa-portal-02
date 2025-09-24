@@ -35,6 +35,7 @@ class CompanyPortalController extends Controller
                 'is_visible',
             ]),
             'homeSections' => HomeSection::all([
+                'title',
                 'top_details',
                 'top_image',
                 'bottom_details',
@@ -98,16 +99,28 @@ class CompanyPortalController extends Controller
 
     public function aboutUsStandards()
     {
-        $standards = StandardApplication::all();
-        // dd($standards);
+        $standards = StandardApplication::all()->map(function ($standard) {
+            $standard->logo = $standard->logo
+                ? asset('storage/' . $standard->logo) // if using storage/app/public
+                : null;
+            return $standard;
+        });
+
         return Inertia::render('Portal/AboutUsStandards', [
             'aboutUsStandards' => $standards,
         ]);
     }
 
+
     public function aboutUsLegislation()
     {
-        $legislations = Legislation::all();
+        $legislations = Legislation::all()->map(function ($legislation) {
+            $legislation->image = $legislation->image
+                ? asset('storage/' . $legislation->image)
+                : null;
+            return $legislation;
+        });
+
         return Inertia::render('Portal/AboutUsLegislation', [
             'aboutUsLegislations' => $legislations,
         ]);
@@ -115,7 +128,14 @@ class CompanyPortalController extends Controller
 
     public function servicesHealthSafety()
     {
-        $services = Service::all();
+        $services = Service::with('images')->get()->map(function ($service) {
+            $service->images = $service->images->map(function ($image) {
+                $image->url = url('storage/' . $image->url); // Ensure full URL is generated
+                return $image;
+            });
+            return $service;
+        });
+
         return Inertia::render('Portal/ServicesHealthSafety', [
             'services' => $services,
         ]);
@@ -123,7 +143,14 @@ class CompanyPortalController extends Controller
 
     public function servicesTraining()
     {
-        $services = Service::all();
+        $services = Service::with('images')->get()->map(function ($service) {
+            $service->images = $service->images->map(function ($image) {
+                $image->url = url('storage/' . $image->url); // Ensure full URL is generated
+                return $image;
+            });
+            return $service;
+        });
+
         return Inertia::render('Portal/ServicesTraining', [
             'services' => $services,
         ]);
@@ -131,7 +158,14 @@ class CompanyPortalController extends Controller
 
     public function servicesEngineering()
     {
-        $services = Service::all();
+        $services = Service::with('images')->get()->map(function ($service) {
+            $service->images = $service->images->map(function ($image) {
+                $image->url = url('storage/' . $image->url); // Ensure full URL is generated
+                return $image;
+            });
+            return $service;
+        });
+
         return Inertia::render('Portal/ServicesEngineering', [
             'services' => $services,
         ]);
@@ -139,7 +173,14 @@ class CompanyPortalController extends Controller
 
     public function servicesEnvironmental()
     {
-        $services = Service::all();
+        $services = Service::with('images')->get()->map(function ($service) {
+            $service->images = $service->images->map(function ($image) {
+                $image->url = url('storage/' . $image->url); // Ensure full URL is generated
+                return $image;
+            });
+            return $service;
+        });
+
         return Inertia::render('Portal/ServicesEnvironmental', [
             'services' => $services,
         ]);

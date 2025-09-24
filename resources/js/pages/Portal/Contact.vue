@@ -9,6 +9,7 @@ interface ContactInfo {
     address: string;
     phone: string;
     email: string;
+    business_hours: string | null;
     is_visible: boolean;
 }
 
@@ -33,6 +34,30 @@ function submitForm() {
         },
     });
 }
+
+// Function to parse and format business hours
+const formatBusinessHours = (hoursHtml: string | null) => {
+    if (!hoursHtml) return [];
+
+    try {
+        // Remove HTML tags and split by line breaks
+        const plainText = hoursHtml.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '');
+        const lines = plainText.split('\n').filter(line => line.trim());
+
+        return lines.map(line => {
+            const parts = line.split(':');
+            if (parts.length >= 2) {
+                return {
+                    day: parts[0].trim(),
+                    time: parts.slice(1).join(':').trim()
+                };
+            }
+            return { day: line.trim(), time: '' };
+        });
+    } catch {
+        return [];
+    }
+};
 </script>
 
 <template>
@@ -81,7 +106,9 @@ function submitForm() {
                                             </div>
                                             <div>
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Phone</h4>
-                                                <p class="text-gray-600 dark:text-gray-300">{{ info.phone }}</p>
+                                                <a :href="`tel:${info.phone}`"
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors">{{
+                                                    info.phone }}</a>
                                             </div>
                                         </div>
 
@@ -93,7 +120,9 @@ function submitForm() {
                                             </div>
                                             <div>
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Email</h4>
-                                                <p class="text-gray-600 dark:text-gray-300">{{ info.email }}</p>
+                                                <a :href="`mailto:${info.email}`"
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors">{{
+                                                    info.email }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -105,20 +134,18 @@ function submitForm() {
                                 <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Business Hours</h3>
                                 <div
                                     class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-                                    <div class="space-y-2">
-                                        <div class="flex justify-between">
-                                            <span class="text-gray-600 dark:text-gray-300">Monday - Friday</span>
-                                            <span class="font-medium text-gray-900 dark:text-white">8:00 AM - 6:00
-                                                PM</span>
+                                    <div v-for="info in contactInfo" :key="info.id">
+                                        <div v-if="info.business_hours" class="space-y-3">
+                                            <div v-for="(slot, index) in formatBusinessHours(info.business_hours)"
+                                                :key="index"
+                                                class="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700 last:border-b-0">
+                                                <span class="font-medium text-gray-900 dark:text-white">{{ slot.day
+                                                    }}</span>
+                                                <span class="text-gray-600 dark:text-gray-300">{{ slot.time }}</span>
+                                            </div>
                                         </div>
-                                        <div class="flex justify-between">
-                                            <span class="text-gray-600 dark:text-gray-300">Saturday</span>
-                                            <span class="font-medium text-gray-900 dark:text-white">9:00 AM - 2:00
-                                                PM</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span class="text-gray-600 dark:text-gray-300">Sunday</span>
-                                            <span class="font-medium text-gray-900 dark:text-white">Closed</span>
+                                        <div v-else class="text-gray-500 dark:text-gray-400 italic">
+                                            Business hours not specified
                                         </div>
                                     </div>
                                 </div>
@@ -134,25 +161,25 @@ function submitForm() {
                                     <div>
                                         <label
                                             class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Name</label>
-                                        <input v-model="form.name" type="text"
+                                        <input v-model="form.name" type="text" required
                                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
                                     </div>
                                     <div>
                                         <label
                                             class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Email</label>
-                                        <input v-model="form.email" type="email"
+                                        <input v-model="form.email" type="email" required
                                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
                                     </div>
                                     <div>
                                         <label
                                             class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Subject</label>
-                                        <input v-model="form.subject" type="text"
+                                        <input v-model="form.subject" type="text" required
                                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
                                     </div>
                                     <div>
                                         <label
                                             class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Message</label>
-                                        <textarea v-model="form.message" rows="4"
+                                        <textarea v-model="form.message" rows="4" required
                                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"></textarea>
                                     </div>
                                     <button type="submit"
@@ -169,12 +196,12 @@ function submitForm() {
                         <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Our Location</h2>
                         <div
                             class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700">
-                            <div class="aspect-video bg-gray-200 dark:bg-gray-700">
-                                <!-- Hardcoded Google Maps iframe -->
+                            <div class="aspect-video">
+                                <!-- Responsive Google Maps iframe -->
                                 <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.8841502568707!2d101.46685459999999!3d3.125323!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc512f9d5fa83b%3A0xcada717e2450a0cf!2sSyaliarisa%20Services%20Sdn%20Bhd%20%2F%20Syaliarisa%20Consultants!5e0!3m2!1sen!2smy!4v1755865606387!5m2!1sen!2smy"
-                                    width="1150" height="650" style="border:0;" allowfullscreen="true" loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    width="100%" height="100%" style="border:0;" allowfullscreen="true" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade" class="min-h-[400px]"></iframe>
                             </div>
                         </div>
                     </div>

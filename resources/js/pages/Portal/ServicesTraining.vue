@@ -2,6 +2,12 @@
 import { Head, usePage } from "@inertiajs/vue3";
 import AppLayout2 from "@/layouts/AppLayout2.vue";
 import { ref } from "vue";
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
+
+// No need to use Swiper.use for modern versions
 
 interface ServiceImage {
     id: number;
@@ -52,23 +58,29 @@ function toggleDetails(serviceId: number) {
         <!-- Services Section -->
         <section class="py-16">
             <div class="container mx-auto px-4">
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 md:px-0">
                     <div v-for="service in trainingServices" :key="service.id"
                         class="bg-white dark:bg-background rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-auto">
                         <!-- Image Gallery -->
                         <div class="relative">
                             <div v-if="service.images?.length" class="overflow-hidden rounded-t-2xl">
-                                <img :src="service.images[0].url" :alt="service.title"
-                                    class="h-48 w-full object-cover" />
+                                <!-- Image Slider -->
+                                <Swiper :slides-per-view="1" :pagination="{ clickable: true }" :modules="[Pagination]"
+                                    class="pb-6">
+                                    <SwiperSlide v-for="(img, index) in service.images" :key="index">
+                                        <img :src="img.url" :alt="`${service.title} image ${index + 1}`"
+                                            class="w-full h-48 md:h-64 object-cover rounded-t-2xl" />
+                                    </SwiperSlide>
+                                </Swiper>
                             </div>
                             <div v-else
                                 class="h-48 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-t-2xl">
                                 <i class="bi bi-image text-4xl text-gray-400"></i>
                             </div>
-                            <div v-if="service.images && service.images.length > 1"
+                            <!-- <div v-if="service.images && service.images.length > 1"
                                 class="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-md">
                                 +{{ service.images.length - 1 }} more
-                            </div>
+                            </div> -->
                         </div>
 
                         <!-- Content -->
@@ -77,7 +89,7 @@ function toggleDetails(serviceId: number) {
                                 {{ service.title }}
                             </h2>
 
-                            <p class="text-gray-700 dark:text-gray-300 text-sm mb-3">
+                            <p class="text-gray-700 dark:text-gray-300 text-md mb-3">
                                 {{ service.summary }}
                             </p>
 
@@ -91,19 +103,8 @@ function toggleDetails(serviceId: number) {
 
                             <!-- Details -->
                             <div v-show="openDetails === service.id"
-                                class="mt-2 text-gray-600 dark:text-gray-300 text-sm leading-relaxed transition-all duration-300"
-                                style="display: none;">
+                                class="mt-2 text-gray-600 dark:text-gray-300 text-md leading-relaxed transition-all duration-300">
                                 <p>{{ service.details }}</p>
-
-                                <!-- Show all images in details -->
-                                <div v-if="service.images && service.images.length > 1"
-                                    class="mt-4 grid grid-cols-2 gap-3">
-                                    <div v-for="(img, i) in service.images.slice(1)" :key="i"
-                                        class="rounded-lg overflow-hidden">
-                                        <img :src="img.url" :alt="`${service.title} image ${i + 2}`"
-                                            class="w-full h-32 object-cover" />
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

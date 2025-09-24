@@ -5,6 +5,9 @@ import PortalFooter from '@/components/PortalFooter.vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination } from 'swiper/modules';
 import AppLayout2 from '@/layouts/AppLayout2.vue';
+import { onMounted } from 'vue';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 interface CompanyInfo {
     background: string;
@@ -38,6 +41,14 @@ const {
     services: Service[];
     homeSections: HomeSection[];
 };
+
+onMounted(() => {
+    AOS.init({
+        duration: 1000, // Animation duration in milliseconds
+        easing: 'ease-in-out', // Animation easing
+        once: true, // Whether animation should happen only once
+    });
+});
 </script>
 
 <template>
@@ -46,7 +57,7 @@ const {
     <AppLayout2>
 
         <!-- Hero -->
-        <section class="min-h-[80vh] flex items-center relative">
+        <section class="min-h-[80vh] flex items-center relative" data-aos="fade-in">
             <!-- Background image with dark overlay -->
             <div class="absolute inset-0 bg-cover bg-center z-0 after:absolute after:inset-0 after:bg-black/60" :style="{
                 backgroundImage: `url(${homeSections[0]?.top_image
@@ -57,7 +68,7 @@ const {
 
             <!-- Content container -->
             <div class="container mx-auto px-4 py-20 relative z-10 text-white">
-                <div class="max-w-3xl p-8 rounded-lg">
+                <div class="max-w-3xl p-8 rounded-lg" data-aos="fade-up">
                     <h1 class="text-5xl font-bold mb-6">Expert Safety Consulting & Environmental Monitoring</h1>
                     <p class="text-xl mb-8">
                         {{ homeSections[0]?.top_details }}
@@ -79,7 +90,7 @@ const {
         <!-- Services -->
         <section id="services" class="py-16 bg-gray-50 dark:bg-gray-800">
             <div class="container mx-auto px-4">
-                <div class="text-center max-w-3xl mx-auto mb-12">
+                <div class="text-center max-w-3xl mx-auto mb-12" data-aos="fade-up">
                     <h2 class="text-3xl font-bold mb-4 text-primary dark:text-secondary">Our Comprehensive Services
                     </h2>
                     <p class="text-xl">Tailored solutions to meet your environmental, health, and safety needs</p>
@@ -88,8 +99,8 @@ const {
                 <div class="overflow-x-auto">
                     <div class="flex space-x-6 pb-4">
                         <!-- Health & Safety -->
-                        <div
-                            class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col">
+                        <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
+                            data-aos="zoom-in">
                             <div
                                 class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
                                 <i class="bi bi-shield"></i>
@@ -103,8 +114,8 @@ const {
                         </div>
 
                         <!-- Training -->
-                        <div
-                            class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col">
+                        <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
+                            data-aos="zoom-in">
                             <div
                                 class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
                                 <i class="bi bi-book"></i>
@@ -118,8 +129,8 @@ const {
                         </div>
 
                         <!-- Engineering -->
-                        <div
-                            class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col">
+                        <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
+                            data-aos="zoom-in">
                             <div
                                 class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
                                 <i class="bi bi-gear"></i>
@@ -133,8 +144,8 @@ const {
                         </div>
 
                         <!-- Environmental -->
-                        <div
-                            class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col">
+                        <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
+                            data-aos="zoom-in">
                             <div
                                 class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
                                 <i class="bi bi-tree"></i>
@@ -154,11 +165,11 @@ const {
         <!-- About -->
         <section id="about" class="py-16 bg-white dark:bg-gray-900">
             <div class="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-12">
-                <div class="lg:w-1/2">
+                <div class="lg:w-1/2" data-aos="fade-right">
                     <img :src="homeSections[0]?.bottom_image ? '/storage/' + homeSections[0].bottom_image : '/images/banner-company.jpg'"
                         alt="About" class="rounded-lg shadow-md w-full max-h-100 object-cover" />
                 </div>
-                <div class="lg:w-1/2">
+                <div class="lg:w-1/2" data-aos="fade-left">
                     <h2 class="text-3xl font-bold mb-6 text-primary dark:text-secondary">About Syaliarisa Services
                     </h2>
                     <p class="text-xl mb-4">{{ homeSections[0]?.bottom_details }}</p>
@@ -172,7 +183,7 @@ const {
         </section>
 
         <!-- Contact -->
-        <section id="contact" class="py-16 bg-[#2262ae] text-white dark:bg-blue-800">
+        <section id="contact" class="py-16 bg-[#2262ae] text-white dark:bg-blue-800" data-aos="fade-up">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col lg:flex-row justify-between items-center">
                     <div class="lg:w-2/3 mb-8 lg:mb-0">

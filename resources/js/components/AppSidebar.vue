@@ -36,7 +36,7 @@ const mainNavItems: NavItem[] = [
         icon: Users,
     },
     {
-        title: 'Employees',
+        title: 'Organization Chart',
         href: route('admin.employees.index'),
         icon: Users,
     },
@@ -46,7 +46,7 @@ const mainNavItems: NavItem[] = [
     //     icon: BookText,
     // },
     {
-        title: 'Standards',
+        title: 'Standards Applications',
         href: route('admin.standard-applications.index'),
         icon: Briefcase,
     },

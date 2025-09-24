@@ -1,5 +1,5 @@
 <template>
-    <footer class="pt-16 border-t">
+    <footer class="pt-16 border-t" data-aos="fade-up">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Column 1: Company Info -->

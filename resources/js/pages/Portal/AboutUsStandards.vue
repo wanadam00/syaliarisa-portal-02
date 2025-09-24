@@ -19,13 +19,12 @@
                         <h2 class="text-xl text-center font-bold text-primary dark:text-white mb-6">
                             {{ standard.title }}
                         </h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                             <!-- Column 1: Logo -->
                             <div class="flex justify-center md:justify-center">
-                                <div
-                                    class="w-20 h-20 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                                <div class="lg:w-1/2">
                                     <img v-if="standard.logo" :src="standard.logo" :alt="standard.title"
-                                        class="w-14 h-14 object-contain" />
+                                        class="rounded-lg w-full max-h-100 object-cover" />
                                     <i v-else class="bi bi-file-earmark-text text-3xl text-gray-400"></i>
                                 </div>
                             </div>
@@ -38,11 +37,11 @@
                         </div> -->
 
                             <!-- Column 3: Description + Link -->
-                            <div class="text-center md:text-center">
+                            <div class="text-justify md:text-justify">
                                 <p class="text-gray-700 dark:text-gray-300 mb-3">{{ standard.description }}</p>
                                 <a v-if="standard.link" :href="standard.link" target="_blank"
                                     class="inline-block px-4 py-2 bg-[#2262ae] text-white text-sm font-medium rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 transition">
-                                    View Standard
+                                    More Info
                                 </a>
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 <template>
-    <header class="fixed top-0 w-full bg-white dark:bg-background/80 shadow-sm z-50">
+    <header class="fixed top-0 w-full bg-white dark:bg-background/80 shadow-sm z-50" data-aos="fade-down">
         <nav class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
                 <a href="/" class="flex items-center">

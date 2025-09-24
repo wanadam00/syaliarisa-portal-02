@@ -73,7 +73,7 @@ onBeforeUnmount(() => {
 <template>
     <AppLayout>
         <div class="p-6">
-            <h1 class="text-2xl font-bold mb-6">Employee List</h1>
+            <h1 class="text-2xl font-bold mb-6">Organization Chart Management</h1>
             <div class="flex justify-end mb-4">
                 <a href="/admin/employees/create"
                     class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition">

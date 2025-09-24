@@ -1,31 +1,184 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
+import { ref, onMounted } from 'vue';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
 
-const { contactInfo } = usePage().props as any;
+interface ContactInfo {
+    id: number;
+    address: string;
+    phone: string;
+    email: string;
+    business_hours: string | null;
+    is_visible: boolean;
+}
+
+const { contactInfo } = usePage().props as unknown as { contactInfo: ContactInfo };
+
 const form = useForm({
-    type: contactInfo.type,
-    value: contactInfo.value
+    address: contactInfo.address ?? '',
+    phone: contactInfo.phone ?? '',
+    email: contactInfo.email ?? '',
+    business_hours: contactInfo.business_hours ?? '',
+    is_visible: Boolean(contactInfo.is_visible ?? true),
 });
+
+const quillEditor = ref<HTMLDivElement | null>(null);
+let quill: Quill | null = null;
+
+// Default business hours template
+const defaultBusinessHours = `
+Monday - Friday: 8:00 AM - 6:00 PM<br>
+Saturday: 9:00 AM - 2:00 PM<br>
+Sunday: Closed
+`.trim();
+
+onMounted(() => {
+    if (quillEditor.value) {
+        quill = new Quill(quillEditor.value, {
+            theme: 'snow',
+            placeholder: 'Enter business hours (e.g., Monday - Friday: 8:00 AM - 6:00 PM)',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['clean']
+                ]
+            }
+        });
+
+        // Set initial value or default template
+        const initialContent = form.business_hours || defaultBusinessHours;
+        quill.root.innerHTML = initialContent;
+
+        // Sync with form
+        quill.on('text-change', () => {
+            form.business_hours = quill?.root.innerHTML || '';
+        });
+
+        // Add format business hours button to toolbar
+        const toolbar = quill.getModule('toolbar');
+        toolbar.addHandler('clean', function () {
+            formatBusinessHours();
+        });
+    }
+});
+
+function formatBusinessHours() {
+    if (!quill) return;
+
+    const text = quill.getText();
+    const lines = text.split('\n').filter(line => line.trim());
+
+    const formattedLines = lines.map(line => {
+        // Simple formatting - you can customize this logic
+        if (line.includes(':')) {
+            const parts = line.split(':');
+            if (parts.length >= 2) {
+                const day = parts[0].trim();
+                const time = parts.slice(1).join(':').trim();
+                return `<strong>${day}:</strong> ${time}`;
+            }
+        }
+        return line;
+    });
+
+    quill.root.innerHTML = formattedLines.join('<br>');
+    form.business_hours = quill.root.innerHTML;
+}
+
 function submit() {
-    form.put(route('admin.contact-info.update', contactInfo.id));
+    form.post(route('admin.contact-info.update', contactInfo.id), {
+        forceFormData: true,
+        onSuccess: () => {
+            // Optional success handling
+        }
+    });
 }
 </script>
 
 <template>
     <AppLayout>
-        <div class="p-6 space-y-6">
-            <h1 class="text-2xl font-bold">Edit Contact Info</h1>
-            <form @submit.prevent="submit" class="space-y-4 max-w-lg">
-                <div>
-                    <label class="block mb-1 font-medium">Type</label>
-                    <input v-model="form.type" required class="w-full border rounded-md p-2" />
+        <div class="p-6 max-w-2xl">
+            <h1 class="text-2xl font-bold mb-6">Edit Contact Info</h1>
+
+            <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
+                <!-- Address -->
+                <div class="flex flex-col space-y-1">
+                    <label for="address" class="font-medium">Address</label>
+                    <input id="address" v-model="form.address" type="text"
+                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                    <span v-if="form.errors.address" class="text-sm text-red-600">
+                        {{ form.errors.address }}
+                    </span>
                 </div>
-                <div>
-                    <label class="block mb-1 font-medium">Value</label>
-                    <input v-model="form.value" required class="w-full border rounded-md p-2" />
+
+                <!-- Phone -->
+                <div class="flex flex-col space-y-1">
+                    <label for="phone" class="font-medium">Phone</label>
+                    <input id="phone" v-model="form.phone" type="text"
+                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                    <span v-if="form.errors.phone" class="text-sm text-red-600">
+                        {{ form.errors.phone }}
+                    </span>
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
+
+                <!-- Email -->
+                <div class="flex flex-col space-y-1">
+                    <label for="email" class="font-medium">Email</label>
+                    <input id="email" v-model="form.email" type="email"
+                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                    <span v-if="form.errors.email" class="text-sm text-red-600">
+                        {{ form.errors.email }}
+                    </span>
+                </div>
+
+                <!-- Map Embed -->
+                <!-- <div class="flex flex-col space-y-1">
+                    <label for="map_embed" class="font-medium">Map Embed (HTML)</label>
+                    <textarea id="map_embed" v-model="form.map_embed" rows="4"
+                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
+                    <span v-if="form.errors.map_embed" class="text-sm text-red-600">
+                        {{ form.errors.map_embed }}
+                    </span>
+                </div> -->
+
+                <!-- Business Hours with Quill -->
+                <div class="flex flex-col space-y-1">
+                    <label for="business_hours" class="font-medium">Business Hours</label>
+                    <div class="mb-2">
+                        <button type="button" @click="formatBusinessHours"
+                            class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded border">
+                            Format Business Hours
+                        </button>
+                        <span class="text-xs text-gray-500 ml-2">Click to auto-format days and times</span>
+                    </div>
+                    <div ref="quillEditor" class="h-40 border rounded-md"></div>
+                    <div class="text-xs text-gray-500 mt-1">
+                        Format example: <strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM
+                    </div>
+                    <span v-if="form.errors.business_hours" class="text-sm text-red-600">
+                        {{ form.errors.business_hours }}
+                    </span>
+                </div>
+
+                <!-- Visible Checkbox -->
+                <div class="flex items-center space-x-2">
+                    <input id="is_visible" v-model="form.is_visible" type="checkbox"
+                        class="h-4 w-4 border rounded text-blue-600" />
+                    <label for="is_visible" class="font-medium">Visible</label>
+                </div>
+
+                <!-- Submit -->
+                <div>
+                    <button type="submit"
+                        class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition"
+                        :disabled="form.processing">
+                        <span v-if="form.processing">Updating...</span>
+                        <span v-else>Update</span>
+                    </button>
+                </div>
             </form>
         </div>
     </AppLayout>

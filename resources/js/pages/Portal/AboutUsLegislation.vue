@@ -12,39 +12,38 @@
 
         <!-- Legislations List -->
         <section class="py-16">
-            <div class="container mx-auto px-4">
-                <div class="space-y-6">
-                    <div v-for="law in legislations" :key="law.id"
-                        class="bg-white dark:bg-background rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 items-center">
-                        <!-- Title -->
-                        <h2 class="text-xl text-center font-bold text-primary dark:text-white mb-6">
-                            {{ law.title }}
-                        </h2>
+            <div class="container mx-auto px-4 space-y-12">
+                <!-- Group by type -->
+                <div v-for="(laws, type) in groupedLegislations" :key="type" class="space-y-6">
 
-                        <!-- Content Columns -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Column 1: Image -->
-                            <div class="flex justify-center md:justify-center">
-                                <div
-                                    class="w-28 h-28 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden">
-                                    <img v-if="law.image" :src="law.image" :alt="law.title"
-                                        class="w-24 h-24 object-contain" />
-                                    <i v-else class="bi bi-file-text text-4xl text-gray-400"></i>
-                                </div>
-                            </div>
+                    <!-- Type Header -->
+                    <div class="text-center md:text-left mb-6">
+                        <h2 class="text-2xl font-bold text-primary text-center dark:text-white">{{ type }}</h2>
+                        <p v-if="laws[0].details" class="text-gray-600 text-justify dark:text-gray-400 mt-2">
+                            {{ laws[0].details }}
+                        </p>
+                    </div>
 
-                            <!-- Column 2: Details -->
-                            <div class="text-center md:text-left">
-                                <p class="text-gray-700 dark:text-gray-300 mb-3">
+                    <!-- Shared container for all laws of this type -->
+                    <div
+                        class="bg-white dark:bg-background rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 flex flex-col md:flex-row gap-6">
+
+                        <!-- One Image for the whole type -->
+                        <div class="md:w-1/3 flex justify-center">
+                            <img v-if="laws[0].image" :src="laws[0].image" :alt="type"
+                                class="rounded-lg w-full object-cover" />
+                            <i v-else class="bi bi-file-text text-4xl text-gray-400"></i>
+                        </div>
+
+                        <!-- All Titles under this type -->
+                        <div class="flex-1 space-y-6">
+                            <div v-for="law in laws" :key="law.id" class="border-b pb-4 last:border-0 last:pb-0">
+                                <h3 class="text-lg font-semibold text-primary dark:text-white mb-2">
+                                    {{ law.title }}
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300 text-justify mb-3">
                                     {{ law.description }}
                                 </p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                                    Type: {{ law.type }}
-                                </p>
-                                <p v-if="law.details" class="text-gray-600 dark:text-gray-400 mb-3">
-                                    {{ law.details }}
-                                </p>
-
                                 <a v-if="law.link" :href="law.link" target="_blank"
                                     class="inline-block px-4 py-2 bg-[#2262ae] text-white text-sm font-medium rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 transition">
                                     Read More
@@ -77,4 +76,13 @@ const { aboutUsLegislations } = usePage().props as unknown as {
 }
 
 const legislations = aboutUsLegislations
+
+// Group by type
+const groupedLegislations = legislations.reduce((groups: Record<string, AboutUsLegislation[]>, law) => {
+    if (!groups[law.type]) {
+        groups[law.type] = []
+    }
+    groups[law.type].push(law)
+    return groups
+}, {})
 </script>

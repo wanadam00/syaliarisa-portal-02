@@ -11,41 +11,49 @@ class StandardApplicationController extends Controller
 {
     public function index()
     {
-        $standardApplications = StandardApplication::all();
-        // return route('admin.standard-applications.index', compact('standardApplications'));
+        $standardApplications = StandardApplication::all()->map(function ($app) {
+            $app->logo = $app->logo
+                ? asset('storage/' . $app->logo)
+                : null;
+            return $app;
+        });
         return Inertia::render('Admin/StandardApplication/Index', [
             'standardApplications' => $standardApplications,
         ]);
     }
 
-    public function create()
+    public function create(StandardApplication $standardApplication)
     {
-        // return route('admin.standard-applications.create');
-        return Inertia::render('Admin/StandardApplication/Create');
+        return Inertia::render('Admin/StandardApplication/Create', [
+            'standardApplication' => $standardApplication,
+        ]);
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string',
-            'description' => 'nullable|string',
-            'logo' => 'nullable|image',
-            'link' => 'nullable|url',
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'logo' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'link' => 'required|url',
             'is_visible' => 'boolean',
         ]);
 
+        // Handle logo upload
         if ($request->hasFile('logo')) {
-            $validated['logo'] = $request->file('logo')->store('standard-applications', 'public');
+            $path = $request->file('logo')->store('standardapplications', 'public');
+            $data['logo'] = $path;
+        } else {
+            unset($data['logo']); // 🚀 prevents overwriting with null
         }
 
-        StandardApplication::create($validated);
+        StandardApplication::create($data);
 
         return redirect()->route('admin.standard-applications.index')->with('success', 'Standard Application created successfully.');
     }
 
     public function edit(StandardApplication $standardApplication)
     {
-        // return route('admin.standard-applications.edit', compact('standardApplication'));
         return Inertia::render('Admin/StandardApplication/Edit', [
             'standardApplication' => $standardApplication,
         ]);
@@ -53,19 +61,23 @@ class StandardApplicationController extends Controller
 
     public function update(Request $request, StandardApplication $standardApplication)
     {
-        $validated = $request->validate([
-            'title' => 'required|string',
-            'description' => 'nullable|string',
-            'logo' => 'nullable|image',
+        $data = $request->validate([
+            'title' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',
         ]);
 
+        // Handle logo upload
         if ($request->hasFile('logo')) {
-            $validated['logo'] = $request->file('logo')->store('standard-applications', 'public');
+            $path = $request->file('logo')->store('standardapplications', 'public');
+            $data['logo'] = $path;
+        } else {
+            unset($data['logo']); // 🚀 prevents overwriting with null
         }
 
-        $standardApplication->update($validated);
+        $standardApplication->update($data);
 
         return redirect()->route('admin.standard-applications.index')->with('success', 'Standard Application updated successfully.');
     }
@@ -73,7 +85,6 @@ class StandardApplicationController extends Controller
     public function destroy(StandardApplication $standardApplication)
     {
         $standardApplication->delete();
-
         return redirect()->route('admin.standard-applications.index')->with('success', 'Standard Application deleted successfully.');
     }
 }

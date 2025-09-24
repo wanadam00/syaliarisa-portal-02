@@ -11,43 +11,51 @@ class LegislationController extends Controller
 {
     public function index()
     {
-        $legislations = Legislation::all();
-        // return route('admin.legislations.index', compact('legislations'));
+        $legislations = Legislation::all()->map(function ($legislation) {
+            $legislation->image = $legislation->image
+                ? asset('storage/' . $legislation->image)
+                : null;
+            return $legislation;
+        });
         return Inertia::render('Admin/Legislation/Index', [
             'legislations' => $legislations,
         ]);
     }
 
-    public function create()
+    public function create(Legislation $legislation)
     {
-        // return route('admin.legislations.create');
-        return Inertia::render('Admin/Legislation/Create');
+        return Inertia::render('Admin/Legislation/Create', [
+            'legislation' => $legislation,
+        ]);
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string',
-            'description' => 'nullable|string',
-            'type' => 'required|string',
-            'details' => 'nullable|string',
-            'image' => 'nullable|image',
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'type' => 'required|string|max:255',
+            'details' => 'required|string',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',
         ]);
 
+        // Handle image upload
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('legislations', 'public');
+            $path = $request->file('image')->store('legislation', 'public');
+            $data['image'] = $path;
+        } else {
+            unset($data['image']); // 🚀 prevents overwriting with null
         }
 
-        Legislation::create($validated);
+        Legislation::create($data);
 
         return redirect()->route('admin.legislations.index')->with('success', 'Legislation created successfully.');
     }
 
     public function edit(Legislation $legislation)
     {
-        // return route('admin.legislations.edit', compact('legislation'));
         return Inertia::render('Admin/Legislation/Edit', [
             'legislation' => $legislation,
         ]);
@@ -55,21 +63,25 @@ class LegislationController extends Controller
 
     public function update(Request $request, Legislation $legislation)
     {
-        $validated = $request->validate([
-            'title' => 'required|string',
-            'description' => 'nullable|string',
-            'type' => 'required|string',
-            'details' => 'nullable|string',
-            'image' => 'nullable|image',
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'type' => 'required|string|max:255',
+            'details' => 'required|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',
         ]);
 
+        // Handle image upload
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('legislations', 'public');
+            $path = $request->file('image')->store('legislation', 'public');
+            $data['image'] = $path;
+        } else {
+            unset($data['image']); // 🚀 prevents overwriting with null
         }
 
-        $legislation->update($validated);
+        $legislation->update($data);
 
         return redirect()->route('admin.legislations.index')->with('success', 'Legislation updated successfully.');
     }

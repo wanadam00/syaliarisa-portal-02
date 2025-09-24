@@ -15,6 +15,7 @@ class ContactInfo extends Model
         'phone',
         'email',
         'map_embed',
+        'business_hours',
         'is_visible',
     ];
 }
