@@ -11,6 +11,7 @@ class HomeSection extends Model
     use HasFactory;
 
     protected $fillable = [
+        'title',
         'top_details',
         'top_image',
         'bottom_details',

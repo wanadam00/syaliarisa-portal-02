@@ -12,6 +12,8 @@ use App\Models\Employee;
 use App\Models\StandardApplication;
 use App\Models\Legislation;
 use App\Models\Customer;
+use App\Mail\CustomerMessageMail;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
@@ -75,10 +77,10 @@ class CompanyPortalController extends Controller
         });
         return Inertia::render('Portal/CompanyInfo', [
             'companyInfo' => [
-                'background' => $companyInfo->background,
-                'vision' => $companyInfo->vision,
-                'mission' => $companyInfo->mission,
-                'is_visible' => $companyInfo->is_visible,
+                'background' => $companyInfo?->background,
+                'vision' => $companyInfo?->vision,
+                'mission' => $companyInfo?->mission,
+                'is_visible' => $companyInfo?->is_visible,
             ],
             'employees' => $employees,
         ]);
@@ -205,7 +207,9 @@ class CompanyPortalController extends Controller
 
         Customer::create($validatedData);
 
-        // return response()->json(['message' => 'Your message has been sent successfully!'], 200);
+        // Send email to the address from .env
+        Mail::to(env('MAIL_FROM_ADDRESS'))->send(new CustomerMessageMail($validatedData));
+
         return redirect()->back()->with('success', 'Your message has been sent successfully!');
     }
 }

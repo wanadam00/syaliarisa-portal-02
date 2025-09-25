@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\LegislationController;
 use App\Http\Controllers\Admin\StandardApplicationController;
 use App\Http\Controllers\Portal\CompanyPortalController;
+use App\Models\ContactInfo;
 
 use Inertia\Inertia;
 
@@ -88,6 +89,21 @@ Route::prefix('/')->group(function () {
     Route::get('/contact-us', [CompanyPortalController::class, 'contact'])->name('portal.contact');
     Route::post('/customers', [CompanyPortalController::class, 'submitCustomerForm'])->name('portal.customers.submit');
 });
+
+// API route to fetch all contact info
+Route::get('/api/contact-info', function () {
+    $contactInfo = ContactInfo::first();
+
+    return response()->json([
+        'contact_info' => $contactInfo ?? [
+            'address' => '',
+            'phone' => '',
+            'email' => '',
+            'business_hours' => '',
+        ]
+    ]);
+});
+
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

@@ -5,6 +5,7 @@ import { ref } from 'vue';
 
 interface HomeSection {
     id: number;
+    title: string;
     top_details: string;
     top_image: string | null;
     bottom_details: string;
@@ -15,6 +16,7 @@ interface HomeSection {
 const { homeSection } = usePage().props as unknown as { homeSection: HomeSection };
 
 const form = useForm({
+    title: homeSection.title ?? '',
     top_details: homeSection.top_details ?? '',
     top_image: null as File | null,
     bottom_details: homeSection.bottom_details ?? '',
@@ -67,10 +69,20 @@ function submit() {
             <h1 class="text-2xl font-bold mb-6">Edit Home</h1>
 
             <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
+                <!-- Title -->
+                <div class="flex flex-col space-y-1">
+                    <label for="title" class="font-medium">Title</label>
+                    <input id="title" v-model="form.title" type="text"
+                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                    <span v-if="form.errors.title" class="text-sm text-red-600">
+                        {{ form.errors.title }}
+                    </span>
+                </div>
+
                 <!-- Top Deatils -->
                 <div class="flex flex-col space-y-1">
-                    <label for="name" class="font-medium">Top Details</label>
-                    <input id="name" v-model="form.top_details" type="text"
+                    <label for="top_details" class="font-medium">Top Details</label>
+                    <input id="top_details" v-model="form.top_details" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.top_details" class="text-sm text-red-600">
                         {{ form.errors.top_details }}

@@ -12,10 +12,10 @@
                         <img src="/images/secondary-logo.png" alt="Syaliarisa Services"
                             class="h-16 hidden dark:block" />
                     </a>
-                    <p class="mb-6 text-primary">
+                    <!-- <p class="mb-6 text-primary">
                         Syaliarisa Services Sdn. Bhd. is an environmental, industrial hygiene and safety consulting,
                         monitoring & training firm operating for Malaysia and the regions.
-                    </p>
+                    </p> -->
                     <div class="flex space-x-4">
                         <!-- Facebook -->
                         <a href="#"
@@ -66,25 +66,25 @@
                     </ul>
                 </div>
 
-                <!-- Column 4: Contact Info -->
+                <!-- Column 4: Contact Info (Dynamic) -->
                 <div>
                     <h3 class="text-xl font-semibold text-primary mb-6">Contact Info</h3>
                     <ul class="space-y-4 text-primary">
-                        <li class="flex items-start gap-3">
+                        <li class="flex items-start gap-3" v-if="contactInfo.address">
                             <i class="bi bi-geo-alt text-xl"></i>
-                            <span>123 Business Avenue, Kuala Lumpur, Malaysia</span>
+                            <span>{{ contactInfo.address }}</span>
                         </li>
-                        <li class="flex items-start gap-3">
+                        <li class="flex items-start gap-3" v-if="contactInfo.phone">
                             <i class="bi bi-telephone text-xl"></i>
-                            <span>+603 1234 5678</span>
+                            <span>{{ contactInfo.phone }}</span>
                         </li>
-                        <li class="flex items-start gap-3">
+                        <li class="flex items-start gap-3" v-if="contactInfo.email">
                             <i class="bi bi-envelope text-xl"></i>
-                            <span>info@syaliarisa.com</span>
+                            <span>{{ contactInfo.email }}</span>
                         </li>
-                        <li class="flex items-start gap-3">
+                        <li class="flex items-start gap-3" v-if="contactInfo.business_hours">
                             <i class="bi bi-clock text-xl"></i>
-                            <span>Mon-Fri: 9:00 AM - 5:00 PM</span>
+                            <div v-html="contactInfo.business_hours" class="text-primary"></div>
                         </li>
                     </ul>
                 </div>
@@ -102,5 +102,17 @@
 </template>
 
 <script setup lang="ts">
-// No additional logic needed
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+
+const contactInfo = ref<any>({})
+
+onMounted(async () => {
+    try {
+        const { data } = await axios.get('/api/contact-info')
+        contactInfo.value = data.contact_info || {}
+    } catch (err) {
+        console.error('Failed to load contact info:', err)
+    }
+})
 </script>

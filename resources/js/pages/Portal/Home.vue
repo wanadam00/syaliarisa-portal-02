@@ -26,6 +26,7 @@ interface Service {
 }
 
 interface HomeSection {
+    title: string;
     top_details: string;
     top_image: string | null;
     bottom_details: string;
@@ -69,7 +70,7 @@ onMounted(() => {
             <!-- Content container -->
             <div class="container mx-auto px-4 py-20 relative z-10 text-white">
                 <div class="max-w-3xl p-8 rounded-lg" data-aos="fade-up">
-                    <h1 class="text-5xl font-bold mb-6">Expert Safety Consulting & Environmental Monitoring</h1>
+                    <h1 class="text-5xl font-bold mb-6">{{ homeSections[0]?.title }}</h1>
                     <p class="text-xl mb-8">
                         {{ homeSections[0]?.top_details }}
                     </p>

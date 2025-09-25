@@ -41,7 +41,7 @@ class ServiceController extends Controller
             'title'      => 'required|string|max:255',
             'summary'    => 'required|string|max:255',
             'details'    => 'required|string|max:5000',
-            'images.*'   => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'images.*'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'is_visible' => 'boolean',
             'deleted_images' => 'array',
             'deleted_images.*' => 'integer|exists:service_images,id',

@@ -108,7 +108,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Phone</h4>
                                                 <a :href="`tel:${info.phone}`"
                                                     class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors">{{
-                                                    info.phone }}</a>
+                                                        info.phone }}</a>
                                             </div>
                                         </div>
 
@@ -122,7 +122,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Email</h4>
                                                 <a :href="`mailto:${info.email}`"
                                                     class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors">{{
-                                                    info.email }}</a>
+                                                        info.email }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -132,16 +132,10 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                             <!-- Business Hours -->
                             <div>
                                 <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Business Hours</h3>
-                                <div
-                                    class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+                                <div class="bg-white dark:bg-gray-800">
                                     <div v-for="info in contactInfo" :key="info.id">
                                         <div v-if="info.business_hours" class="space-y-3">
-                                            <div v-for="(slot, index) in formatBusinessHours(info.business_hours)"
-                                                :key="index"
-                                                class="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700 last:border-b-0">
-                                                <span class="font-medium text-gray-900 dark:text-white">{{ slot.day
-                                                    }}</span>
-                                                <span class="text-gray-600 dark:text-gray-300">{{ slot.time }}</span>
+                                            <div v-html="info.business_hours" class="text-gray-600 dark:text-gray-300">
                                             </div>
                                         </div>
                                         <div v-else class="text-gray-500 dark:text-gray-400 italic">

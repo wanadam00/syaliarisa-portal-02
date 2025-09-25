@@ -19,13 +19,16 @@
                         Info</a> -->
 
                     <!-- About Us Dropdown -->
-                    <div class="relative group inline-block">
+                    <div class="relative group inline-block dropdown-container"
+                        @mouseenter="handleDropdownHover('about')" @mouseleave="handleDropdownLeave"
+                        @click="toggleDropdown('about')">
                         <!-- Button -->
                         <button
                             class="flex items-center gap-1 text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium transition-colors duration-200">
                             About Us
                             <!-- Arrow SVG -->
-                            <svg class="w-5 h-5 text-gray-800 group-hover:text-blue-600 dark:text-white transform transition-transform duration-300 group-hover:rotate-180"
+                            <svg class="w-5 h-5 text-gray-800 group-hover:text-blue-600 dark:text-white transform transition-transform duration-300"
+                                :class="{ 'rotate-180': openDropdown === 'about' || activeDropdown === 'about' }"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                                 stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7" />
@@ -33,9 +36,11 @@
                         </button>
 
                         <!-- Dropdown -->
-                        <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-background shadow-lg rounded-md py-2 border
-           opacity-0 invisible transform -translate-y-2 transition-all duration-300 ease-out
-           group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
+                        <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-background shadow-lg rounded-md py-2 border transition-all duration-400 ease-out"
+                            :class="{
+                                'opacity-100 visible translate-y-0': openDropdown === 'about' || activeDropdown === 'about',
+                                'opacity-0 invisible -translate-y-2': openDropdown !== 'about' && activeDropdown !== 'about'
+                            }">
                             <a href="/about-us/company-info"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 transition-colors">Company
                                 Info</a>
@@ -47,20 +52,25 @@
                     </div>
 
                     <!-- Services Dropdown -->
-                    <div class="relative group inline-block">
+                    <div class="relative group inline-block dropdown-container"
+                        @mouseenter="handleDropdownHover('services')" @mouseleave="handleDropdownLeave"
+                        @click="toggleDropdown('services')">
                         <button
                             class="text-gray-800 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium flex items-center gap-1">
                             Services
                             <!-- Arrow SVG -->
-                            <svg class="w-5 h-5 text-gray-800 group-hover:text-blue-600 dark:text-white transform transition-transform duration-300 group-hover:rotate-180"
+                            <svg class="w-5 h-5 text-gray-800 group-hover:text-blue-600 dark:text-white transform transition-transform duration-300"
+                                :class="{ 'rotate-180': openDropdown === 'services' || activeDropdown === 'services' }"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                                 stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7" />
                             </svg>
                         </button>
-                        <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-background shadow-lg rounded-md py-2 opacity-0 invisible border
-                transition-all duration-200 transform -translate-y-1
-                group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
+                        <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-background shadow-lg rounded-md py-2 opacity-0 invisible border transition-all duration-400 ease-out"
+                            :class="{
+                                'opacity-100 visible translate-y-0': openDropdown === 'services' || activeDropdown === 'services',
+                                'opacity-0 invisible -translate-y-2': openDropdown !== 'services' && activeDropdown !== 'services'
+                            }">
                             <a href="/services/health-safety"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Health
                                 & Safety</a>
@@ -80,7 +90,8 @@
 
                 <!-- Mobile Toggle -->
                 <!-- Mobile Toggle Button - Made more prominent -->
-                <button @click="toggleMobileMenu" class="lg:hidden p-2 focus:outline-none" aria-label="Toggle menu">
+                <button @click="toggleMobileMenu" class="lg:hidden p-2 focus:outline-none mobile-toggle-button"
+                    aria-label="Toggle menu">
                     <div class="w-6 h-6 relative">
                         <!-- Top bar -->
                         <span
@@ -99,7 +110,7 @@
             </div>
 
             <!-- Mobile Menu -->
-            <div v-if="mobileMenuOpen" class="lg:hidden pt-4">
+            <div v-if="mobileMenuOpen" class="lg:hidden pt-4 mobile-menu-container">
                 <div class="flex flex-col space-y-2">
 
                     <!-- Home -->
@@ -182,10 +193,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const mobileMenuOpen = ref(false);
 const openDropdown = ref('');
+const activeDropdown = ref('');
 
 const toggleMobileMenu = () => {
     mobileMenuOpen.value = !mobileMenuOpen.value;
@@ -196,4 +208,43 @@ const toggleMobileMenu = () => {
 const toggleDropdown = (menu) => {
     openDropdown.value = openDropdown.value === menu ? '' : menu;
 };
+
+const handleDropdownHover = (menu) => {
+    activeDropdown.value = menu;
+};
+
+const handleDropdownLeave = () => {
+    activeDropdown.value = '';
+};
+
+const handleClickOutside = (event) => {
+    const dropdowns = document.querySelectorAll('.dropdown-container');
+    const isClickInsideDropdown = Array.from(dropdowns).some(dropdown => dropdown.contains(event.target));
+
+    const mobileMenu = document.querySelector('.mobile-menu-container');
+    const mobileToggle = document.querySelector('.mobile-toggle-button');
+    const isClickInsideMobileMenu = mobileMenu && mobileMenu.contains(event.target);
+    const isClickOnToggle = mobileToggle && mobileToggle.contains(event.target);
+
+    if (window.innerWidth >= 1024) {
+        // Close dropdowns on desktop sizes
+        if (!isClickInsideDropdown) {
+            openDropdown.value = '';
+        }
+    } else {
+        // Close mobile menu on mobile sizes if clicking outside the menu and toggle button
+        if (!isClickInsideMobileMenu && !isClickOnToggle) {
+            mobileMenuOpen.value = false;
+            document.body.style.overflow = '';
+        }
+    }
+};
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
 </script>

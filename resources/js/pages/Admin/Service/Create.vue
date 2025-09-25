@@ -52,7 +52,7 @@ function toggleDeleteImage(id: number) {
 }
 
 function submit() {
-    form.post(route('admin.services.update', service.id), {
+    form.post(route('admin.services.store'), {
         forceFormData: true,
         onSuccess: () => {
             previews.value = [];
