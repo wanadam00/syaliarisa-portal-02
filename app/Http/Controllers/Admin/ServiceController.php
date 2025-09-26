@@ -37,11 +37,12 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'type'       => 'required|string|max:255',
-            'title'      => 'required|string|max:255',
-            'summary'    => 'required|string|max:255',
-            'details'    => 'required|string|max:5000',
-            'images.*'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'type' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'summary' => 'required|string',
+            'details' => 'nullable|string',
+            'link' => 'nullable|string|max:500', // ✅ allow video link
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'is_visible' => 'boolean',
             'deleted_images' => 'array',
             'deleted_images.*' => 'integer|exists:service_images,id',
@@ -49,10 +50,11 @@ class ServiceController extends Controller
 
         // Create service first
         $service = Service::create([
-            'type'       => $data['type'],
-            'title'      => $data['title'],
-            'summary'    => $data['summary'],
-            'details'    => $data['details'],
+            'type' => $data['type'],
+            'title' => $data['title'],
+            'summary' => $data['summary'],
+            'details' => $data['details'],
+            'link' => $data['link'] ?? null, // ✅ save video link
             'is_visible' => $request->boolean('is_visible'),
         ]);
 
@@ -86,6 +88,11 @@ class ServiceController extends Controller
             return $img;
         });
 
+        // Make sure the video link (if uploaded) is full URL
+        if ($service->link && !str_starts_with($service->link, 'http')) {
+            $service->link = asset('storage/' . $service->link);
+        }
+
         return Inertia::render('Admin/Service/Edit', [
             'service' => $service,
         ]);
@@ -93,45 +100,42 @@ class ServiceController extends Controller
 
     public function update(Request $request, Service $service)
     {
-        $data = $request->validate([
-            'type'       => 'required|string|max:255',
-            'title'      => 'required|string|max:255',
-            'summary'    => 'required|string|max:255',
-            'details'    => 'required|string|max:5000',
-            'images.*'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        $validated = $request->validate([
+            'type' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'summary' => 'required|string',
+            'details' => 'nullable|string',
+            'link' => 'nullable|string|max:500', // ✅ allow video link
             'is_visible' => 'boolean',
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'deleted_images' => 'array',
-            'deleted_images.*' => 'integer|exists:service_images,id',
+            'deleted_images.*' => 'integer',
         ]);
 
-        // Update service
+        // update service data
         $service->update([
-            'type'       => $data['type'],
-            'title'      => $data['title'],
-            'summary'    => $data['summary'],
-            'details'    => $data['details'],
-            'is_visible' => $request->boolean('is_visible'),
+            'type' => $validated['type'],
+            'title' => $validated['title'],
+            'summary' => $validated['summary'],
+            'details' => $validated['details'],
+            'link' => $validated['link'] ?? null, // ✅ save video link
+            'is_visible' => $validated['is_visible'] ?? false,
         ]);
 
-        // 🆕 Delete selected images
-        if (!empty($data['deleted_images'])) {
-            $images = ServiceImage::whereIn('id', $data['deleted_images'])->get();
-            foreach ($images as $img) {
-                Storage::disk('public')->delete($img->url);
-                $img->delete();
-            }
+        // handle deleted images
+        if (!empty($validated['deleted_images'])) {
+            $service->images()->whereIn('id', $validated['deleted_images'])->delete();
         }
 
-        // Add new images if uploaded
+        // handle new images
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
-                $path = $file->store('services', 'public');
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('services', 'public');
                 $service->images()->create(['url' => $path]);
             }
         }
 
-        return redirect()->route('admin.services.index')
-            ->with('success', 'Service updated successfully.');
+        return redirect()->route('admin.services.index')->with('success', 'Service updated successfully.');
     }
 
     public function destroy(Service $service)

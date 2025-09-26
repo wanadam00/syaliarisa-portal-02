@@ -4,12 +4,15 @@ import { useForm, usePage } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
+import Swal from 'sweetalert2';
 
 interface ContactInfo {
     id: number;
     address: string;
     phone: string;
     email: string;
+    mobile_phone_1: string | null;
+    mobile_phone_2: string | null;
     business_hours: string | null;
     is_visible: boolean;
 }
@@ -20,19 +23,14 @@ const form = useForm({
     address: contactInfo.address ?? '',
     phone: contactInfo.phone ?? '',
     email: contactInfo.email ?? '',
+    mobile_phone_1: contactInfo.mobile_phone_1 ?? '',
+    mobile_phone_2: contactInfo.mobile_phone_2 ?? '',
     business_hours: contactInfo.business_hours ?? '',
     is_visible: Boolean(contactInfo.is_visible ?? true),
 });
 
 const quillEditor = ref<HTMLDivElement | null>(null);
 let quill: Quill | null = null;
-
-// Default business hours template
-const defaultBusinessHours = `
-Monday - Friday: 8:00 AM - 6:00 PM<br>
-Saturday: 9:00 AM - 2:00 PM<br>
-Sunday: Closed
-`.trim();
 
 onMounted(() => {
     if (quillEditor.value) {
@@ -49,7 +47,7 @@ onMounted(() => {
         });
 
         // Set initial value or default template
-        const initialContent = form.business_hours || defaultBusinessHours;
+        const initialContent = form.business_hours;
         quill.root.innerHTML = initialContent;
 
         // Sync with form
@@ -92,8 +90,22 @@ function submit() {
     form.post(route('admin.contact-info.update', contactInfo.id), {
         forceFormData: true,
         onSuccess: () => {
-            // Optional success handling
-        }
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Contact information updated.',
+                confirmButtonColor: '#3085d6',
+            });
+            form.reset();
+        },
+        onError: () => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed!',
+                text: 'Unable to update contact information.',
+                confirmButtonColor: '#d33',
+            });
+        },
     });
 }
 </script>
@@ -106,7 +118,7 @@ function submit() {
             <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                 <!-- Address -->
                 <div class="flex flex-col space-y-1">
-                    <label for="address" class="font-medium">Address</label>
+                    <label for="address" class="font-medium">Address<span class="text-red-500">*</span></label>
                     <input id="address" v-model="form.address" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.address" class="text-sm text-red-600">
@@ -116,7 +128,7 @@ function submit() {
 
                 <!-- Phone -->
                 <div class="flex flex-col space-y-1">
-                    <label for="phone" class="font-medium">Phone</label>
+                    <label for="phone" class="font-medium">Office Phone<span class="text-red-500">*</span></label>
                     <input id="phone" v-model="form.phone" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.phone" class="text-sm text-red-600">
@@ -124,9 +136,29 @@ function submit() {
                     </span>
                 </div>
 
+                <!-- Mobile Phone 1 -->
+                <div class="flex flex-col space-y-1">
+                    <label for="mobile_phone_1" class="font-medium">Mobile Phone 1</label>
+                    <input id="mobile_phone_1" v-model="form.mobile_phone_1" type="text"
+                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                    <span v-if="form.errors.mobile_phone_1" class="text-sm text-red-600">
+                        {{ form.errors.mobile_phone_1 }}
+                    </span>
+                </div>
+
+                <!-- Mobile Phone 2 -->
+                <div class="flex flex-col space-y-1">
+                    <label for="mobile_phone_2" class="font-medium">Mobile Phone 2</label>
+                    <input id="mobile_phone_2" v-model="form.mobile_phone_2" type="text"
+                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                    <span v-if="form.errors.mobile_phone_2" class="text-sm text-red-600">
+                        {{ form.errors.mobile_phone_2 }}
+                    </span>
+                </div>
+
                 <!-- Email -->
                 <div class="flex flex-col space-y-1">
-                    <label for="email" class="font-medium">Email</label>
+                    <label for="email" class="font-medium">Email<span class="text-red-500">*</span></label>
                     <input id="email" v-model="form.email" type="email"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.email" class="text-sm text-red-600">
@@ -146,7 +178,8 @@ function submit() {
 
                 <!-- Business Hours with Quill -->
                 <div class="flex flex-col space-y-1">
-                    <label for="business_hours" class="font-medium">Business Hours</label>
+                    <label for="business_hours" class="font-medium">Business Hours<span
+                            class="text-red-500">*</span></label>
                     <div class="mb-2">
                         <button type="button" @click="formatBusinessHours"
                             class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded border">

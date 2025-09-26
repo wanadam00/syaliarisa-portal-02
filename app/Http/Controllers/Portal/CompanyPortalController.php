@@ -64,8 +64,8 @@ class CompanyPortalController extends Controller
 
     public function companyInfo()
     {
-        $companyInfo = CompanyInfo::first();
-        $employees = Employee::all()->map(function ($employee) {
+        $companyInfo = CompanyInfo::where('is_visible', true)->first();
+        $employees = Employee::where('is_visible', true)->get()->map(function ($employee) {
             return [
                 'id' => $employee->id,
                 'name' => $employee->name,
@@ -75,6 +75,7 @@ class CompanyPortalController extends Controller
                 'photo' => $employee->photo_url, // send URL to frontend
             ];
         });
+
         return Inertia::render('Portal/CompanyInfo', [
             'companyInfo' => [
                 'background' => $companyInfo?->background,
@@ -86,24 +87,22 @@ class CompanyPortalController extends Controller
         ]);
     }
 
+    // public function aboutUsOrganization()
+    // {
+    //     $companyInfo = CompanyInfo::where('is_visible', true)->first();
+    //     $employees = Employee::where('is_visible', true)->get();
 
-    public function aboutUsOrganization()
-    {
-        $companyInfo = CompanyInfo::first();
-        $employees = Employee::where('is_visible', true)->get();
-        // $aboutUsContents = AboutUsContent::where('section', 'organization')->get();
-        return Inertia::render('Portal/AboutUsOrganization', [
-            'companyInfo' => $companyInfo,
-            'employees' => $employees,
-            // 'aboutUsContents' => $aboutUsContents,
-        ]);
-    }
+    //     return Inertia::render('Portal/AboutUsOrganization', [
+    //         'companyInfo' => $companyInfo,
+    //         'employees' => $employees,
+    //     ]);
+    // }
 
     public function aboutUsStandards()
     {
-        $standards = StandardApplication::all()->map(function ($standard) {
+        $standards = StandardApplication::where('is_visible', true)->get()->map(function ($standard) {
             $standard->logo = $standard->logo
-                ? asset('storage/' . $standard->logo) // if using storage/app/public
+                ? asset('storage/' . $standard->logo)
                 : null;
             return $standard;
         });
@@ -113,10 +112,9 @@ class CompanyPortalController extends Controller
         ]);
     }
 
-
     public function aboutUsLegislation()
     {
-        $legislations = Legislation::all()->map(function ($legislation) {
+        $legislations = Legislation::where('is_visible', true)->get()->map(function ($legislation) {
             $legislation->image = $legislation->image
                 ? asset('storage/' . $legislation->image)
                 : null;
@@ -130,13 +128,16 @@ class CompanyPortalController extends Controller
 
     public function servicesHealthSafety()
     {
-        $services = Service::with('images')->get()->map(function ($service) {
-            $service->images = $service->images->map(function ($image) {
-                $image->url = url('storage/' . $image->url); // Ensure full URL is generated
-                return $image;
+        $services = Service::where('is_visible', true)
+            ->with('images')
+            ->get()
+            ->map(function ($service) {
+                $service->images = $service->images->map(function ($image) {
+                    $image->url = url('storage/' . $image->url);
+                    return $image;
+                });
+                return $service;
             });
-            return $service;
-        });
 
         return Inertia::render('Portal/ServicesHealthSafety', [
             'services' => $services,
@@ -145,13 +146,16 @@ class CompanyPortalController extends Controller
 
     public function servicesTraining()
     {
-        $services = Service::with('images')->get()->map(function ($service) {
-            $service->images = $service->images->map(function ($image) {
-                $image->url = url('storage/' . $image->url); // Ensure full URL is generated
-                return $image;
+        $services = Service::where('is_visible', true)
+            ->with('images')
+            ->get()
+            ->map(function ($service) {
+                $service->images = $service->images->map(function ($image) {
+                    $image->url = url('storage/' . $image->url);
+                    return $image;
+                });
+                return $service;
             });
-            return $service;
-        });
 
         return Inertia::render('Portal/ServicesTraining', [
             'services' => $services,
@@ -160,13 +164,16 @@ class CompanyPortalController extends Controller
 
     public function servicesEngineering()
     {
-        $services = Service::with('images')->get()->map(function ($service) {
-            $service->images = $service->images->map(function ($image) {
-                $image->url = url('storage/' . $image->url); // Ensure full URL is generated
-                return $image;
+        $services = Service::where('is_visible', true)
+            ->with('images')
+            ->get()
+            ->map(function ($service) {
+                $service->images = $service->images->map(function ($image) {
+                    $image->url = url('storage/' . $image->url);
+                    return $image;
+                });
+                return $service;
             });
-            return $service;
-        });
 
         return Inertia::render('Portal/ServicesEngineering', [
             'services' => $services,
@@ -175,13 +182,16 @@ class CompanyPortalController extends Controller
 
     public function servicesEnvironmental()
     {
-        $services = Service::with('images')->get()->map(function ($service) {
-            $service->images = $service->images->map(function ($image) {
-                $image->url = url('storage/' . $image->url); // Ensure full URL is generated
-                return $image;
+        $services = Service::where('is_visible', true)
+            ->with('images')
+            ->get()
+            ->map(function ($service) {
+                $service->images = $service->images->map(function ($image) {
+                    $image->url = url('storage/' . $image->url);
+                    return $image;
+                });
+                return $service;
             });
-            return $service;
-        });
 
         return Inertia::render('Portal/ServicesEnvironmental', [
             'services' => $services,
@@ -190,7 +200,7 @@ class CompanyPortalController extends Controller
 
     public function contact()
     {
-        $contactInfo = ContactInfo::all();
+        $contactInfo = ContactInfo::where('is_visible', true)->get();
         return Inertia::render('Portal/Contact', [
             'contactInfo' => $contactInfo,
         ]);

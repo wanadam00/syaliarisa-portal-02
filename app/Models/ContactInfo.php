@@ -14,6 +14,8 @@ class ContactInfo extends Model
         'address',
         'phone',
         'email',
+        'mobile_phone_1',
+        'mobile_phone_2',
         'map_embed',
         'business_hours',
         'is_visible',

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('standard_applications', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('logo')->nullable();
             $table->string('link')->nullable();
             $table->boolean('is_visible')->default(true);

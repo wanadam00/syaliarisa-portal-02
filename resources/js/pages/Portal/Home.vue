@@ -70,8 +70,8 @@ onMounted(() => {
             <!-- Content container -->
             <div class="container mx-auto px-4 py-20 relative z-10 text-white">
                 <div class="max-w-3xl p-8 rounded-lg" data-aos="fade-up">
-                    <h1 class="text-5xl font-bold mb-6">{{ homeSections[0]?.title }}</h1>
-                    <p class="text-xl mb-8">
+                    <h1 class="text-5xl text-justify font-bold mb-6">{{ homeSections[0]?.title }}</h1>
+                    <p class="text-xl text-justify mb-8">
                         {{ homeSections[0]?.top_details }}
                     </p>
                     <div class="flex flex-wrap gap-4">
@@ -173,7 +173,7 @@ onMounted(() => {
                 <div class="lg:w-1/2" data-aos="fade-left">
                     <h2 class="text-3xl font-bold mb-6 text-primary dark:text-secondary">About Syaliarisa Services
                     </h2>
-                    <p class="text-xl mb-4">{{ homeSections[0]?.bottom_details }}</p>
+                    <p class="text-xl text-justify mb-4">{{ homeSections[0]?.bottom_details }}</p>
                     <!-- <p class="mb-4">{{ companyInfo[0]?.mission }}</p> -->
                     <a href="/about-us/company-info"
                         class="inline-block bg-[#2262ae] hover:bg-secondary hover:text-primary text-white font-medium px-6 py-3 rounded transition">

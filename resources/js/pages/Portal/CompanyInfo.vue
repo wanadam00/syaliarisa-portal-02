@@ -27,26 +27,6 @@ const { companyInfo, employees } = usePage().props as unknown as {
 // Only employees that are visible
 const visibleEmployees = computed(() => employees.filter(e => e.is_visible));
 
-// Group employees by department but only visible ones
-const departments = computed(() => {
-    const deptMap = new Map<string, Employee[]>();
-    visibleEmployees.value.forEach(employee => {
-        if (!deptMap.has(employee.department)) {
-            deptMap.set(employee.department, []);
-        }
-        deptMap.get(employee.department)?.push(employee);
-    });
-    return deptMap;
-});
-
-// Leadership Team only visible
-const leadershipTeam = computed(() =>
-    visibleEmployees.value.filter(e =>
-        e.position.toLowerCase().includes('chief') ||
-        e.position.toLowerCase().includes('director')
-    )
-);
-
 // Organization hierarchy based on position
 const organization = computed(() => {
     const findByPosition = (pos: string) =>
@@ -82,7 +62,7 @@ onMounted(() => {
     clients.forEach(client => {
         L.marker([client.lat, client.lng])
             .addTo(map)
-            // .bindPopup(`<b>${client.name}</b>`);
+        // .bindPopup(`<b>${client.name}</b>`);
     });
 });
 
@@ -93,7 +73,8 @@ onMounted(() => {
     <Head title="Company Info" />
     <AppLayout2>
         <!-- Hero Section -->
-        <section class="bg-[#2262ae] dark:bg-background dark:border-b py-12 text-white pt-32">
+        <section
+            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32">
             <div class="container mx-auto px-4 text-center">
                 <h1
                     class="text-4xl md:text-5xl font-bold mb-4 dark:text-white dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">
@@ -112,20 +93,20 @@ onMounted(() => {
                     <!-- Company Background -->
                     <div class="mb-12">
                         <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">About Our Company</h2>
-                        <p class="mb-6 text-gray-700 dark:text-gray-300">{{ companyInfo.background }}</p>
+                        <p class="mb-6 text-gray-700 text-justify dark:text-gray-300">{{ companyInfo.background }}</p>
 
                         <div class="grid md:grid-cols-2 gap-6 mb-8">
                             <div
                                 class="bg-white dark:bg-background p-6 rounded-lg shadow-md dark:shadow-white border border-gray-100 dark:border-white">
                                 <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Our Mission
                                 </h3>
-                                <p class="text-gray-700 dark:text-gray-300">{{ companyInfo.mission }}</p>
+                                <p class="text-gray-700 dark:text-gray-300 text-justify">{{ companyInfo.mission }}</p>
                             </div>
                             <div
                                 class="bg-white dark:bg-background p-6 rounded-lg shadow-md dark:shadow-white border border-gray-100 dark:border-white">
                                 <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Our Vision
                                 </h3>
-                                <p class="text-gray-700 dark:text-gray-300">{{ companyInfo.vision }}</p>
+                                <p class="text-gray-700 dark:text-gray-300 text-justify">{{ companyInfo.vision }}</p>
                             </div>
                         </div>
                     </div>

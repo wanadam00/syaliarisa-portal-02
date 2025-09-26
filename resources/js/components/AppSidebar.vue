@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { LayoutGrid, Building2, Users, BookText, Briefcase, Phone, Folder, BookOpen } from 'lucide-vue-next';
+import { LayoutGrid, Home, Info, Users, FileText, Gavel, Wrench, Phone, Folder, BookOpen } from 'lucide-vue-next';
 
 import {
     Sidebar,
@@ -20,50 +20,40 @@ import { type NavItem } from '@/types';
 
 // Main admin sections
 const mainNavItems: NavItem[] = [
-    // {
-    //     title: 'Dashboard',
-    //     href: route('dashboard'),
-    //     icon: LayoutGrid,
-    // },
     {
         title: 'Home',
         href: route('admin.home-sections.index'),
-        icon: Building2,
+        icon: Home, // Updated to Home icon
     },
     {
         title: 'Company Info',
         href: route('admin.company-info.index'),
-        icon: Users,
+        icon: Info, // Updated to Info icon
     },
     {
         title: 'Organization Chart',
         href: route('admin.employees.index'),
-        icon: Users,
+        icon: Users, // Kept Users icon
     },
-    // {
-    //     title: 'About Us',
-    //     href: route('admin.about-us-contents.index'),
-    //     icon: BookText,
-    // },
     {
         title: 'Standards Applications',
         href: route('admin.standard-applications.index'),
-        icon: Briefcase,
+        icon: FileText, // Updated to FileText icon
     },
     {
         title: 'Legislations',
         href: route('admin.legislations.index'),
-        icon: Briefcase,
+        icon: Gavel, // Updated to Gavel icon
     },
     {
         title: 'Services',
         href: route('admin.services.index'),
-        icon: Briefcase,
+        icon: Wrench, // Updated to Wrench icon
     },
     {
         title: 'Contact Us',
         href: route('admin.contact-info.index'),
-        icon: Phone,
+        icon: Phone, // Kept Phone icon
     },
 ];
 

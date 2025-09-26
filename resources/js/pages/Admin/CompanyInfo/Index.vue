@@ -80,7 +80,7 @@ function deleteCompany(id: number) {
             <div class="flex justify-end mb-4">
                 <a href="/admin/company-info/create"
                     class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition">
-                    + Create
+                    + Add
                 </a>
             </div>
 
@@ -99,9 +99,21 @@ function deleteCompany(id: number) {
                     <tbody class="text-gray-800 dark:text-gray-100 divide-y divide-gray-200 dark:divide-gray-700">
                         <tr v-for="(info, index) in companyInfo" :key="info.id">
                             <td class="px-4 py-2">{{ index + 1 }}</td>
-                            <td class="px-4 py-2 truncate">{{ info.background }}</td>
-                            <td class="px-4 py-2 truncate">{{ info.vision }}</td>
-                            <td class="px-4 py-2 truncate">{{ info.mission }}</td>
+                            <td class="px-4 py-2 w-64">
+                                <div class="line-clamp-1 text-ellipsis overflow-hidden" :background="info.background">
+                                    {{ info.background }}
+                                </div>
+                            </td>
+                            <td class="px-4 py-2 w-64">
+                                <div class="line-clamp-1 text-ellipsis overflow-hidden" :background="info.vision">
+                                    {{ info.vision }}
+                                </div>
+                            </td>
+                            <td class="px-4 py-2 w-64">
+                                <div class="line-clamp-1 text-ellipsis overflow-hidden" :background="info.mission">
+                                    {{ info.mission }}
+                                </div>
+                            </td>
                             <td class="px-4 py-2">
                                 <span
                                     :class="info.is_visible ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">

@@ -3,12 +3,15 @@ import { Head, usePage } from '@inertiajs/vue3';
 import AppLayout2 from '@/layouts/AppLayout2.vue';
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import Swal from 'sweetalert2';
 
 interface ContactInfo {
     id: number;
     address: string;
     phone: string;
     email: string;
+    mobile_phone_1: string | null;
+    mobile_phone_2: string | null;
     business_hours: string | null;
     is_visible: boolean;
 }
@@ -26,11 +29,21 @@ const form = useForm({
 function submitForm() {
     form.post('/customers', {
         onSuccess: () => {
-            alert('Your message has been sent successfully!');
+            Swal.fire({
+                icon: 'success',
+                title: 'Message Sent!',
+                text: 'Your message has been sent successfully!',
+                confirmButtonColor: '#3085d6',
+            });
             form.reset();
         },
         onError: () => {
-            alert('There was an error sending your message. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'There was an error sending your message. Please try again.',
+                confirmButtonColor: '#d33',
+            });
         },
     });
 }
@@ -40,7 +53,6 @@ const formatBusinessHours = (hoursHtml: string | null) => {
     if (!hoursHtml) return [];
 
     try {
-        // Remove HTML tags and split by line breaks
         const plainText = hoursHtml.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '');
         const lines = plainText.split('\n').filter(line => line.trim());
 
@@ -66,9 +78,10 @@ const formatBusinessHours = (hoursHtml: string | null) => {
     <div class="flex flex-col min-h-screen bg-gradient-to-br from-white to-blue-50 dark:from-gray-900 dark:to-gray-800">
         <AppLayout2>
             <!-- Page Header -->
-            <section class="bg-[#2262ae] dark:bg-background dark:border-b py-12 text-white pt-32">
+            <section
+                class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32">
                 <div class="container mx-auto px-4 text-center">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h1>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
                     <p class="text-lg text-blue-100 dark:text-gray-300">
                         We'd love to hear from you. Reach out to us through any of the channels below.
                     </p>
@@ -89,8 +102,8 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                         <!-- Address -->
                                         <div class="flex items-start gap-4">
                                             <div
-                                                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
-                                                <i class="bi bi-geo-alt"></i>
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800">
+                                                <i class="bi bi-geo-alt text-red-500"></i>
                                             </div>
                                             <div>
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Address</h4>
@@ -98,31 +111,65 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                             </div>
                                         </div>
 
-                                        <!-- Phone -->
+                                        <!-- Office Phone -->
                                         <div class="flex items-start gap-4">
                                             <div
-                                                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
-                                                <i class="bi bi-telephone"></i>
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800">
+                                                <i class="bi bi-telephone text-gray-500"></i>
                                             </div>
                                             <div>
-                                                <h4 class="font-medium text-gray-900 dark:text-white">Phone</h4>
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Office Phone</h4>
                                                 <a :href="`tel:${info.phone}`"
-                                                    class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors">{{
-                                                        info.phone }}</a>
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-gray-700 transition-colors">
+                                                    {{ info.phone }}
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <!-- Mobile Phone 1 -->
+                                        <div v-if="info.mobile_phone_1" class="flex items-start gap-4">
+                                            <div
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800">
+                                                <i class="bi bi-whatsapp text-green-500"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Whatsapp (1)</h4>
+                                                <a :href="`https://wa.me/${info.mobile_phone_1.replace('+', '')}`"
+                                                    target="_blank"
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-green-500 transition-colors">
+                                                    {{ info.mobile_phone_1 }}
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <!-- Mobile Phone 2 -->
+                                        <div v-if="info.mobile_phone_2" class="flex items-start gap-4">
+                                            <div
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800">
+                                                <i class="bi bi-whatsapp text-green-500"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Whatsapp (2)</h4>
+                                                <a :href="`https://wa.me/${info.mobile_phone_2.replace('+', '')}`"
+                                                    target="_blank"
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-green-500 transition-colors">
+                                                    {{ info.mobile_phone_2 }}
+                                                </a>
                                             </div>
                                         </div>
 
                                         <!-- Email -->
                                         <div class="flex items-start gap-4">
                                             <div
-                                                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
-                                                <i class="bi bi-envelope"></i>
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800">
+                                                <i class="bi bi-envelope text-yellow-500"></i>
                                             </div>
                                             <div>
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Email</h4>
                                                 <a :href="`mailto:${info.email}`"
-                                                    class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors">{{
-                                                        info.email }}</a>
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 transition-colors">
+                                                    {{ info.email }}
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -176,10 +223,15 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                         <textarea v-model="form.message" rows="4" required
                                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"></textarea>
                                     </div>
-                                    <button type="submit"
-                                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors">
-                                        Send Message
-                                    </button>
+                                    <!-- Submit -->
+                                    <div>
+                                        <button type="submit"
+                                            class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition"
+                                            :disabled="form.processing">
+                                            <span v-if="form.processing">Sending...</span>
+                                            <span v-else>Send Message</span>
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
                         </div>

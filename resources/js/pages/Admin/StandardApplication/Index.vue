@@ -92,21 +92,22 @@ onBeforeUnmount(() => {
 
                             <!-- Description with better text handling -->
                             <td class="px-4 py-2 w-64 max-w-[16rem]">
-                                <div class="line-clamp-2 text-ellipsis overflow-hidden" :title="standard.description">
+                                <div class="line-clamp-1 text-ellipsis overflow-hidden" :title="standard.description">
                                     {{ standard.description }}
                                 </div>
                             </td>
 
                             <td class="px-4 py-2 w-24">
                                 <img v-if="standard.logo" :src="standard.logo" :alt="standard.title"
-                                    class="h-10 w-10 rounded object-cover mx-auto" />
+                                    class="h-10 w-10 rounded object-cover" />
                                 <span v-else class="italic text-gray-400 text-sm">No logo</span>
                             </td>
 
                             <!-- Link with better truncation -->
                             <td class="px-4 py-2 w-48 max-w-[12rem]">
                                 <a v-if="standard.link" :href="standard.link" target="_blank"
-                                    class="text-blue-600 hover:underline truncate block" :title="standard.link">
+                                    class="text-blue-600 hover:underline line-clamp-1 text-ellipsis overflow-hidden"
+                                    :title="standard.link">
                                     {{ standard.link }}
                                 </a>
                                 <span v-else class="italic text-gray-400 text-sm">No link</span>

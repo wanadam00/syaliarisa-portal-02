@@ -33,9 +33,9 @@ class StandardApplicationController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
             'logo' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'link' => 'required|url',
+            'link' => 'nullable|url',
             'is_visible' => 'boolean',
         ]);
 
@@ -62,8 +62,8 @@ class StandardApplicationController extends Controller
     public function update(Request $request, StandardApplication $standardApplication)
     {
         $data = $request->validate([
-            'title' => 'nullable|string|max:255',
-            'description' => 'nullable|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
             'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',

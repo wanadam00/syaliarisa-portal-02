@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
+            $table->string('mobile_phone_1')->nullable();
+            $table->string('mobile_phone_2')->nullable();
             $table->string('email')->nullable();
             $table->text('map_embed')->nullable();
             $table->text('business_hours')->nullable();

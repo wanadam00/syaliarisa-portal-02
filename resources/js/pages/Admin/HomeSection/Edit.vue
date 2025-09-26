@@ -2,6 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Swal from 'sweetalert2';
 
 interface HomeSection {
     id: number;
@@ -56,9 +57,22 @@ function submit() {
     form.post(route('admin.home-sections.update', homeSection.id), {
         forceFormData: true, // 🔑 ensures file uploads
         onSuccess: () => {
-            topPreview.value = null; // reset preview after successful update
-            bottomPreview.value = null; // reset preview after successful update
-        }
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Home information updated.',
+                confirmButtonColor: '#3085d6',
+            });
+            form.reset();
+        },
+        onError: () => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed!',
+                text: 'Unable to update home information.',
+                confirmButtonColor: '#d33',
+            });
+        },
     });
 }
 </script>
@@ -71,7 +85,7 @@ function submit() {
             <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                 <!-- Title -->
                 <div class="flex flex-col space-y-1">
-                    <label for="title" class="font-medium">Title</label>
+                    <label for="title" class="font-medium">Title<span class="text-red-500">*</span></label>
                     <input id="title" v-model="form.title" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.title" class="text-sm text-red-600">
@@ -81,7 +95,7 @@ function submit() {
 
                 <!-- Top Deatils -->
                 <div class="flex flex-col space-y-1">
-                    <label for="top_details" class="font-medium">Top Details</label>
+                    <label for="top_details" class="font-medium">Top Details<span class="text-red-500">*</span></label>
                     <input id="top_details" v-model="form.top_details" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.top_details" class="text-sm text-red-600">
@@ -114,7 +128,8 @@ function submit() {
 
                 <!-- Bottom Details -->
                 <div class="flex flex-col space-y-1">
-                    <label for="department" class="font-medium">Bottom Details</label>
+                    <label for="department" class="font-medium">Bottom Details<span
+                            class="text-red-500">*</span></label>
                     <input id="department" v-model="form.bottom_details" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.bottom_details" class="text-sm text-red-600">

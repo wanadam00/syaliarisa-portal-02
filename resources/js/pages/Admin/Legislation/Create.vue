@@ -2,6 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Swal from 'sweetalert2';
 
 interface Legislation {
     id: number;
@@ -45,8 +46,22 @@ function submit() {
     form.post(route('admin.legislations.store'), {
         forceFormData: true,
         onSuccess: () => {
-            preview.value = null;
-        }
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'New detail added to the legislation.',
+                confirmButtonColor: '#3085d6',
+            });
+            form.reset();
+        },
+        onError: () => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed!',
+                text: 'Unable to add detail to the legislation.',
+                confirmButtonColor: '#d33',
+            });
+        },
     });
 }
 </script>
@@ -60,7 +75,7 @@ function submit() {
 
                 <!-- Type -->
                 <div class="flex flex-col space-y-1">
-                    <label for="type" class="font-medium">Type of legislation</label>
+                    <label for="type" class="font-medium">Type of legislation<span class="text-red-500">*</span></label>
                     <select id="type" v-model="form.type"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
                         <option value="" disabled>-- Select Type --</option>
@@ -86,7 +101,7 @@ function submit() {
 
                 <!-- Title -->
                 <div class="flex flex-col space-y-1">
-                    <label for="title" class="font-medium">Title</label>
+                    <label for="title" class="font-medium">Title<span class="text-red-500">*</span></label>
                     <input id="title" v-model="form.title" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.title" class="text-sm text-red-600">
@@ -96,7 +111,7 @@ function submit() {
 
                 <!-- Description -->
                 <div class="flex flex-col space-y-1">
-                    <label for="description" class="font-medium">Description</label>
+                    <label for="description" class="font-medium">Description<span class="text-red-500">*</span></label>
                     <textarea id="description" v-model="form.description" rows="5"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
                     <span v-if="form.errors.description" class="text-sm text-red-600">

@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
             <div class="flex justify-end mb-4">
                 <a href="/admin/employees/create"
                     class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition">
-                    + Create
+                    + Add
                 </a>
             </div>
             <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
@@ -96,7 +96,11 @@ onBeforeUnmount(() => {
                     <tbody class="text-gray-800 dark:text-gray-100 divide-y divide-gray-200 dark:divide-gray-700">
                         <tr v-for="(employee, index) in employees" :key="employee.id">
                             <td class="px-4 py-2">{{ index + 1 }}</td>
-                            <td class="px-4 py-2 truncate">{{ employee.name }}</td>
+                            <td class="px-4 py-2 w-64">
+                                <div class="line-clamp-1 text-ellipsis overflow-hidden" :name="employee.name">
+                                    {{ employee.name }}
+                                </div>
+                            </td>
                             <td class="px-4 py-2 truncate">{{ employee.department }}</td>
                             <td class="px-4 py-2 truncate">{{ employee.position }}</td>
                             <td class="px-4 py-2">

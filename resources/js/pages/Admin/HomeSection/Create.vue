@@ -2,6 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Swal from 'sweetalert2';
 
 interface HomeSection {
     id: number;
@@ -56,9 +57,22 @@ function submit() {
     form.post(route('admin.home-sections.store'), {
         forceFormData: true, // 🔑 ensures file uploads
         onSuccess: () => {
-            topPreview.value = null; // reset preview after successful update
-            bottomPreview.value = null; // reset preview after successful update
-        }
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'New detail added to the home.',
+                confirmButtonColor: '#3085d6',
+            });
+            form.reset();
+        },
+        onError: () => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed!',
+                text: 'Unable to add detail to the home.',
+                confirmButtonColor: '#d33',
+            });
+        },
     });
 }
 </script>
@@ -66,23 +80,23 @@ function submit() {
 <template>
     <AppLayout>
         <div class="p-6 max-w-2xl">
-            <h1 class="text-2xl font-bold mb-6">Create Home</h1>
+            <h1 class="text-2xl font-bold mb-6">Add Home</h1>
 
             <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                 <!-- Title -->
                 <div class="flex flex-col space-y-1">
-                    <label for="title" class="font-medium">Title</label>
+                    <label for="title" class="font-medium">Title<span class="text-red-500">*</span></label>
                     <input id="title" v-model="form.title" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.title" class="text-sm text-red-600">
                         {{ form.errors.title }}
                     </span>
                 </div>
-                
+
                 <!-- Top Details -->
                 <div class="flex flex-col space-y-1">
-                    <label for="top_details" class="font-medium">Top Details</label>
-                    <input id="top_details" v-model="form.top_details" type="text"
+                    <label for="top_details" class="font-medium">Top Details<span class="text-red-500">*</span></label>
+                    <textarea id="top_details" v-model="form.top_details" type="text" rows="3"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.top_details" class="text-sm text-red-600">
                         {{ form.errors.top_details }}
@@ -91,7 +105,7 @@ function submit() {
 
                 <!-- Top Background Upload -->
                 <div class="flex flex-col space-y-1">
-                    <label for="top_image" class="font-medium">Top Background</label>
+                    <label for="top_image" class="font-medium">Top Background<span class="text-red-500">*</span></label>
                     <input id="top_image" type="file" accept="image/*" @change="handleFileChangeTop"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                     <div v-if="form.errors.top_image" class="text-sm text-red-600">
@@ -114,8 +128,9 @@ function submit() {
 
                 <!-- Bottom Details -->
                 <div class="flex flex-col space-y-1">
-                    <label for="department" class="font-medium">Bottom Details</label>
-                    <input id="department" v-model="form.bottom_details" type="text"
+                    <label for="department" class="font-medium">Bottom Details<span
+                            class="text-red-500">*</span></label>
+                    <textarea id="department" v-model="form.bottom_details" type="text" rows="3"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.bottom_details" class="text-sm text-red-600">
                         {{ form.errors.bottom_details }}
@@ -124,7 +139,8 @@ function submit() {
 
                 <!-- Bottom Image Upload -->
                 <div class="flex flex-col space-y-1">
-                    <label for="bottom_image" class="font-medium">Bottom Image</label>
+                    <label for="bottom_image" class="font-medium">Bottom Image<span
+                            class="text-red-500">*</span></label>
                     <input id="bottom_image" type="file" accept="image/*" @change="handleFileChangeBottom"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                     <div v-if="form.errors.bottom_image" class="text-sm text-red-600">

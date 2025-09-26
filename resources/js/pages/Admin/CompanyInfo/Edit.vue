@@ -2,6 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Swal from 'sweetalert2';
 
 interface CompanyInfo {
     id: number;
@@ -24,7 +25,22 @@ function submit() {
     form.post(route('admin.company-info.update', companyInfo.id), {
         forceFormData: true, // 🔑 ensures file uploads
         onSuccess: () => {
-        }
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Company information updated.',
+                confirmButtonColor: '#3085d6',
+            });
+            form.reset();
+        },
+        onError: () => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed!',
+                text: 'Unable to update company information.',
+                confirmButtonColor: '#d33',
+            });
+        },
     });
 }
 </script>
@@ -37,7 +53,8 @@ function submit() {
             <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                 <!-- Background -->
                 <div class="flex flex-col space-y-1">
-                    <label for="background" class="font-medium">Company Background</label>
+                    <label for="background" class="font-medium">Company Background<span
+                            class="text-red-500">*</span></label>
                     <textarea id="text" v-model="form.background" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.background" class="text-sm text-red-600">
@@ -47,7 +64,7 @@ function submit() {
 
                 <!-- Vision -->
                 <div class="flex flex-col space-y-1">
-                    <label for="vision" class="font-medium">Vision</label>
+                    <label for="vision" class="font-medium">Vision<span class="text-red-500">*</span></label>
                     <textarea id="vision" v-model="form.vision" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.vision" class="text-sm text-red-600">
@@ -57,7 +74,7 @@ function submit() {
 
                 <!-- mission -->
                 <div class="flex flex-col space-y-1">
-                    <label for="mission" class="font-medium">Mission</label>
+                    <label for="mission" class="font-medium">Mission<span class="text-red-500">*</span></label>
                     <textarea id="mission" v-model="form.mission" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.mission" class="text-sm text-red-600">

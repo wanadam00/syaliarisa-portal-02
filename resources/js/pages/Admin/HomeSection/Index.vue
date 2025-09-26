@@ -5,6 +5,7 @@ import { reactive, onMounted, onBeforeUnmount } from 'vue';
 
 interface HomeSection {
     id: number;
+    title: string;
     top_details: string;
     top_image: string | null;
     bottom_details: string | null;
@@ -79,7 +80,7 @@ sections.forEach(s => (s.showMenu = false));
             <div class="flex justify-end mb-4">
                 <Link :href="route('admin.home-sections.create')"
                     class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition">
-                + Create
+                + Add
                 </Link>
             </div>
 
@@ -89,6 +90,7 @@ sections.forEach(s => (s.showMenu = false));
                     <thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                         <tr>
                             <th class="px-4 py-3">No.</th>
+                            <th class="px-4 py-3">Title</th>
                             <th class="px-4 py-3">Top Details</th>
                             <th class="px-4 py-3">Top Background</th>
                             <th class="px-4 py-3">Bottom Details</th>
@@ -100,13 +102,28 @@ sections.forEach(s => (s.showMenu = false));
                     <tbody class="text-gray-800 dark:text-gray-100 divide-y divide-gray-200 dark:divide-gray-700">
                         <tr v-for="(section, index) in sections" :key="section.id">
                             <td class="px-4 py-2">{{ index + 1 }}</td>
-                            <td class="px-4 py-2 truncate">{{ section.top_details }}</td>
+                            <td class="px-4 py-2 w-64">
+                                <div class="line-clamp-1 text-ellipsis overflow-hidden" :title="section.title">
+                                    {{ section.title }}
+                                </div>
+                            </td>
+                            <td class="px-4 py-2 w-64">
+                                <div class="line-clamp-1 text-ellipsis overflow-hidden" :title="section.top_details">
+                                    {{ section.top_details }}
+                                </div>
+                            </td>
+                            <!-- <td class="px-4 py-2 truncate">{{ section.top_details }}</td> -->
                             <td class="px-4 py-2">
                                 <img v-if="section.top_image" :src="section.top_image" alt="Top Image"
                                     class="h-10 w-16 rounded object-cover" />
                                 <span v-else class="italic text-gray-400">No image</span>
                             </td>
-                            <td class="px-4 py-2 truncate">{{ section.bottom_details }}</td>
+                            <td class="px-4 py-2 w-64">
+                                <div class="line-clamp-1 text-ellipsis overflow-hidden" :title="section.bottom_details">
+                                    {{ section.bottom_details }}
+                                </div>
+                            </td>
+                            <!-- <td class="px-4 py-2 truncate">{{ section.bottom_details }}</td> -->
                             <td class="px-4 py-2">
                                 <img v-if="section.bottom_image" :src="section.bottom_image" alt="Bottom Image"
                                     class="h-10 w-16 rounded object-cover" />

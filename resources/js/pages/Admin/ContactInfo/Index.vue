@@ -98,11 +98,14 @@ onBeforeUnmount(() => {
                     <tbody class="text-gray-800 dark:text-gray-100 divide-y divide-gray-200 dark:divide-gray-700">
                         <tr v-for="(contactInfo, index) in contactInfo" :key="contactInfo.id">
                             <td class="px-4 py-2">{{ index + 1 }}</td>
-                            <td class="px-4 py-2 truncate">{{ contactInfo.address }}</td>
+                            <td class="px-4 py-2 w-64 max-w-[16rem]">
+                                <div class="line-clamp-1 text-ellipsis overflow-hidden prose prose-sm dark:prose-invert"
+                                    v-html="contactInfo.address">
+                                </div>
+                            </td>
                             <td class="px-4 py-2 truncate">{{ contactInfo.phone }}</td>
                             <td class="px-4 py-2 truncate">{{ contactInfo.email }}</td>
                             <!-- <td class="px-4 py-2 truncate">{{ contactInfo.map_embed }}</td> -->
-                            <!-- <td class="px-4 py-2 truncate">{{ contactInfo.business_hours }}</td> -->
                             <!-- Business Hours -->
                             <td class="px-4 py-2 w-64 max-w-[16rem]">
                                 <div class="line-clamp-2 text-ellipsis overflow-hidden prose prose-sm dark:prose-invert"

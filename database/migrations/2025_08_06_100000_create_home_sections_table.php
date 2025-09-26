@@ -11,9 +11,9 @@ return new class extends Migration
         Schema::create('home_sections', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->string('top_details')->nullable();
+            $table->text('top_details')->nullable();
             $table->string('top_image')->nullable();
-            $table->string('bottom_details')->nullable();
+            $table->text('bottom_details')->nullable();
             $table->string('bottom_image')->nullable();
             $table->timestamps();
         });

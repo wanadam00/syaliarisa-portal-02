@@ -62,11 +62,13 @@ interface AboutUsStandard {
     description: string
     logo: string | null
     link: string | null
+    is_visible: boolean
 }
 
 const { aboutUsStandards } = usePage().props as unknown as {
     aboutUsStandards: AboutUsStandard[]
 }
 
-const standards = aboutUsStandards
+const standards = aboutUsStandards;
+const visibleStandards = standards.filter((standard) => standard.is_visible);
 </script>

@@ -2,6 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Swal from 'sweetalert2';
 
 interface StandardApplication {
     id: number;
@@ -41,8 +42,22 @@ function submit() {
     form.post(route('admin.standard-applications.store'), {
         forceFormData: true, // 🔑 ensures file uploads
         onSuccess: () => {
-            preview.value = null; // reset preview after successful update
-        }
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'New standard added to the standard application.',
+                confirmButtonColor: '#3085d6',
+            });
+            form.reset();
+        },
+        onError: () => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed!',
+                text: 'Unable to add standard to the standard application.',
+                confirmButtonColor: '#d33',
+            });
+        },
     });
 }
 </script>
@@ -55,7 +70,7 @@ function submit() {
             <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                 <!-- Title -->
                 <div class="flex flex-col space-y-1">
-                    <label for="title" class="font-medium">Title</label>
+                    <label for="title" class="font-medium">Title<span class="text-red-500">*</span></label>
                     <input id="title" v-model="form.title" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.title" class="text-sm text-red-600">
@@ -64,7 +79,7 @@ function submit() {
                 </div>
                 <!-- Description -->
                 <div class="flex flex-col space-y-1">
-                    <label for="description" class="font-medium">Description</label>
+                    <label for="description" class="font-medium">Description<span class="text-red-500">*</span></label>
                     <textarea id="description" v-model="form.description" rows="3"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required></textarea>
                     <span v-if="form.errors.description" class="text-sm text-red-600">
@@ -83,7 +98,7 @@ function submit() {
 
                 <!-- Logo Upload -->
                 <div class="flex flex-col space-y-1">
-                    <label for="logo" class="font-medium">Logo</label>
+                    <label for="logo" class="font-medium">Logo<span class="text-red-500">*</span></label>
                     <input id="logo" type="file" accept="image/*" @change="handleFileChange"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                     <div v-if="form.errors.logo" class="text-sm text-red-600">
