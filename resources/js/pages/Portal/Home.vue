@@ -80,7 +80,7 @@ onMounted(() => {
                             Get a Consultation
                         </a>
                         <a href="#services"
-                            class="border-2 border-white hover:bg-white hover:text-primary text-white font-medium px-6 py-3 rounded transition">
+                            class="border-2 border-white hover:bg-white hover:text-primary text-white font-medium px-6 py-3 rounded transition duration">
                             Our Services
                         </a>
                     </div>
@@ -103,13 +103,13 @@ onMounted(() => {
                         <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                class="w-20 h-20 bg-[#2262ae] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
                                 <i class="bi bi-shield"></i>
                             </div>
                             <h3 class="text-xl font-medium mb-3">Health & Safety</h3>
                             <p class="mb-5 flex-grow">Explore our professional Health & Safety solutions.</p>
                             <a href="/services/health-safety"
-                                class="inline-block border border-primary text-primary hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
+                                class="inline-block border border-[#2262ae] text-[#2262ae] hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
                                 Learn More
                             </a>
                         </div>
@@ -118,13 +118,13 @@ onMounted(() => {
                         <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
                                 <i class="bi bi-book"></i>
                             </div>
                             <h3 class="text-xl font-medium mb-3">Training</h3>
                             <p class="mb-5 flex-grow">Comprehensive training programs for your team.</p>
                             <a href="/services/training"
-                                class="inline-block border border-primary text-primary hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
+                                class="inline-block border border-[#2262ae] text-[#2262ae] hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
                                 Learn More
                             </a>
                         </div>
@@ -133,13 +133,13 @@ onMounted(() => {
                         <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                class="w-20 h-20 bg-[#2262ae] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
                                 <i class="bi bi-gear"></i>
                             </div>
                             <h3 class="text-xl font-medium mb-3">Engineering</h3>
                             <p class="mb-5 flex-grow">Innovative engineering solutions tailored to your needs.</p>
                             <a href="/services/engineering"
-                                class="inline-block border border-primary text-primary hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
+                                class="inline-block border border-[#2262ae] text-[#2262ae] hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
                                 Learn More
                             </a>
                         </div>
@@ -148,13 +148,13 @@ onMounted(() => {
                         <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
                                 <i class="bi bi-tree"></i>
                             </div>
                             <h3 class="text-xl font-medium mb-3">Environmental</h3>
                             <p class="mb-5 flex-grow">Sustainable environmental solutions for your business.</p>
                             <a href="/services/environmental"
-                                class="inline-block border border-primary text-primary hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
+                                class="inline-block border border-[#2262ae] text-[#2262ae] hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
                                 Learn More
                             </a>
                         </div>

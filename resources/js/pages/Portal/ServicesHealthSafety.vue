@@ -47,7 +47,7 @@ function toggleDetails(serviceId: number) {
         <section class="bg-[#2262ae] dark:bg-background py-12 pt-32 text-white">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">
-                    Services (Health & Safety)
+                   Health & Safety
                 </h1>
                 <p class="text-gray-200 text-lg">
                     Explore our professional Health & Safety solutions

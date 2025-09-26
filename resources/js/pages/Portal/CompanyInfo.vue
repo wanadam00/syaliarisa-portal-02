@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Head, usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import AppLayout2 from '@/layouts/AppLayout2.vue';
+import L from 'leaflet';
 
 interface CompanyInfo {
     background: string;
@@ -60,6 +61,29 @@ const organization = computed(() => {
         fieldExecutives: findByPosition("Field Executive"),
         fieldTechnicians: findByPosition("Field Technician"),
     };
+});
+
+// Example branch data (you can fetch this from Laravel later)
+const clients = [
+    { id: 1, name: "HQ - Kuala Lumpur", lat: 3.139, lng: 101.6869 },
+    { id: 2, name: "Branch - Penang", lat: 5.4141, lng: 100.3288 },
+    { id: 3, name: "Branch - Johor Bahru", lat: 1.4927, lng: 103.7414 },
+];
+
+onMounted(() => {
+    const map = L.map('client-map').setView([3.139, 101.6869], 6); // default Malaysia view
+
+    // OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add markers for each branch
+    clients.forEach(client => {
+        L.marker([client.lat, client.lng])
+            .addTo(map)
+            // .bindPopup(`<b>${client.name}</b>`);
+    });
 });
 
 </script>
@@ -237,6 +261,12 @@ const organization = computed(() => {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white text-center">
+                        Our Client Locations
+                    </h2>
+                    <div id="client-map" class="leaflet-container"></div>
                 </div>
             </div>
         </section>

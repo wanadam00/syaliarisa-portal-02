@@ -41,7 +41,7 @@ const applyColorScheme = () => {
 </script>
 
 <template>
-    <div class="flex flex-col min-h-screen bg-white dark:bg-background text-[#212323] dark:text-white">
+    <div class="flex flex-col min-h-screen bg-white dark:bg-background text-[#212323] dark:text-white overflow-hidden">
         <PortalHeader />
         <slot />
         <PortalFooter />

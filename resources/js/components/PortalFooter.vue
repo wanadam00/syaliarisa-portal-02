@@ -1,5 +1,5 @@
 <template>
-    <footer class="pt-16 border-t" data-aos="fade-up">
+    <footer class="pt-16 border-t bg-gray-50" data-aos="fade-up">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Column 1: Company Info -->
@@ -16,6 +16,7 @@
                         Syaliarisa Services Sdn. Bhd. is an environmental, industrial hygiene and safety consulting,
                         monitoring & training firm operating for Malaysia and the regions.
                     </p> -->
+                    <h3 class="text-xl font-semibold text-primary mb-6">Follow Us</h3>
                     <div class="flex space-x-4">
                         <!-- Facebook -->
                         <a href="#"
