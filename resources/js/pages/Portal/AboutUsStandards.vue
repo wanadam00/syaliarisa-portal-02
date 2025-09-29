@@ -3,7 +3,8 @@
     <Head title="Standards" />
     <AppLayout2>
         <!-- Hero Section -->
-        <section class="bg-[#2262ae] dark:bg-background py-12 text-white pt-32">
+        <section
+            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">Standards Application</h1>
                 <p class="text-lg opacity-90">Explore our recognized standards and guidelines</p>

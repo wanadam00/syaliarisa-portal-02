@@ -131,8 +131,8 @@ function submit() {
                     <button type="submit"
                         class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition"
                         :disabled="form.processing">
-                        <span v-if="form.processing">Submiting...</span>
-                        <span v-else>Submit</span>
+                        <span v-if="form.processing">Saving...</span>
+                        <span v-else>Save</span>
                     </button>
                 </div>
             </form>

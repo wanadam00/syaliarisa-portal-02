@@ -33,6 +33,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = $request->user();
+
+        if (is_null($user->email_verified_at)) {
+            return redirect()->route('password.forceUpdate')
+                ->with('status', 'Please update your password to verify your email and continue.');
+        }
+
         return redirect()->intended(route('admin.home-sections.index', absolute: false));
     }
 
@@ -46,6 +53,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

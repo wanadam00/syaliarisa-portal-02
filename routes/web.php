@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\LegislationController;
 use App\Http\Controllers\Admin\StandardApplicationController;
 use App\Http\Controllers\Portal\CompanyPortalController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Models\ContactInfo;
 
 use Inertia\Inertia;
@@ -21,6 +22,16 @@ use Inertia\Inertia;
 // Route::get('dashboard', function () {
 //     return Inertia::render('admin/home');
 // })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Password update routes
+// Password update routes
+Route::middleware('auth')->group(function () {
+    Route::get('/password/update', [PasswordController::class, 'edit'])
+        ->name('password.forceUpdate'); // use unique name
+
+    Route::post('/password/update', [PasswordController::class, 'update'])
+        ->name('password.forceUpdate.store'); // use PUT
+});
 
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
