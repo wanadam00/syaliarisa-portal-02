@@ -92,19 +92,19 @@ onMounted(() => {
                 <div class="flex flex-col">
                     <!-- Company Background -->
                     <div class="mb-12">
-                        <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">About Our Company</h2>
+                        <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">About Us</h2>
                         <p class="mb-6 text-gray-700 text-justify dark:text-gray-300">{{ companyInfo.background }}</p>
 
                         <div class="grid md:grid-cols-2 gap-6 mb-8">
                             <div
                                 class="bg-white dark:bg-background p-6 rounded-lg shadow-md dark:shadow-white border border-gray-100 dark:border-white">
-                                <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Our Mission
+                                <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Mission
                                 </h3>
                                 <p class="text-gray-700 dark:text-gray-300 text-justify">{{ companyInfo.mission }}</p>
                             </div>
                             <div
                                 class="bg-white dark:bg-background p-6 rounded-lg shadow-md dark:shadow-white border border-gray-100 dark:border-white">
-                                <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Our Vision
+                                <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Vision
                                 </h3>
                                 <p class="text-gray-700 dark:text-gray-300 text-justify">{{ companyInfo.vision }}</p>
                             </div>
@@ -113,7 +113,7 @@ onMounted(() => {
 
                     <!-- Organization Structure -->
                     <div class="text-center mb-12">
-                        <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Our Team Structure</h2>
+                        <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Team Structure</h2>
 
                         <!-- Manager -->
                         <div v-for="manager in organization.manager" :key="manager.id"
@@ -245,7 +245,7 @@ onMounted(() => {
                 </div>
                 <div class="container mx-auto px-4">
                     <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white text-center">
-                        Our Client Locations
+                        Client Locations
                     </h2>
                     <div id="client-map" class="leaflet-container"></div>
                 </div>

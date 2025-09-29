@@ -19,7 +19,7 @@ use Inertia\Inertia;
 // })->name('home');
 
 // Route::get('dashboard', function () {
-//     return Inertia::render('Dashboard');
+//     return Inertia::render('admin/home');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 
