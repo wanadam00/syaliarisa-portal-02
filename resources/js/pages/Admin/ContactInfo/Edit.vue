@@ -140,7 +140,7 @@ function submit() {
                 <div class="flex flex-col space-y-1">
                     <label for="mobile_phone_1" class="font-medium">Mobile Phone 1</label>
                     <input id="mobile_phone_1" v-model="form.mobile_phone_1" type="text"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.mobile_phone_1" class="text-sm text-red-600">
                         {{ form.errors.mobile_phone_1 }}
                     </span>
@@ -197,10 +197,17 @@ function submit() {
                 </div>
 
                 <!-- Visible Checkbox -->
-                <div class="flex items-center space-x-2">
-                    <input id="is_visible" v-model="form.is_visible" type="checkbox"
-                        class="h-4 w-4 border rounded text-blue-600" />
-                    <label for="is_visible" class="font-medium">Visible</label>
+                <div class="flex items-center space-x-3">
+                    <label for="is_visible" class="font-medium text-gray-700 dark:text-gray-300">Visible</label>
+                    <button type="button" @click="form.is_visible = !form.is_visible" :class="[
+                        'relative inline-flex h-6 w-11 items-center rounded-full transition',
+                        form.is_visible ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
+                    ]">
+                        <span :class="[
+                            'inline-block h-4 w-4 transform rounded-full bg-white transition',
+                            form.is_visible ? 'translate-x-6' : 'translate-x-1'
+                        ]" />
+                    </button>
                 </div>
 
                 <!-- Submit -->

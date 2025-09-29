@@ -14,13 +14,16 @@ class ServiceController extends Controller
     public function index()
     {
         // load services with images
-        $services = Service::with('images')->get()->map(function ($service) {
-            $service->images->transform(function ($img) {
-                $img->url = asset('storage/' . $img->url);
-                return $img;
+        $services = Service::with('images')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->through(function ($service) {
+                $service->images->transform(function ($img) {
+                    $img->url = asset('storage/' . $img->url);
+                    return $img;
+                });
+                return $service;
             });
-            return $service;
-        });
 
         return Inertia::render('Admin/Service/Index', [
             'services' => $services,

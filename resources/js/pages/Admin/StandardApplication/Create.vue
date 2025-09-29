@@ -71,7 +71,7 @@ function submit() {
                 <!-- Title -->
                 <div class="flex flex-col space-y-1">
                     <label for="title" class="font-medium">Title<span class="text-red-500">*</span></label>
-                    <input id="title" v-model="form.title" type="text"
+                    <input id="title" v-model="form.title" type="text" placeholder="Enter title..."
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.title" class="text-sm text-red-600">
                         {{ form.errors.title }}
@@ -80,7 +80,7 @@ function submit() {
                 <!-- Description -->
                 <div class="flex flex-col space-y-1">
                     <label for="description" class="font-medium">Description<span class="text-red-500">*</span></label>
-                    <textarea id="description" v-model="form.description" rows="3"
+                    <textarea id="description" v-model="form.description" rows="3" placeholder="Enter description..."
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required></textarea>
                     <span v-if="form.errors.description" class="text-sm text-red-600">
                         {{ form.errors.description }}
@@ -89,8 +89,8 @@ function submit() {
                 <!-- Link -->
                 <div class="flex flex-col space-y-1">
                     <label for="link" class="font-medium">Link</label>
-                    <input id="link" v-model="form.link" type="url"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                    <input id="link" v-model="form.link" type="url" placeholder="https://example.com"
+                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                     <span v-if="form.errors.link" class="text-sm text-red-600">
                         {{ form.errors.link }}
                     </span>
@@ -120,10 +120,17 @@ function submit() {
                 </div>
 
                 <!-- Visible Checkbox -->
-                <div class="flex items-center space-x-2">
-                    <input id="is_visible" v-model="form.is_visible" type="checkbox"
-                        class="h-4 w-4 border rounded text-blue-600" />
-                    <label for="is_visible" class="font-medium">Visible</label>
+                <div class="flex items-center space-x-3">
+                    <label for="is_visible" class="font-medium text-gray-700 dark:text-gray-300">Visible</label>
+                    <button type="button" @click="form.is_visible = !form.is_visible" :class="[
+                        'relative inline-flex h-6 w-11 items-center rounded-full transition',
+                        form.is_visible ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
+                    ]">
+                        <span :class="[
+                            'inline-block h-4 w-4 transform rounded-full bg-white transition',
+                            form.is_visible ? 'translate-x-6' : 'translate-x-1'
+                        ]" />
+                    </button>
                 </div>
 
                 <!-- Submit -->

@@ -113,13 +113,13 @@ function submit() {
 <template>
     <AppLayout>
         <div class="p-6 max-w-2xl">
-            <h1 class="text-2xl font-bold mb-6">Edit Contact Info</h1>
+            <h1 class="text-2xl font-bold mb-6">Add Contact Info</h1>
 
             <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                 <!-- Address -->
                 <div class="flex flex-col space-y-1">
                     <label for="address" class="font-medium">Address<span class="text-red-500">*</span></label>
-                    <input id="address" v-model="form.address" type="text"
+                    <input id="address" v-model="form.address" type="text" placeholder="Enter address..."
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.address" class="text-sm text-red-600">
                         {{ form.errors.address }}
@@ -129,7 +129,7 @@ function submit() {
                 <!-- Phone -->
                 <div class="flex flex-col space-y-1">
                     <label for="phone" class="font-medium">Office Phone<span class="text-red-500">*</span></label>
-                    <input id="phone" v-model="form.phone" type="text"
+                    <input id="phone" v-model="form.phone" type="text" placeholder="Enter office phone..."
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.phone" class="text-sm text-red-600">
                         {{ form.errors.phone }}
@@ -139,7 +139,7 @@ function submit() {
                 <!-- Mobile Phone 1 -->
                 <div class="flex flex-col space-y-1">
                     <label for="mobile_phone_1" class="font-medium">Mobile Phone 1</label>
-                    <input id="mobile_phone_1" v-model="form.mobile_phone_1" type="text"
+                    <input id="mobile_phone_1" v-model="form.mobile_phone_1" type="text" placeholder="Enter mobile phone 1..."
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                     <span v-if="form.errors.mobile_phone_1" class="text-sm text-red-600">
                         {{ form.errors.mobile_phone_1 }}
@@ -149,7 +149,7 @@ function submit() {
                 <!-- Mobile Phone 2 -->
                 <div class="flex flex-col space-y-1">
                     <label for="mobile_phone_2" class="font-medium">Mobile Phone 2</label>
-                    <input id="mobile_phone_2" v-model="form.mobile_phone_2" type="text"
+                    <input id="mobile_phone_2" v-model="form.mobile_phone_2" type="text" placeholder="Enter mobile phone 2..."
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                     <span v-if="form.errors.mobile_phone_2" class="text-sm text-red-600">
                         {{ form.errors.mobile_phone_2 }}
@@ -159,7 +159,7 @@ function submit() {
                 <!-- Email -->
                 <div class="flex flex-col space-y-1">
                     <label for="email" class="font-medium">Email<span class="text-red-500">*</span></label>
-                    <input id="email" v-model="form.email" type="email"
+                    <input id="email" v-model="form.email" type="email" placeholder="Enter email..."
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                     <span v-if="form.errors.email" class="text-sm text-red-600">
                         {{ form.errors.email }}
@@ -197,10 +197,17 @@ function submit() {
                 </div>
 
                 <!-- Visible Checkbox -->
-                <div class="flex items-center space-x-2">
-                    <input id="is_visible" v-model="form.is_visible" type="checkbox"
-                        class="h-4 w-4 border rounded text-blue-600" />
-                    <label for="is_visible" class="font-medium">Visible</label>
+                <div class="flex items-center space-x-3">
+                    <label for="is_visible" class="font-medium text-gray-700 dark:text-gray-300">Visible</label>
+                    <button type="button" @click="form.is_visible = !form.is_visible" :class="[
+                        'relative inline-flex h-6 w-11 items-center rounded-full transition',
+                        form.is_visible ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
+                    ]">
+                        <span :class="[
+                            'inline-block h-4 w-4 transform rounded-full bg-white transition',
+                            form.is_visible ? 'translate-x-6' : 'translate-x-1'
+                        ]" />
+                    </button>
                 </div>
 
                 <!-- Submit -->

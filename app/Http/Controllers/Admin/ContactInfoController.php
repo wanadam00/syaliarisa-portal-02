@@ -29,7 +29,7 @@ class ContactInfoController extends Controller
         $data = $request->validate([
             'address'        => 'required|string',
             'phone'          => ['required', 'regex:/^\+60\d{8,10}$/'],   // ✅ must start with +60
-            'mobile_phone_1' => ['nullable', 'regex:/^\+60\d{8,10}$/'],
+            'mobile_phone_1' => ['required', 'regex:/^\+60\d{8,10}$/'],
             'mobile_phone_2' => ['nullable', 'regex:/^\+60\d{8,10}$/'],
             'email'          => 'required|email',
             'business_hours' => 'required|string',
@@ -56,7 +56,7 @@ class ContactInfoController extends Controller
         $data = $request->validate([
             'address'        => 'required|string',
             'phone'          => ['required', 'regex:/^\+60\d{8,10}$/'],   // ✅ must start with +60
-            'mobile_phone_1' => ['nullable', 'regex:/^\+60\d{8,10}$/'],
+            'mobile_phone_1' => ['required', 'regex:/^\+60\d{8,10}$/'],
             'mobile_phone_2' => ['nullable', 'regex:/^\+60\d{8,10}$/'],
             'email'          => 'required|email',
             'business_hours' => 'required|string',

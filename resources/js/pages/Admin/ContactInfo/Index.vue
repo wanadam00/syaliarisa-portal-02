@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { usePage, router } from '@inertiajs/vue3';
+import { usePage, router, Link } from '@inertiajs/vue3';
 import { reactive, onMounted, onBeforeUnmount } from 'vue';
+import Swal from 'sweetalert2';
+import { Plus } from 'lucide-vue-next';
 
 interface ContactInfo {
     id: number;
@@ -14,14 +16,35 @@ interface ContactInfo {
     showMenu?: boolean; // added for dropdown state
 }
 
+// function deleteContact(id: number) {
+//     if (confirm('Are you sure you want to delete this contact info?')) {
+//         router.delete(route('admin.contact-info.destroy', id), {
+//             onSuccess: () => {
+//                 router.visit(route('admin.contact-info.index'));
+//             },
+//         });
+//     }
+// }
+
 function deleteContact(id: number) {
-    if (confirm('Are you sure you want to delete this contact info?')) {
-        router.delete(route('admin.contact-info.destroy', id), {
-            onSuccess: () => {
-                router.visit(route('admin.contact-info.index'));
-            },
-        });
-    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(route('admin.contact-info.destroy', id), {
+                onSuccess: () => {
+                    Swal.fire('Deleted!', 'The contact info has been deleted.', 'success')
+                    router.visit(route('admin.contact-info.index'))
+                },
+            })
+        }
+    })
 }
 
 const { contactInfo } = usePage().props as unknown as { contactInfo: ContactInfo[] };
@@ -74,16 +97,31 @@ onBeforeUnmount(() => {
 <template>
     <AppLayout>
         <div class="p-6">
-            <h1 class="text-2xl font-bold mb-6">Contact Info Management</h1>
-            <div class="flex justify-end mb-4">
-                <a href="/admin/contact/create"
-                    class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition">
-                    + Add
-                </a>
+            <!-- Header -->
+            <div
+                class="overflow-y-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 mb-6 shadow-xl border border-gray-200/50 dark:border-gray-700/50">
+                <div class="flex sm:items-center justify-between gap-4">
+                    <div class="truncate">
+                        <h1
+                            class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                            Contact Info Management
+                        </h1>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Create and manage contact information
+                        </p>
+                    </div>
+                    <Link :href="route('admin.contact-info.create')"
+                        class="group inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105">
+                    <Plus class="size-5 mr-0 sm:mr-2 transition-transform group-hover:rotate-90 duration-300" />
+                    <span class="hidden sm:inline">New Contact</span>
+                    </Link>
+                </div>
             </div>
-            <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+
+            <div
+                class="overflow-x-auto rounded-2xl border border-gray-200/50 dark:border-gray-700/50 bg-white/70 dark:bg-gray-900/60 backdrop-blur-xl shadow-lg">
                 <table class="min-w-full text-sm text-left">
-                    <thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                    <thead
+                        class="bg-gradient-to-r from-gray-100/70 to-gray-200/50 dark:from-gray-800/70 dark:to-gray-700/50 text-gray-700 dark:text-gray-200 uppercase tracking-wide text-xs">
                         <tr>
                             <th class="px-4 py-3">No.</th>
                             <th class="px-4 py-3">Address</th>
@@ -95,8 +133,9 @@ onBeforeUnmount(() => {
                             <th class="px-4 py-3 text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="text-gray-800 dark:text-gray-100 divide-y divide-gray-200 dark:divide-gray-700">
-                        <tr v-for="(contactInfo, index) in contactInfo" :key="contactInfo.id">
+                    <tbody class="text-gray-800 dark:text-gray-100 divide-y divide-gray-200/30 dark:divide-gray-700/30">
+                        <tr v-for="(contactInfo, index) in contactInfo" :key="contactInfo.id"
+                            class="hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors">
                             <td class="px-4 py-2">{{ index + 1 }}</td>
                             <td class="px-4 py-2 w-64 max-w-[16rem]">
                                 <div class="line-clamp-1 text-ellipsis overflow-hidden prose prose-sm dark:prose-invert"
