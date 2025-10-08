@@ -3,6 +3,8 @@ import type { BreadcrumbItemType } from '@/types';
 import PortalHeader from '@/components/PortalHeader.vue';
 import PortalFooter from '@/components/PortalFooter.vue';
 import { ref, onMounted } from 'vue';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 interface Props {
     breadcrumbs?: BreadcrumbItemType[];
@@ -38,6 +40,14 @@ const applyColorScheme = () => {
         document.documentElement.classList.remove('dark');
     }
 };
+
+onMounted(() => {
+    AOS.init({
+        duration: 1000, // Animation duration in milliseconds
+        easing: 'ease-in-out', // Animation easing
+        once: true, // Whether animation should happen only once
+    });
+});
 </script>
 
 <template>

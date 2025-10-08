@@ -3,7 +3,7 @@
         'fixed top-0 w-full shadow-md z-[9999] transition-colors duration-500',
         scrolled
             ? 'bg-gradient-to-r from-[#48b2e5] to-[#2262ae] opacity-100'
-            : 'bg-gradient-to-r from-[#48b2e5]/80 to-[#2262ae]/80 opacity-80'
+            : 'bg-gradient-to-r from-[#48b2e5]/80 to-[#2262ae]/80 opacity-90'
     ]" data-aos="fade-down">
         <nav class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">

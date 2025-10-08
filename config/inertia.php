@@ -17,7 +17,8 @@ return [
 
     'ssr' => [
         'enabled' => true,
-        'url' => 'http://127.0.0.1:13714',
+        // Use VITE_APP_URL or APP_URL if available so SSR doesn't force http://
+        'url' => env('VITE_APP_URL', env('APP_URL', 'http://127.0.0.1:13714')),
         // 'bundle' => base_path('bootstrap/ssr/ssr.mjs'),
     ],
 

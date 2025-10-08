@@ -4,7 +4,8 @@
     <AppLayout2>
         <!-- Hero Section -->
         <section
-            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32">
+            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32"
+            data-aos="fade-down">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">Standards Application</h1>
                 <p class="text-lg opacity-90">Explore our recognized standards and guidelines</p>
@@ -16,7 +17,8 @@
             <div class="container mx-auto px-4">
                 <div class="space-y-6">
                     <div v-for="standard in standards" :key="standard.id"
-                        class="bg-white dark:bg-background rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 items-center">
+                        class="bg-white dark:bg-background rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 items-center"
+                        data-aos="fade-up">
                         <h2 class="text-xl text-center font-bold text-primary dark:text-white mb-6">
                             {{ standard.title }}
                         </h2>
@@ -29,13 +31,6 @@
                                     <i v-else class="bi bi-file-earmark-text text-3xl text-gray-400"></i>
                                 </div>
                             </div>
-
-                            <!-- Column 2: Title -->
-                            <!-- <div class="flex justify-center items-center text-center">
-                            <h2 class="text-xl font-bold text-primary dark:text-white">
-                                {{ standard.title }}
-                            </h2>
-                        </div> -->
 
                             <!-- Column 3: Description + Link -->
                             <div class="text-justify md:text-justify">

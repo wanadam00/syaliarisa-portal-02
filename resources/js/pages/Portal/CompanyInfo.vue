@@ -3,6 +3,7 @@ import { Head, usePage } from '@inertiajs/vue3';
 import { computed, onMounted } from 'vue';
 import AppLayout2 from '@/layouts/AppLayout2.vue';
 import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 interface CompanyInfo {
     background: string;
@@ -66,6 +67,15 @@ onMounted(() => {
     });
 });
 
+// Fix default icon paths
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: new URL('leaflet/dist/images/marker-icon.png', import.meta.url).toString(),
+    iconUrl: new URL('leaflet/dist/images/marker-icon.png', import.meta.url).toString(),
+    shadowUrl: new URL('leaflet/dist/images/marker-shadow.png', import.meta.url).toString(),
+});
+
 </script>
 
 <template>
@@ -74,7 +84,8 @@ onMounted(() => {
     <AppLayout2>
         <!-- Hero Section -->
         <section
-            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32">
+            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32"
+            data-aos="fade-down">
             <div class="container mx-auto px-4 text-center">
                 <h1
                     class="text-4xl md:text-5xl font-bold mb-4 dark:text-white dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">
@@ -87,23 +98,23 @@ onMounted(() => {
         </section>
 
         <!-- Content Section -->
-        <section class="py-16 ">
+        <section class="py-16">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col">
                     <!-- Company Background -->
-                    <div class="mb-12">
+                    <div class="mb-12" data-aos="fade-up">
                         <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">About Us</h2>
                         <p class="mb-6 text-gray-700 text-justify dark:text-gray-300">{{ companyInfo.background }}</p>
 
                         <div class="grid md:grid-cols-2 gap-6 mb-8">
-                            <div
-                                class="bg-white dark:bg-background p-6 rounded-lg shadow-md dark:shadow-white border border-gray-100 dark:border-white">
+                            <div class="bg-white dark:bg-background p-6 rounded-lg shadow-md dark:shadow-white border border-gray-100 dark:border-white"
+                                data-aos="zoom-in">
                                 <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Mission
                                 </h3>
                                 <p class="text-gray-700 dark:text-gray-300 text-justify">{{ companyInfo.mission }}</p>
                             </div>
-                            <div
-                                class="bg-white dark:bg-background p-6 rounded-lg shadow-md dark:shadow-white border border-gray-100 dark:border-white">
+                            <div class="bg-white dark:bg-background p-6 rounded-lg shadow-md dark:shadow-white border border-gray-100 dark:border-white"
+                                data-aos="zoom-in">
                                 <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Vision
                                 </h3>
                                 <p class="text-gray-700 dark:text-gray-300 text-justify">{{ companyInfo.vision }}</p>
@@ -112,12 +123,12 @@ onMounted(() => {
                     </div>
 
                     <!-- Organization Structure -->
-                    <div class="text-center mb-12">
+                    <div class="text-center mb-12" data-aos="fade-up">
                         <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Team Structure</h2>
 
                         <!-- Manager -->
                         <div v-for="manager in organization.manager" :key="manager.id"
-                            class="flex flex-col items-center">
+                            class="flex flex-col items-center" data-aos="fade-up">
                             <!-- Manager -->
                             <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-blue-600">
                                 <img v-if="manager.photo" :src="manager.photo" :alt="manager.name"
@@ -135,7 +146,7 @@ onMounted(() => {
 
                             <!-- Assistant Manager -->
                             <div v-for="am in organization.assistantManager" :key="am.id"
-                                class="flex flex-col items-center">
+                                class="flex flex-col items-center" data-aos="fade-up">
                                 <div class="w-28 h-28 rounded-full overflow-hidden border-2 border-green-600">
                                     <img v-if="am.photo" :src="am.photo" :alt="am.name"
                                         class="w-full h-full object-cover" />
@@ -151,7 +162,7 @@ onMounted(() => {
                                 <div class="flex justify-center gap-8 mt-6 flex-wrap">
                                     <!-- Chemist -->
                                     <div v-for="c in organization.chemists" :key="c.id"
-                                        class="flex flex-col items-center">
+                                        class="flex flex-col items-center" data-aos="fade-up">
                                         <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-purple-600">
                                             <img v-if="c.photo" :src="c.photo" class="w-full h-full object-cover" />
                                             <div v-else
@@ -165,7 +176,7 @@ onMounted(() => {
 
                                     <!-- Admin Executive -->
                                     <div v-for="ae in organization.adminExecutives" :key="ae.id"
-                                        class="flex flex-col items-center">
+                                        class="flex flex-col items-center" data-aos="fade-up">
                                         <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-orange-600">
                                             <img v-if="ae.photo" :src="ae.photo" class="w-full h-full object-cover" />
                                             <div v-else
@@ -179,7 +190,7 @@ onMounted(() => {
 
                                     <!-- Environmental Executive + Field Techs -->
                                     <div v-for="ee in organization.environmentalExecutives" :key="ee.id"
-                                        class="flex flex-col items-center">
+                                        class="flex flex-col items-center" data-aos="fade-up">
                                         <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-teal-600">
                                             <img v-if="ee.photo" :src="ee.photo" class="w-full h-full object-cover" />
                                             <div v-else
@@ -210,7 +221,7 @@ onMounted(() => {
 
                                     <!-- Field Executives + Field Techs -->
                                     <div v-for="fe in organization.fieldExecutives" :key="fe.id"
-                                        class="flex flex-col items-center">
+                                        class="flex flex-col items-center" data-aos="fade-up">
                                         <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-pink-600">
                                             <img v-if="fe.photo" :src="fe.photo" class="w-full h-full object-cover" />
                                             <div v-else
@@ -243,7 +254,7 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-                <div class="container mx-auto px-4">
+                <div class="container mx-auto px-4" data-aos="fade-in">
                     <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white text-center">
                         Client Locations
                     </h2>

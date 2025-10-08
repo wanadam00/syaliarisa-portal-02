@@ -4,7 +4,8 @@
     <AppLayout2>
         <!-- Hero Section -->
         <section
-            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32">
+            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32"
+            data-aos="fade-down">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">Legislations</h1>
                 <p class="text-lg opacity-90">Explore our legislative references and resources</p>
@@ -15,7 +16,7 @@
         <section class="py-16">
             <div class="container mx-auto px-4 space-y-12">
                 <!-- Group by type -->
-                <div v-for="(laws, type) in groupedLegislations" :key="type" class="space-y-6">
+                <div v-for="(laws, type) in groupedLegislations" :key="type" class="space-y-6" data-aos="fade-up">
 
                     <!-- Type Header -->
                     <div class="text-center md:text-left mb-6">
@@ -38,7 +39,8 @@
 
                         <!-- All Titles under this type -->
                         <div class="flex-1 space-y-6">
-                            <div v-for="law in laws" :key="law.id" class="border-b pb-4 last:border-0 last:pb-0">
+                            <div v-for="law in laws" :key="law.id" class="border-b pb-4 last:border-0 last:pb-0"
+                                data-aos="fade-up">
                                 <h3 class="text-lg font-semibold text-primary dark:text-white mb-2">
                                     {{ law.title }}
                                 </h3>

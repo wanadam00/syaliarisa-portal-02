@@ -79,7 +79,8 @@ const formatBusinessHours = (hoursHtml: string | null) => {
         <AppLayout2>
             <!-- Page Header -->
             <section
-                class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32">
+                class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32"
+                data-aos="fade-down">
                 <div class="container mx-auto px-4 text-center">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
                     <p class="text-lg text-blue-100 dark:text-gray-300">
@@ -93,7 +94,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                 <div class="max-w-6xl mx-auto">
                     <div class="grid lg:grid-cols-2 gap-12">
                         <!-- Contact Information -->
-                        <div class="space-y-8">
+                        <div class="space-y-8" data-aos="fade-up">
                             <div>
                                 <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Contact Information
                                 </h2>
@@ -194,7 +195,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                         </div>
 
                         <!-- Contact Form -->
-                        <div>
+                        <div data-aos="fade-up">
                             <div
                                 class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
                                 <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Send us a Message</h2>
@@ -238,7 +239,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                     </div>
 
                     <!-- Map Section -->
-                    <div class="mt-16">
+                    <div class="mt-16" data-aos="fade-in">
                         <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Our Location</h2>
                         <div
                             class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700">
