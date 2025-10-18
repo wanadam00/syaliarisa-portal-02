@@ -142,7 +142,7 @@ sections.forEach(s => (s.showMenu = false));
                                 <span v-else class="italic text-gray-400">No image</span>
                             </td>
                             <td class="px-4 py-3 w-64">
-                                <div class="line-clamp-1" :title="section.bottom_details">
+                                <div class="line-clamp-1" :top_details="section.bottom_details">
                                     {{ section.bottom_details }}
                                 </div>
                             </td>

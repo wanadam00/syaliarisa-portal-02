@@ -68,59 +68,68 @@ function submit() {
 
 <template>
     <AppLayout>
-        <div class="p-6 max-w-2xl">
-            <h1 class="text-2xl font-bold mb-6">Add Legislation</h1>
+        <div class="p-6 w-full mx-auto">
+            <!-- <h1 class="text-2xl font-bold mb-6">Add Legislation</h1> -->
+            <div
+                class="overflow-y-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 mb-6 shadow-xl border border-gray-200/50 dark:border-gray-700/50">
 
-            <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
 
-                <!-- Type -->
-                <div class="flex flex-col space-y-1">
-                    <label for="type" class="font-medium">Type of legislation<span class="text-red-500">*</span></label>
-                    <select id="type" v-model="form.type"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
-                        <option value="" disabled>-- Select Type --</option>
-                        <option value="OSHA 1994">OSHA 1994</option>
-                        <option value="Factories & Machinery Act 1967 (FMA 1967)">Factories & Machinery Act 1967 (FMA
-                            1967)</option>
-                        <option value="Environmental Quality Act 1974">Environmental Quality Act 1974</option>
-                    </select>
-                    <span v-if="form.errors.type" class="text-sm text-red-600">
-                        {{ form.errors.type }}
-                    </span>
-                </div>
+                <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
 
-                <!-- Details -->
-                <div class="flex flex-col space-y-1">
-                    <label for="details" class="font-medium">Details</label>
-                    <textarea id="details" v-model="form.details" rows="5" placeholder="e.g., Section 15, Subsection 3"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
-                    <span v-if="form.errors.details" class="text-sm text-red-600">
-                        {{ form.errors.details }}
-                    </span>
-                </div>
+                    <!-- Type -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="type" class="font-medium">Type of legislation<span
+                                class="text-red-500">*</span></label>
+                        <select id="type" v-model="form.type"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
+                            <option value="" disabled>-- Select Type --</option>
+                            <option value="OSHA 1994">OSHA 1994</option>
+                            <option value="Factories & Machinery Act 1967 (FMA 1967)">Factories & Machinery Act 1967
+                                (FMA
+                                1967)</option>
+                            <option value="Environmental Quality Act 1974">Environmental Quality Act 1974</option>
+                        </select>
+                        <span v-if="form.errors.type" class="text-sm text-red-600">
+                            {{ form.errors.type }}
+                        </span>
+                    </div>
 
-                <!-- Title -->
-                <div class="flex flex-col space-y-1">
-                    <label for="title" class="font-medium">Title<span class="text-red-500">*</span></label>
-                    <input id="title" v-model="form.title" type="text" placeholder="e.g., Safety Measures for Handling Chemicals"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
-                    <span v-if="form.errors.title" class="text-sm text-red-600">
-                        {{ form.errors.title }}
-                    </span>
-                </div>
+                    <!-- Details -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="details" class="font-medium">Details</label>
+                        <textarea id="details" v-model="form.details" rows="5"
+                            placeholder="e.g., Section 15, Subsection 3"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
+                        <span v-if="form.errors.details" class="text-sm text-red-600">
+                            {{ form.errors.details }}
+                        </span>
+                    </div>
 
-                <!-- Description -->
-                <div class="flex flex-col space-y-1">
-                    <label for="description" class="font-medium">Description<span class="text-red-500">*</span></label>
-                    <textarea id="description" v-model="form.description" rows="5" placeholder="Provide a brief description of the legislation"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
-                    <span v-if="form.errors.description" class="text-sm text-red-600">
-                        {{ form.errors.description }}
-                    </span>
-                </div>
+                    <!-- Title -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="title" class="font-medium">Title<span class="text-red-500">*</span></label>
+                        <input id="title" v-model="form.title" type="text"
+                            placeholder="e.g., Safety Measures for Handling Chemicals"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                        <span v-if="form.errors.title" class="text-sm text-red-600">
+                            {{ form.errors.title }}
+                        </span>
+                    </div>
 
-                <!-- Type -->
-                <!-- <div class="flex flex-col space-y-1">
+                    <!-- Description -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="description" class="font-medium">Description<span
+                                class="text-red-500">*</span></label>
+                        <textarea id="description" v-model="form.description" rows="5"
+                            placeholder="Provide a brief description of the legislation"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
+                        <span v-if="form.errors.description" class="text-sm text-red-600">
+                            {{ form.errors.description }}
+                        </span>
+                    </div>
+
+                    <!-- Type -->
+                    <!-- <div class="flex flex-col space-y-1">
                     <label for="type" class="font-medium">Type</label>
                     <input id="type" v-model="form.type" type="text"
                         class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
@@ -129,63 +138,65 @@ function submit() {
                     </span>
                 </div> -->
 
-                <!-- Link -->
-                <div class="flex flex-col space-y-1">
-                    <label for="link" class="font-medium">Link</label>
-                    <input id="link" v-model="form.link" type="url" placeholder="https://www.example.com/legislation"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
-                    <span v-if="form.errors.link" class="text-sm text-red-600">
-                        {{ form.errors.link }}
-                    </span>
-                </div>
-
-                <!-- Image Upload -->
-                <div class="flex flex-col space-y-1">
-                    <label for="image" class="font-medium">Image</label>
-                    <input id="image" type="file" accept="image/*" @change="handleFileChange"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
-                    <div v-if="form.errors.image" class="text-sm text-red-600">
-                        {{ form.errors.image }}
+                    <!-- Link -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="link" class="font-medium">Link</label>
+                        <input id="link" v-model="form.link" type="url"
+                            placeholder="https://www.example.com/legislation"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                        <span v-if="form.errors.link" class="text-sm text-red-600">
+                            {{ form.errors.link }}
+                        </span>
                     </div>
 
-                    <!-- Show preview if new image uploaded -->
-                    <div v-if="preview" class="mt-2">
-                        <p class="text-sm text-gray-500">New image preview:</p>
-                        <img :src="preview" alt="New preview" class="h-20 rounded-md border object-cover" />
+                    <!-- Image Upload -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="image" class="font-medium">Image</label>
+                        <input id="image" type="file" accept="image/*" @change="handleFileChange"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                        <div v-if="form.errors.image" class="text-sm text-red-600">
+                            {{ form.errors.image }}
+                        </div>
+
+                        <!-- Show preview if new image uploaded -->
+                        <div v-if="preview" class="mt-2">
+                            <p class="text-sm text-gray-500">New image preview:</p>
+                            <img :src="preview" alt="New preview" class="h-20 rounded-md border object-cover" />
+                        </div>
+
+                        <!-- Otherwise show old image -->
+                        <div v-else-if="legislation.image" class="mt-2">
+                            <p class="text-sm text-gray-500">Current image:</p>
+                            <img :src="`/storage/${legislation.image}`" alt="Legislation image"
+                                class="h-20 rounded-md border object-cover" />
+                        </div>
                     </div>
 
-                    <!-- Otherwise show old image -->
-                    <div v-else-if="legislation.image" class="mt-2">
-                        <p class="text-sm text-gray-500">Current image:</p>
-                        <img :src="`/storage/${legislation.image}`" alt="Legislation image"
-                            class="h-20 rounded-md border object-cover" />
+                    <!-- Visible Checkbox -->
+                    <div class="flex items-center space-x-3">
+                        <label for="is_visible" class="font-medium text-gray-700 dark:text-gray-300">Visible</label>
+                        <button type="button" @click="form.is_visible = !form.is_visible" :class="[
+                            'relative inline-flex h-6 w-11 items-center rounded-full transition',
+                            form.is_visible ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
+                        ]">
+                            <span :class="[
+                                'inline-block h-4 w-4 transform rounded-full bg-white transition',
+                                form.is_visible ? 'translate-x-6' : 'translate-x-1'
+                            ]" />
+                        </button>
                     </div>
-                </div>
 
-                <!-- Visible Checkbox -->
-                <div class="flex items-center space-x-3">
-                    <label for="is_visible" class="font-medium text-gray-700 dark:text-gray-300">Visible</label>
-                    <button type="button" @click="form.is_visible = !form.is_visible" :class="[
-                        'relative inline-flex h-6 w-11 items-center rounded-full transition',
-                        form.is_visible ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
-                    ]">
-                        <span :class="[
-                            'inline-block h-4 w-4 transform rounded-full bg-white transition',
-                            form.is_visible ? 'translate-x-6' : 'translate-x-1'
-                        ]" />
-                    </button>
-                </div>
-
-                <!-- Submit -->
-                <div>
-                    <button type="submit"
-                        class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition"
-                        :disabled="form.processing">
-                        <span v-if="form.processing">Saving...</span>
-                        <span v-else>Save</span>
-                    </button>
-                </div>
-            </form>
+                    <!-- Submit -->
+                    <div class="inline-flex justify-end w-full">
+                        <button type="submit"
+                            class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition"
+                            :disabled="form.processing">
+                            <span v-if="form.processing">Saving...</span>
+                            <span v-else>Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </AppLayout>
 </template>

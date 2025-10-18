@@ -64,95 +64,99 @@ function submit() {
 
 <template>
     <AppLayout>
-        <div class="p-6 max-w-2xl">
-            <h1 class="text-2xl font-bold mb-6">Edit Employee</h1>
-
-            <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
-                <!-- Name -->
-                <div class="flex flex-col space-y-1">
-                    <label for="name" class="font-medium">Name<span class="text-red-500">*</span></label>
-                    <input id="name" v-model="form.name" type="text"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
-                    <span v-if="form.errors.name" class="text-sm text-red-600">
-                        {{ form.errors.name }}
-                    </span>
-                </div>
-
-                <!-- Department -->
-                <div class="flex flex-col space-y-1">
-                    <label for="department" class="font-medium">Department<span class="text-red-500">*</span></label>
-                    <input id="department" v-model="form.department" type="text"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
-                    <span v-if="form.errors.department" class="text-sm text-red-600">
-                        {{ form.errors.department }}
-                    </span>
-                </div>
-
-                <!-- Position -->
-                <div class="flex flex-col space-y-1">
-                    <label for="position" class="font-medium">Position<span class="text-red-500">*</span></label>
-                    <select id="position" v-model="form.position"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
-                        <option value="" disabled>-- Select Position --</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Assistant Manager">Assistant Manager</option>
-                        <option value="Chemist">Chemist</option>
-                        <option value="Admin Executive">Admin Executive</option>
-                        <option value="Environmental Executive">Environmental Executive</option>
-                        <option value="Field Executive">Field Executive</option>
-                        <option value="Field Technician">Field Technician</option>
-                    </select>
-                    <span v-if="form.errors.position" class="text-sm text-red-600">
-                        {{ form.errors.position }}
-                    </span>
-                </div>
-
-                <!-- Photo Upload -->
-                <div class="flex flex-col space-y-1">
-                    <label for="photo" class="font-medium">Photo</label>
-                    <input id="photo" type="file" accept="image/*" @change="handleFileChange"
-                        class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
-                    <div v-if="form.errors.photo" class="text-sm text-red-600">
-                        {{ form.errors.photo }}
+        <div class="p-6 w-full mx-auto">
+            <!-- <h1 class="text-2xl font-bold mb-6">Edit Employee</h1> -->
+            <div
+                class="overflow-y-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 mb-6 shadow-xl border border-gray-200/50 dark:border-gray-700/50">
+                <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
+                    <!-- Name -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="name" class="font-medium">Name<span class="text-red-500">*</span></label>
+                        <input id="name" v-model="form.name" type="text"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                        <span v-if="form.errors.name" class="text-sm text-red-600">
+                            {{ form.errors.name }}
+                        </span>
                     </div>
 
-                    <!-- Show preview if new photo uploaded -->
-                    <div v-if="preview" class="mt-2">
-                        <p class="text-sm text-gray-500">New photo preview:</p>
-                        <img :src="preview" alt="New preview" class="h-20 rounded-md border" />
+                    <!-- Department -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="department" class="font-medium">Department<span
+                                class="text-red-500">*</span></label>
+                        <input id="department" v-model="form.department" type="text"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                        <span v-if="form.errors.department" class="text-sm text-red-600">
+                            {{ form.errors.department }}
+                        </span>
                     </div>
 
-                    <!-- Otherwise show old photo -->
-                    <div v-else-if="employee.photo" class="mt-2">
-                        <p class="text-sm text-gray-500">Current photo:</p>
-                        <img :src="`/storage/${employee.photo}`" alt="Employee photo" class="h-20 rounded-md border" />
+                    <!-- Position -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="position" class="font-medium">Position<span class="text-red-500">*</span></label>
+                        <select id="position" v-model="form.position"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
+                            <option value="" disabled>-- Select Position --</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Assistant Manager">Assistant Manager</option>
+                            <option value="Chemist">Chemist</option>
+                            <option value="Admin Executive">Admin Executive</option>
+                            <option value="Environmental Executive">Environmental Executive</option>
+                            <option value="Field Executive">Field Executive</option>
+                            <option value="Field Technician">Field Technician</option>
+                        </select>
+                        <span v-if="form.errors.position" class="text-sm text-red-600">
+                            {{ form.errors.position }}
+                        </span>
                     </div>
-                </div>
 
-                <!-- Visible Checkbox -->
-                <div class="flex items-center space-x-3">
-                    <label for="is_visible" class="font-medium text-gray-700 dark:text-gray-300">Visible</label>
-                    <button type="button" @click="form.is_visible = !form.is_visible" :class="[
-                        'relative inline-flex h-6 w-11 items-center rounded-full transition',
-                        form.is_visible ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
-                    ]">
-                        <span :class="[
-                            'inline-block h-4 w-4 transform rounded-full bg-white transition',
-                            form.is_visible ? 'translate-x-6' : 'translate-x-1'
-                        ]" />
-                    </button>
-                </div>
+                    <!-- Photo Upload -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="photo" class="font-medium">Photo</label>
+                        <input id="photo" type="file" accept="image/*" @change="handleFileChange"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                        <div v-if="form.errors.photo" class="text-sm text-red-600">
+                            {{ form.errors.photo }}
+                        </div>
 
-                <!-- Submit -->
-                <div>
-                    <button type="submit"
-                        class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition"
-                        :disabled="form.processing">
-                        <span v-if="form.processing">Updating...</span>
-                        <span v-else>Update</span>
-                    </button>
-                </div>
-            </form>
+                        <!-- Show preview if new photo uploaded -->
+                        <div v-if="preview" class="mt-2">
+                            <p class="text-sm text-gray-500">New photo preview:</p>
+                            <img :src="preview" alt="New preview" class="h-20 rounded-md border" />
+                        </div>
+
+                        <!-- Otherwise show old photo -->
+                        <div v-else-if="employee.photo" class="mt-2">
+                            <p class="text-sm text-gray-500">Current photo:</p>
+                            <img :src="`/storage/${employee.photo}`" alt="Employee photo"
+                                class="h-20 rounded-md border" />
+                        </div>
+                    </div>
+
+                    <!-- Visible Checkbox -->
+                    <div class="flex items-center space-x-3">
+                        <label for="is_visible" class="font-medium text-gray-700 dark:text-gray-300">Visible</label>
+                        <button type="button" @click="form.is_visible = !form.is_visible" :class="[
+                            'relative inline-flex h-6 w-11 items-center rounded-full transition',
+                            form.is_visible ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
+                        ]">
+                            <span :class="[
+                                'inline-block h-4 w-4 transform rounded-full bg-white transition',
+                                form.is_visible ? 'translate-x-6' : 'translate-x-1'
+                            ]" />
+                        </button>
+                    </div>
+
+                    <!-- Submit -->
+                    <div>
+                        <button type="submit"
+                            class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition"
+                            :disabled="form.processing">
+                            <span v-if="form.processing">Updating...</span>
+                            <span v-else>Update</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </AppLayout>
 </template>

@@ -79,8 +79,8 @@ function submit() {
 
 <template>
     <AppLayout>
-        <div class="p-6 max-w-2xl">
-            <div
+        <div class="p-6 w-full mx-auto">
+            <!-- <div
                 class="overflow-y-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 mb-6 shadow-xl border border-gray-200/50 dark:border-gray-700/50">
                 <div class="flex sm:items-center justify-between gap-4">
                     <div class="truncate">
@@ -90,7 +90,7 @@ function submit() {
                         </h1>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div
                 class="overflow-y-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 mb-6 shadow-xl border border-gray-200/50 dark:border-gray-700/50">
                 <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
@@ -189,7 +189,7 @@ function submit() {
                 </div> -->
 
                     <!-- Submit -->
-                    <div>
+                    <div class="inline-flex justify-end w-full">
                         <button type="submit"
                             class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition"
                             :disabled="form.processing">

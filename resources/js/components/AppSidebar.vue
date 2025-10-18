@@ -73,7 +73,7 @@ const footerNavItems: NavItem[] = [
 </script>
 
 <template>
-    <Sidebar collapsible="icon" variant="inset" class="h-screen border-r shadow-sm">
+    <Sidebar collapsible="icon" variant="inset" class="h-screen border-r shadow-sm bg-gradient-to-b from-gray-900 to-gray-800 group-data-[variant=floating]:border-gray-700">
         <!-- Header with Logo -->
         <SidebarHeader>
             <SidebarMenu>

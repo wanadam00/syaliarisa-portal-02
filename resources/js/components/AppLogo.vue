@@ -11,7 +11,7 @@ const isCollapsed = computed(() => sidebar.state.value === "collapsed")
     <div>
         <!-- Show full logo when not collapsed -->
         <template v-if="!isCollapsed">
-            <img src="/images/primary-logo.png" alt="Syaliarisa Services" class="h-15 block dark:hidden" />
+            <img src="/images/secondary-logo.png" alt="Syaliarisa Services" class="h-15 block dark:hidden" />
             <img src="/images/secondary-logo.png" alt="Syaliarisa Services" class="h-15 hidden dark:block" />
         </template>
 
