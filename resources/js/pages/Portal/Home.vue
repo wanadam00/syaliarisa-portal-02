@@ -43,13 +43,13 @@ const {
     homeSections: HomeSection[];
 };
 
-onMounted(() => {
-    AOS.init({
-        duration: 1000, // Animation duration in milliseconds
-        easing: 'ease-in-out', // Animation easing
-        once: true, // Whether animation should happen only once
-    });
-});
+// onMounted(() => {
+//     AOS.init({
+//         duration: 1000, // Animation duration in milliseconds
+//         easing: 'ease-in-out', // Animation easing
+//         once: true, // Whether animation should happen only once
+//     });
+// });
 </script>
 
 <template>
@@ -58,7 +58,7 @@ onMounted(() => {
     <AppLayout2>
 
         <!-- Hero -->
-        <section class="min-h-[80vh] flex items-center relative" data-aos="fade-in">
+        <section class="min-h-[100vh] flex items-center relative" data-aos="fade-in">
             <!-- Background image with dark overlay -->
             <div class="absolute inset-0 bg-cover bg-center z-0 after:absolute after:inset-0 after:bg-black/60" :style="{
                 backgroundImage: `url(${homeSections[0]?.top_image
@@ -68,13 +68,13 @@ onMounted(() => {
             }"></div>
 
             <!-- Content container -->
-            <div class="container mx-auto px-4 py-20 relative z-10 text-white">
-                <div class="max-w-3xl p-8 rounded-lg" data-aos="fade-up">
-                    <h1 class="text-5xl text-justify font-bold mb-6">{{ homeSections[0]?.title }}</h1>
-                    <p class="text-xl text-justify mb-8">
+            <div class="container mx-auto px-4 py-20 relative z-10 text-white justify-center flex">
+                <div class="max-w-6xl px-6 py-20" data-aos="fade-up">
+                    <h1 class="sm:text-6xl text-5xl text-center font-bold mb-6">{{ homeSections[0]?.title }}</h1>
+                    <p class="sm:text-2xl text-xl text-center ">
                         {{ homeSections[0]?.top_details }}
                     </p>
-                    <div class="flex flex-wrap gap-4">
+                    <!-- <div class="flex flex-wrap gap-4">
                         <a href="/contact-us"
                             class="bg-[#2262ae] hover:bg-white hover:text-primary text-white font-medium px-6 py-3 rounded transition">
                             Get a Consultation
@@ -83,7 +83,7 @@ onMounted(() => {
                             class="border-2 border-white hover:bg-white hover:text-primary text-white font-medium px-6 py-3 rounded transition duration">
                             Our Services
                         </a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>
@@ -103,15 +103,26 @@ onMounted(() => {
                         <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-[#2262ae] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
                                 <i class="bi bi-shield"></i>
                             </div>
                             <h3 class="text-xl font-medium mb-3">Health & Safety</h3>
                             <p class="mb-5 flex-grow">Explore our professional Health & Safety solutions.</p>
-                            <a href="/services/health-safety"
-                                class="inline-block border border-[#2262ae] text-[#2262ae] hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
-                                Learn More
-                            </a>
+                            <!-- <a href="/services/health-safety"
+                                class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition">
+                                Find Out More
+                            </a> -->
+                            <div class="flex justify-center pt-4">
+                                <a href="/services/training"
+                                    class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-6 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
+                                    <span>Find Out More</span>
+                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
 
                         <!-- Training -->
@@ -123,25 +134,47 @@ onMounted(() => {
                             </div>
                             <h3 class="text-xl font-medium mb-3">Training</h3>
                             <p class="mb-5 flex-grow">Comprehensive training programs for your team.</p>
-                            <a href="/services/training"
-                                class="inline-block border border-[#2262ae] text-[#2262ae] hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
-                                Learn More
-                            </a>
+                            <!-- <a href="/services/training"
+                                class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition">
+                                Find Out More
+                            </a> -->
+                            <div class="flex justify-center pt-4">
+                                <a href="/services/training"
+                                    class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-6 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
+                                    <span>Find Out More</span>
+                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
 
                         <!-- Engineering -->
                         <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-[#2262ae] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
                                 <i class="bi bi-gear"></i>
                             </div>
                             <h3 class="text-xl font-medium mb-3">Engineering</h3>
                             <p class="mb-5 flex-grow">Innovative engineering solutions tailored to your needs.</p>
-                            <a href="/services/engineering"
-                                class="inline-block border border-[#2262ae] text-[#2262ae] hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
-                                Learn More
-                            </a>
+                            <!-- <a href="/services/engineering"
+                                class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition">
+                                Find Out More
+                            </a> -->
+                            <div class="flex justify-center pt-4">
+                                <a href="/services/engineering"
+                                    class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-6 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
+                                    <span>Find Out More</span>
+                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
 
                         <!-- Environmental -->
@@ -153,10 +186,21 @@ onMounted(() => {
                             </div>
                             <h3 class="text-xl font-medium mb-3">Environmental</h3>
                             <p class="mb-5 flex-grow">Sustainable environmental solutions for your business.</p>
-                            <a href="/services/environmental"
-                                class="inline-block border border-[#2262ae] text-[#2262ae] hover:bg-[#2262ae] hover:text-white px-4 py-2 rounded transition">
-                                Learn More
-                            </a>
+                            <!-- <a href="/services/environmental"
+                                class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition uppercase font-extrabold">
+                                Find Out More
+                            </a> -->
+                            <div class="flex justify-center pt-4">
+                                <a href="/services/environmental"
+                                    class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-6 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
+                                    <span>Find Out More</span>
+                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -175,16 +219,26 @@ onMounted(() => {
                     </h2>
                     <p class="text-xl text-justify mb-4">{{ homeSections[0]?.bottom_details }}</p>
                     <!-- <p class="mb-4">{{ companyInfo[0]?.mission }}</p> -->
-                    <a href="/about-us/company-info"
-                        class="inline-block bg-[#2262ae] hover:bg-secondary hover:text-primary text-white font-medium px-6 py-3 rounded transition">
-                        Learn More About Us
-                    </a>
+                    <!-- Button aligned to end -->
+                    <div class="flex justify-end pt-4">
+                        <a href="/about-us/company-info"
+                            class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-md">
+                            <span>Explore More About Us</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Contact -->
-        <section id="contact" class="py-16 bg-[#2262ae] text-white dark:bg-blue-800" data-aos="fade-up">
+        <section id="contact"
+            class="flex justify-center py-16 bg-[#2262ae] sm:text-left text-center text-white dark:bg-blue-800"
+            data-aos="fade-up">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col lg:flex-row justify-between items-center">
                     <div class="lg:w-2/3 mb-8 lg:mb-0">
@@ -196,7 +250,7 @@ onMounted(() => {
                     </div>
                     <div class="lg:w-1/3 text-center lg:text-right">
                         <a href="/contact-us"
-                            class="inline-block bg-white hover:bg-gray-100 text-primary font-medium px-8 py-3 rounded transition">
+                            class="inline-block bg-white hover:bg-gray-900 text-primary hover:text-white font-medium px-8 py-3 rounded transition">
                             Get Started
                         </a>
                     </div>

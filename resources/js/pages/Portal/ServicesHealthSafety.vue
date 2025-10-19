@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, usePage } from "@inertiajs/vue3";
 import AppLayout2 from "@/layouts/AppLayout2.vue";
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -29,11 +29,17 @@ const healthServices = services.filter((s) =>
     s.type.toLowerCase().includes("health")
 );
 
-const openDetails = ref<number | null>(null);
+// Track open state per service to avoid cross-triggering when one item toggles
+const openDetailsMap = reactive<Record<number, boolean>>({});
 const showVideo = ref<string | null>(null); // ✅ for modal video
 
 function toggleDetails(serviceId: number) {
-    openDetails.value = openDetails.value === serviceId ? null : serviceId;
+    // Toggle the given service's open state while closing other items
+    const shouldOpen = !openDetailsMap[serviceId];
+    // close all currently tracked items
+    Object.keys(openDetailsMap).forEach((k) => (openDetailsMap[Number(k)] = false));
+    // set the clicked one to the desired state
+    openDetailsMap[serviceId] = shouldOpen;
 }
 
 const formatQuillContent = (html: string) => {
@@ -53,7 +59,8 @@ const formatQuillContent = (html: string) => {
     <AppLayout2>
         <!-- Hero Section -->
         <section
-            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32">
+            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32"
+            data-aos="fade-down">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">
                     Health & Safety
@@ -67,9 +74,10 @@ const formatQuillContent = (html: string) => {
         <!-- Services Section -->
         <section class="py-16">
             <div class="container mx-auto">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 md:px-0">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 md:px-0 items-start">
                     <div v-for="service in healthServices" :key="service.id"
-                        class="bg-white dark:bg-background rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-auto">
+                        class="bg-white dark:bg-background rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-auto"
+                        data-aos="fade-up">
 
                         <!-- Image Gallery -->
                         <div class="relative">
@@ -99,22 +107,32 @@ const formatQuillContent = (html: string) => {
                             </div>
 
                             <!-- Toggle Details -->
-                            <button @click="toggleDetails(service.id)"
-                                class="mt-2 flex items-center gap-2 cursor-pointer text-blue-600 dark:text-blue-400 font-medium">
-                                <span>More details</span>
-                                <i class="bi bi-chevron-down transition-transform duration-300"
-                                    :class="{ 'rotate-180': openDetails === service.id }"></i>
-                            </button>
-
-                            <!-- Details -->
-                            <div v-show="openDetails === service.id"
-                                class="mt-2 text-gray-600 text-justify dark:text-gray-300 text-md leading-relaxed transition-all duration-300">
-                                <div v-html="formatQuillContent(service.details)"></div>
-                                <!-- Watch Video Button -->
-                                <button v-if="service.link" @click="showVideo = service.link"
-                                    class="mt-2 mb-3 w-full bg-[#2262ae] hover:bg-[#1d4f8a] text-white font-medium py-2 px-4 rounded-lg transition">
-                                    Watch Video
+                            <div v-if="service.details">
+                                <button @click="toggleDetails(service.id)"
+                                    class="mt-2 flex items-center gap-2 cursor-pointer text-blue-600 dark:text-blue-400 font-medium">
+                                    <span>{{ openDetailsMap[service.id] ? 'Hide details' : 'More details' }}</span>
+                                    <i class="bi bi-chevron-down transition-transform duration-300"
+                                        :class="{ 'rotate-180': openDetailsMap[service.id] }"></i>
                                 </button>
+
+                                <!-- Animated Details Section (safe per-item animation using max-height + opacity) -->
+                                <div class="mt-2 text-gray-600 text-justify dark:text-gray-300 text-md leading-relaxed overflow-hidden transition-all duration-500"
+                                    :style="{
+                                        maxHeight: openDetailsMap[service.id] ? '1000px' : '0px',
+                                        opacity: openDetailsMap[service.id] ? 1 : 0,
+                                    }">
+                                    <div v-html="formatQuillContent(service.details)" class="px-0 py-2"></div>
+
+                                    <!-- Watch Video Button -->
+                                    <button v-if="service.link" @click="showVideo = service.link"
+                                        class="mt-4 mb-3 w-full bg-white/80 backdrop-blur-sm border border-gray-200 text-[#2262ae] hover:bg-[#2262ae] hover:text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-3 group">
+                                        <svg class="w-5 h-5 transition-transform duration-300 group-hover:scale-110"
+                                            fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                        </svg>
+                                        <span>Watch Video</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -124,7 +142,7 @@ const formatQuillContent = (html: string) => {
 
         <!-- Video Modal -->
         <teleport to="body">
-            <div v-if="showVideo"
+            <div v-if="showVideo" data-aos="zoom-in"
                 class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 sm:pt-24">
                 <div class="relative w-11/12 md:w-3/4 lg:w-2/3">
                     <!-- YouTube -->

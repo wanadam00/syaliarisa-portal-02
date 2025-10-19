@@ -2,9 +2,11 @@
 import type { BreadcrumbItemType } from '@/types';
 import PortalHeader from '@/components/PortalHeader.vue';
 import PortalFooter from '@/components/PortalFooter.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUpdated } from 'vue';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+
+onUpdated(() => AOS.refresh());
 
 interface Props {
     breadcrumbs?: BreadcrumbItemType[];
@@ -43,11 +45,18 @@ const applyColorScheme = () => {
 
 onMounted(() => {
     AOS.init({
-        duration: 1000, // Animation duration in milliseconds
+        duration: 1000, // Animation duration
         easing: 'ease-in-out', // Animation easing
-        once: true, // Whether animation should happen only once
+        once: false, // ✅ animate again when element comes back into view
+        mirror: true, // ✅ optional: makes animation trigger in reverse when scrolling up
+    });
+
+    // Recalculate AOS positions after page load or layout change
+    window.addEventListener('scroll', () => {
+        AOS.refresh();
     });
 });
+
 </script>
 
 <template>

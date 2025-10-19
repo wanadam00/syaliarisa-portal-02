@@ -47,10 +47,17 @@
                                 <p class="text-gray-700 dark:text-gray-300 text-justify mb-3">
                                     {{ law.description }}
                                 </p>
-                                <a v-if="law.link" :href="law.link" target="_blank"
-                                    class="inline-block px-4 py-2 bg-[#2262ae] text-white text-sm font-medium rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 transition">
-                                    Read More
-                                </a>
+                                <div class="flex pt-4 justify-end">
+                                    <a v-if="law.link" :href="law.link" target="_blank"
+                                        class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
+                                        <span>Learn More</span>
+                                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -225,9 +225,9 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"></textarea>
                                     </div>
                                     <!-- Submit -->
-                                    <div>
+                                    <div class="flex justify-end pt-4">
                                         <button type="submit"
-                                            class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition"
+                                            class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-6 py-2 rounded-lg transition-all duration-300 hover:shadow-md"
                                             :disabled="form.processing">
                                             <span v-if="form.processing">Sending...</span>
                                             <span v-else>Send Message</span>
