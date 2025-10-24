@@ -96,7 +96,7 @@ function submit() {
                 <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                     <!-- Title -->
                     <div class="flex flex-col space-y-1">
-                        <label for="title" class="font-medium">Title<span class="text-red-500">*</span></label>
+                        <label for="title" class="font-medium">Title<span class="ml-1 text-red-500">*</span></label>
                         <input id="title" v-model="form.title" type="text" placeholder="Enter title..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                         <span v-if="form.errors.title" class="text-sm text-red-600">
@@ -107,7 +107,7 @@ function submit() {
                     <!-- Top Details -->
                     <div class="flex flex-col space-y-1">
                         <label for="top_details" class="font-medium">Top Details<span
-                                class="text-red-500">*</span></label>
+                                class="ml-1 text-red-500">*</span></label>
                         <textarea id="top_details" v-model="form.top_details" type="text" rows="3"
                             placeholder="Enter top details..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
@@ -119,7 +119,7 @@ function submit() {
                     <!-- Top Background Upload -->
                     <div class="flex flex-col space-y-1">
                         <label for="top_image" class="font-medium">Top Background<span
-                                class="text-red-500">*</span></label>
+                                class="ml-1 text-red-500">*</span></label>
                         <input id="top_image" type="file" accept="image/*" @change="handleFileChangeTop"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <div v-if="form.errors.top_image" class="text-sm text-red-600">
@@ -143,7 +143,7 @@ function submit() {
                     <!-- Bottom Details -->
                     <div class="flex flex-col space-y-1">
                         <label for="department" class="font-medium">Bottom Details<span
-                                class="text-red-500">*</span></label>
+                                class="ml-1 text-red-500">*</span></label>
                         <textarea id="department" v-model="form.bottom_details" type="text" rows="3"
                             placeholder="Enter bottom details..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
@@ -155,7 +155,7 @@ function submit() {
                     <!-- Bottom Image Upload -->
                     <div class="flex flex-col space-y-1">
                         <label for="bottom_image" class="font-medium">Bottom Image<span
-                                class="text-red-500">*</span></label>
+                                class="ml-1 text-red-500">*</span></label>
                         <input id="bottom_image" type="file" accept="image/*" @change="handleFileChangeBottom"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <div v-if="form.errors.bottom_image" class="text-sm text-red-600">

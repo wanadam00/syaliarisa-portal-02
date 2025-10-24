@@ -62,6 +62,32 @@
                         </div>
                     </div>
                 </div>
+                <!-- Individual Legislations (separate cards) -->
+                <div v-if="individualLegislations.length" class="space-y-6" data-aos="fade-up">
+                    <div class="text-center md:text-left mb-6">
+                        <h2 class="text-2xl font-bold text-primary text-center dark:text-white">Other Legislations</h2>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">Legislations shown as individual cards.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div v-for="law in individualLegislations" :key="law.id"
+                            class="bg-white dark:bg-background rounded-lg shadow-md p-6 flex flex-col">
+                            <div class="mb-4">
+                                <img v-if="law.image" :src="law.image" :alt="law.title"
+                                    class="w-full h-40 object-cover rounded-md" />
+                                <i v-else class="bi bi-file-text text-3xl text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-primary dark:text-white mb-2">{{ law.title }}</h3>
+                            <p class="text-gray-700 dark:text-gray-300 text-sm flex-1">{{ law.description }}</p>
+                            <div class="mt-4 flex justify-end">
+                                <a v-if="law.link" :href="law.link" target="_blank"
+                                    class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
+                                    <span>Learn More</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </AppLayout2>
@@ -79,6 +105,7 @@ interface AboutUsLegislation {
     details: string
     image: string | null
     link: string | null
+    display_mode?: 'group' | 'individual'
 }
 
 const { aboutUsLegislations } = usePage().props as unknown as {
@@ -87,12 +114,16 @@ const { aboutUsLegislations } = usePage().props as unknown as {
 
 const legislations = aboutUsLegislations
 
-// Group by type
-const groupedLegislations = legislations.reduce((groups: Record<string, AboutUsLegislation[]>, law) => {
-    if (!groups[law.type]) {
-        groups[law.type] = []
-    }
-    groups[law.type].push(law)
-    return groups
-}, {})
+// Separate grouped and individual display modes
+const groupedLegislations = legislations
+    .filter((l) => (l.display_mode ?? 'group') === 'group')
+    .reduce((groups: Record<string, AboutUsLegislation[]>, law) => {
+        if (!groups[law.type]) {
+            groups[law.type] = []
+        }
+        groups[law.type].push(law)
+        return groups
+    }, {})
+
+const individualLegislations = legislations.filter((l) => (l.display_mode ?? 'group') === 'individual')
 </script>

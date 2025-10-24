@@ -120,7 +120,7 @@ function submit() {
                 <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                     <!-- Address -->
                     <div class="flex flex-col space-y-1">
-                        <label for="address" class="font-medium">Address<span class="text-red-500">*</span></label>
+                        <label for="address" class="font-medium">Address<span class="ml-1 text-red-500">*</span></label>
                         <input id="address" v-model="form.address" type="text"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                         <span v-if="form.errors.address" class="text-sm text-red-600">
@@ -130,7 +130,8 @@ function submit() {
 
                     <!-- Phone -->
                     <div class="flex flex-col space-y-1">
-                        <label for="phone" class="font-medium">Office Phone<span class="text-red-500">*</span></label>
+                        <label for="phone" class="font-medium">Office Phone<span
+                                class="ml-1 text-red-500">*</span></label>
                         <input id="phone" v-model="form.phone" type="text"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                         <span v-if="form.errors.phone" class="text-sm text-red-600">
@@ -160,7 +161,7 @@ function submit() {
 
                     <!-- Email -->
                     <div class="flex flex-col space-y-1">
-                        <label for="email" class="font-medium">Email<span class="text-red-500">*</span></label>
+                        <label for="email" class="font-medium">Email<span class="ml-1 text-red-500">*</span></label>
                         <input id="email" v-model="form.email" type="email"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                         <span v-if="form.errors.email" class="text-sm text-red-600">
@@ -181,7 +182,7 @@ function submit() {
                     <!-- Business Hours with Quill -->
                     <div class="flex flex-col space-y-1">
                         <label for="business_hours" class="font-medium">Business Hours<span
-                                class="text-red-500">*</span></label>
+                                class="ml-1 text-red-500">*</span></label>
                         <div class="mb-2">
                             <button type="button" @click="formatBusinessHours"
                                 class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded border">

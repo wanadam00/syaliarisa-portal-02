@@ -88,7 +88,7 @@ function submit() {
                     <!-- Type -->
                     <div class="flex flex-col space-y-1">
                         <label for="type" class="font-medium">Type of services<span
-                                class="text-red-500">*</span></label>
+                                class="ml-1 text-red-500">*</span></label>
                         <select id="type" v-model="form.type"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
                             <option value="" disabled>-- Select Position --</option>
@@ -104,7 +104,7 @@ function submit() {
 
                     <!-- Title -->
                     <div class="flex flex-col space-y-1">
-                        <label for="title" class="font-medium">Title<span class="text-red-500">*</span></label>
+                        <label for="title" class="font-medium">Title<span class="ml-1 text-red-500">*</span></label>
                         <input id="title" v-model="form.title" type="text" placeholder="Enter title..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                         <span v-if="form.errors.title" class="text-sm text-red-600">
@@ -115,7 +115,7 @@ function submit() {
                     <!-- Summary -->
                     <div class="flex flex-col space-y-1">
                         <label for="summary" class="font-medium">
-                            Summary <span class="text-red-500">*</span>
+                            Summary<span class="ml-1 text-red-500">*</span>
                         </label>
                         <QuillEditor v-model:content="form.summary" content-type="html" theme="snow" toolbar="full"
                             placeholder="Enter summary..." class="border rounded-md" />

@@ -11,6 +11,7 @@ interface Legislation {
     type: string;
     is_visible: boolean;
     showMenu?: boolean; // added for dropdown state
+    display_mode?: string;
 }
 
 // function deleteLegislation(id: number) {
@@ -125,6 +126,7 @@ onBeforeUnmount(() => {
                             <th class="px-4 py-3">No.</th>
                             <th class="px-4 py-3">Title</th>
                             <th class="px-4 py-3">Type</th>
+                            <th class="px-4 py-3">Display</th>
                             <th class="px-4 py-3">Visible</th>
                             <th class="px-4 py-3 text-center">Actions</th>
                         </tr>
@@ -135,6 +137,7 @@ onBeforeUnmount(() => {
                             <td class="px-4 py-2">{{ index + 1 }}</td>
                             <td class="px-4 py-2">{{ legislation.title }}</td>
                             <td class="px-4 py-2">{{ legislation.type }}</td>
+                            <td class="px-4 py-2">{{ legislation.display_mode ?? 'group' }}</td>
                             <td class="px-4 py-2">
                                 <span
                                     :class="legislation.is_visible ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">

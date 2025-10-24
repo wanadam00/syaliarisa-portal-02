@@ -103,25 +103,26 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                         <!-- Address -->
                                         <div class="flex items-start gap-4">
                                             <div
-                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800">
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800 flex-shrink-0">
                                                 <i class="bi bi-geo-alt text-red-500"></i>
                                             </div>
-                                            <div>
+                                            <div class="min-w-0 flex-1">
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Address</h4>
-                                                <p class="text-gray-600 dark:text-gray-300">{{ info.address }}</p>
+                                                <p class="text-gray-600 dark:text-gray-300 break-words">{{ info.address
+                                                    }}</p>
                                             </div>
                                         </div>
 
                                         <!-- Office Phone -->
                                         <div class="flex items-start gap-4">
                                             <div
-                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800">
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800 flex-shrink-0">
                                                 <i class="bi bi-telephone text-gray-500"></i>
                                             </div>
-                                            <div>
+                                            <div class="min-w-0 flex-1">
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Office Phone</h4>
                                                 <a :href="`tel:${info.phone}`"
-                                                    class="text-gray-600 dark:text-gray-300 hover:text-gray-700 transition-colors">
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-gray-700 transition-colors break-words">
                                                     {{ info.phone }}
                                                 </a>
                                             </div>
@@ -130,14 +131,14 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                         <!-- Mobile Phone 1 -->
                                         <div v-if="info.mobile_phone_1" class="flex items-start gap-4">
                                             <div
-                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800">
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800 flex-shrink-0">
                                                 <i class="bi bi-whatsapp text-green-500"></i>
                                             </div>
-                                            <div>
+                                            <div class="min-w-0 flex-1">
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Whatsapp (1)</h4>
                                                 <a :href="`https://wa.me/${info.mobile_phone_1.replace('+', '')}`"
                                                     target="_blank"
-                                                    class="text-gray-600 dark:text-gray-300 hover:text-green-500 transition-colors">
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-green-500 transition-colors break-words">
                                                     {{ info.mobile_phone_1 }}
                                                 </a>
                                             </div>
@@ -146,14 +147,14 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                         <!-- Mobile Phone 2 -->
                                         <div v-if="info.mobile_phone_2" class="flex items-start gap-4">
                                             <div
-                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800">
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800 flex-shrink-0">
                                                 <i class="bi bi-whatsapp text-green-500"></i>
                                             </div>
-                                            <div>
+                                            <div class="min-w-0 flex-1">
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Whatsapp (2)</h4>
                                                 <a :href="`https://wa.me/${info.mobile_phone_2.replace('+', '')}`"
                                                     target="_blank"
-                                                    class="text-gray-600 dark:text-gray-300 hover:text-green-500 transition-colors">
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-green-500 transition-colors break-words">
                                                     {{ info.mobile_phone_2 }}
                                                 </a>
                                             </div>
@@ -162,13 +163,13 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                         <!-- Email -->
                                         <div class="flex items-start gap-4">
                                             <div
-                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800">
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800 flex-shrink-0">
                                                 <i class="bi bi-envelope text-yellow-500"></i>
                                             </div>
-                                            <div>
+                                            <div class="min-w-0 flex-1">
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Email</h4>
                                                 <a :href="`mailto:${info.email}`"
-                                                    class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 transition-colors">
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 transition-colors break-words truncate">
                                                     {{ info.email }}
                                                 </a>
                                             </div>

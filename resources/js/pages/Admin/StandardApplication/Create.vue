@@ -73,7 +73,7 @@ function submit() {
                 <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                     <!-- Title -->
                     <div class="flex flex-col space-y-1">
-                        <label for="title" class="font-medium">Title<span class="text-red-500">*</span></label>
+                        <label for="title" class="font-medium">Title<span class="ml-1 text-red-500">*</span></label>
                         <input id="title" v-model="form.title" type="text" placeholder="Enter title..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                         <span v-if="form.errors.title" class="text-sm text-red-600">
@@ -83,7 +83,7 @@ function submit() {
                     <!-- Description -->
                     <div class="flex flex-col space-y-1">
                         <label for="description" class="font-medium">Description<span
-                                class="text-red-500">*</span></label>
+                                class="ml-1 text-red-500">*</span></label>
                         <textarea id="description" v-model="form.description" rows="3"
                             placeholder="Enter description..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
@@ -104,7 +104,7 @@ function submit() {
 
                     <!-- Logo Upload -->
                     <div class="flex flex-col space-y-1">
-                        <label for="logo" class="font-medium">Logo<span class="text-red-500">*</span></label>
+                        <label for="logo" class="font-medium">Logo<span class="ml-1 text-red-500">*</span></label>
                         <input id="logo" type="file" accept="image/*" @change="handleFileChange"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <div v-if="form.errors.logo" class="text-sm text-red-600">

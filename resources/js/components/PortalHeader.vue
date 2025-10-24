@@ -60,7 +60,8 @@
                     <div class="relative group inline-block dropdown-container"
                         @mouseenter="handleDropdownHover('services')" @mouseleave="handleDropdownLeave"
                         @click="toggleDropdown('services')">
-                        <button class="text-white hover:text-gray-700 font-medium flex items-center gap-1">
+                        <button
+                            class="flex items-center gap-1 text-white hover:text-gray-700 font-medium transition-colors duration-300">
                             Services
                             <!-- Arrow SVG -->
                             <svg class="w-5 h-5 text-white group-hover:text-gray-700 transform transition-transform duration-300"
@@ -76,14 +77,17 @@
                                 'opacity-100 invisible -translate-y-2': openDropdown !== 'services' && activeDropdown !== 'services'
                             }">
                             <a href="/services/health-safety"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">Health
-                                & Safety</a>
-                            <a href="/services/training"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">Training</a>
-                            <a href="/services/engineering"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">Engineering</a>
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">
+                                Occupational Safety & Health Monitoring
+                            </a>
                             <a href="/services/environmental"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">Environmental</a>
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">
+                                Environmental Monitoring
+                            </a>
+                            <a href="/services/training"
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">
+                                Training Academy
+                            </a>
                         </div>
                     </div>
 

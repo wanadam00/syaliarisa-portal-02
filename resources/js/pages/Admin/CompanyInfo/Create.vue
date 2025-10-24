@@ -56,7 +56,7 @@ function submit() {
                     <!-- Background -->
                     <div class="flex flex-col space-y-1">
                         <label for="background" class="font-medium">Company Background<span
-                                class="text-red-500">*</span></label>
+                                class="ml-1 text-red-500">*</span></label>
                         <textarea id="text" v-model="form.background" type="text"
                             placeholder="Enter company background..." rows="4"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
@@ -67,7 +67,7 @@ function submit() {
 
                     <!-- Vision -->
                     <div class="flex flex-col space-y-1">
-                        <label for="vision" class="font-medium">Vision<span class="text-red-500">*</span></label>
+                        <label for="vision" class="font-medium">Vision<span class="ml-1 text-red-500">*</span></label>
                         <textarea id="vision" v-model="form.vision" type="text" placeholder="Enter company vision..."
                             rows="3" class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
                             required />
@@ -78,7 +78,7 @@ function submit() {
 
                     <!-- mission -->
                     <div class="flex flex-col space-y-1">
-                        <label for="mission" class="font-medium">Mission<span class="text-red-500">*</span></label>
+                        <label for="mission" class="font-medium">Mission<span class="ml-1 text-red-500">*</span></label>
                         <textarea id="mission" v-model="form.mission" type="text" placeholder="Enter company mission..."
                             rows="3" class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
                             required />

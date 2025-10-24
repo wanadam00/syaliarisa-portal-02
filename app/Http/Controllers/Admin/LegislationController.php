@@ -24,8 +24,11 @@ class LegislationController extends Controller
 
     public function create(Legislation $legislation)
     {
+        // provide existing types for dropdown + add-new option
+        $types = Legislation::query()->pluck('type')->unique()->values()->filter()->values();
         return Inertia::render('Admin/Legislation/Create', [
             'legislation' => $legislation,
+            'types' => $types,
         ]);
     }
 
@@ -39,6 +42,7 @@ class LegislationController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',
+            'display_mode' => 'in:group,individual',
         ]);
 
         // Handle image upload
@@ -49,6 +53,11 @@ class LegislationController extends Controller
             unset($data['image']); // 🚀 prevents overwriting with null
         }
 
+        // Default display mode
+        if (!isset($data['display_mode'])) {
+            $data['display_mode'] = 'group';
+        }
+
         Legislation::create($data);
 
         return redirect()->route('admin.legislations.index')->with('success', 'Legislation created successfully.');
@@ -56,8 +65,14 @@ class LegislationController extends Controller
 
     public function edit(Legislation $legislation)
     {
+        // provide existing types for dropdown and ensure current type is available
+        $types = Legislation::query()->pluck('type')->unique()->values()->filter()->values();
+        if ($legislation->type && !$types->contains($legislation->type)) {
+            $types->push($legislation->type);
+        }
         return Inertia::render('Admin/Legislation/Edit', [
             'legislation' => $legislation,
+            'types' => $types,
         ]);
     }
 
@@ -71,6 +86,7 @@ class LegislationController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',
+            'display_mode' => 'in:group,individual',
         ]);
 
         // Handle image upload
@@ -79,6 +95,11 @@ class LegislationController extends Controller
             $data['image'] = $path;
         } else {
             unset($data['image']); // 🚀 prevents overwriting with null
+        }
+
+        // Default display mode
+        if (!isset($data['display_mode'])) {
+            $data['display_mode'] = 'group';
         }
 
         $legislation->update($data);

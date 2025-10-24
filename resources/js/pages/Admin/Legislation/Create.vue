@@ -15,7 +15,7 @@ interface Legislation {
     is_visible: boolean;
 }
 
-const { legislation } = usePage().props as unknown as { legislation: Legislation };
+const { legislation, types } = usePage().props as unknown as { legislation: Legislation, types: string[] };
 
 const form = useForm({
     title: legislation.title,
@@ -25,10 +25,13 @@ const form = useForm({
     image: null as File | null,
     link: legislation.link ?? '',
     is_visible: Boolean(legislation.is_visible ?? true),
+    display_mode: 'group',
 });
 
 // 🖼️ preview state
 const preview = ref<string | null>(null);
+// new category input
+const newCategory = ref('');
 
 function handleFileChange(e: Event) {
     const target = e.target as HTMLInputElement;
@@ -43,6 +46,11 @@ function handleFileChange(e: Event) {
 }
 
 function submit() {
+    // If admin chose to add a new category, use that value as the type
+    if (form.type === '__add_new__') {
+        form.type = newCategory.value || '';
+    }
+
     form.post(route('admin.legislations.store'), {
         forceFormData: true,
         onSuccess: () => {
@@ -79,16 +87,19 @@ function submit() {
                     <!-- Type -->
                     <div class="flex flex-col space-y-1">
                         <label for="type" class="font-medium">Type of legislation<span
-                                class="text-red-500">*</span></label>
+                                class="ml-1 text-red-500">*</span></label>
                         <select id="type" v-model="form.type"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
                             <option value="" disabled>-- Select Type --</option>
-                            <option value="OSHA 1994">OSHA 1994</option>
-                            <option value="Factories & Machinery Act 1967 (FMA 1967)">Factories & Machinery Act 1967
-                                (FMA
-                                1967)</option>
-                            <option value="Environmental Quality Act 1974">Environmental Quality Act 1974</option>
+                            <option v-for="(t, idx) in types" :key="idx" :value="t">{{ t }}</option>
+                            <option value="__add_new__">+ Add New Category</option>
                         </select>
+                        <div v-if="form.type === '__add_new__'" class="mt-2">
+                            <input v-model="newCategory" type="text" placeholder="Type new category"
+                                class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                            <p class="text-sm text-gray-500 mt-1">Enter a new category name and it will be used as the
+                                type.</p>
+                        </div>
                         <span v-if="form.errors.type" class="text-sm text-red-600">
                             {{ form.errors.type }}
                         </span>
@@ -107,7 +118,7 @@ function submit() {
 
                     <!-- Title -->
                     <div class="flex flex-col space-y-1">
-                        <label for="title" class="font-medium">Title<span class="text-red-500">*</span></label>
+                        <label for="title" class="font-medium">Title<span class="ml-1 text-red-500">*</span></label>
                         <input id="title" v-model="form.title" type="text"
                             placeholder="e.g., Safety Measures for Handling Chemicals"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
@@ -119,7 +130,7 @@ function submit() {
                     <!-- Description -->
                     <div class="flex flex-col space-y-1">
                         <label for="description" class="font-medium">Description<span
-                                class="text-red-500">*</span></label>
+                                class="ml-1 text-red-500">*</span></label>
                         <textarea id="description" v-model="form.description" rows="5"
                             placeholder="Provide a brief description of the legislation"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
@@ -184,6 +195,18 @@ function submit() {
                                 form.is_visible ? 'translate-x-6' : 'translate-x-1'
                             ]" />
                         </button>
+                    </div>
+
+                    <!-- Display Mode -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="display_mode" class="font-medium">Display Mode</label>
+                        <select id="display_mode" v-model="form.display_mode"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500">
+                            <option value="group">Grouped (default)</option>
+                            <option value="individual">Individual (separate card)</option>
+                        </select>
+                        <p class="text-sm text-gray-500">Choose whether this legislation appears in a grouped card by
+                            type or as its own card.</p>
                     </div>
 
                     <!-- Submit -->

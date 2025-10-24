@@ -71,7 +71,7 @@ function submit() {
                 <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
                     <!-- Name -->
                     <div class="flex flex-col space-y-1">
-                        <label for="name" class="font-medium">Name<span class="text-red-500">*</span></label>
+                        <label for="name" class="font-medium">Name<span class="ml-1 text-red-500">*</span></label>
                         <input id="name" v-model="form.name" type="text" placeholder="Enter employee name..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                         <span v-if="form.errors.name" class="text-sm text-red-600">
@@ -82,7 +82,7 @@ function submit() {
                     <!-- Department -->
                     <div class="flex flex-col space-y-1">
                         <label for="department" class="font-medium">Department<span
-                                class="text-red-500">*</span></label>
+                                class="ml-1 text-red-500">*</span></label>
                         <input id="department" v-model="form.department" type="text"
                             placeholder="Enter employee department..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
@@ -93,7 +93,8 @@ function submit() {
 
                     <!-- Position -->
                     <div class="flex flex-col space-y-1">
-                        <label for="position" class="font-medium">Position<span class="text-red-500">*</span></label>
+                        <label for="position" class="font-medium">Position<span
+                                class="ml-1 text-red-500">*</span></label>
                         <select id="position" v-model="form.position"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
                             <option value="" disabled>-- Select Position --</option>
@@ -112,7 +113,7 @@ function submit() {
 
                     <!-- Photo Upload -->
                     <div class="flex flex-col space-y-1">
-                        <label for="photo" class="font-medium">Photo<span class="text-red-500">*</span></label>
+                        <label for="photo" class="font-medium">Photo<span class="ml-1 text-red-500">*</span></label>
                         <input id="photo" type="file" accept="image/*" @change="handleFileChange"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <div v-if="form.errors.photo" class="text-sm text-red-600">

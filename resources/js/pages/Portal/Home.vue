@@ -103,10 +103,10 @@ const {
                         <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-primary text-3xl">
                                 <i class="bi bi-shield"></i>
                             </div>
-                            <h3 class="text-xl font-medium mb-3">Health & Safety</h3>
+                            <h3 class="text-xl font-medium mb-3">Occupational Safety & Health Monitoring</h3>
                             <p class="mb-5 flex-grow">Explore our professional Health & Safety solutions.</p>
                             <!-- <a href="/services/health-safety"
                                 class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition">
@@ -125,14 +125,40 @@ const {
                             </div>
                         </div>
 
+                        <!-- Environmental -->
+                        <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
+                            data-aos="zoom-in">
+                            <div
+                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-primary text-3xl">
+                                <i class="bi bi-tree"></i>
+                            </div>
+                            <h3 class="text-xl font-medium mb-3">Environmental Monitoring</h3>
+                            <p class="mb-5 flex-grow">Sustainable environmental solutions for your business.</p>
+                            <!-- <a href="/services/environmental"
+                                class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition uppercase font-extrabold">
+                                Find Out More
+                            </a> -->
+                            <div class="flex justify-center pt-4">
+                                <a href="/services/environmental"
+                                    class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-6 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
+                                    <span>Find Out More</span>
+                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
                         <!-- Training -->
                         <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-primary text-3xl">
                                 <i class="bi bi-book"></i>
                             </div>
-                            <h3 class="text-xl font-medium mb-3">Training</h3>
+                            <h3 class="text-xl font-medium mb-3">Training Academy</h3>
                             <p class="mb-5 flex-grow">Comprehensive training programs for your team.</p>
                             <!-- <a href="/services/training"
                                 class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition">
@@ -152,18 +178,14 @@ const {
                         </div>
 
                         <!-- Engineering -->
-                        <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
+                        <!-- <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
+                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-primary text-3xl">
                                 <i class="bi bi-gear"></i>
                             </div>
                             <h3 class="text-xl font-medium mb-3">Engineering</h3>
                             <p class="mb-5 flex-grow">Innovative engineering solutions tailored to your needs.</p>
-                            <!-- <a href="/services/engineering"
-                                class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition">
-                                Find Out More
-                            </a> -->
                             <div class="flex justify-center pt-4">
                                 <a href="/services/engineering"
                                     class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-6 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
@@ -175,33 +197,7 @@ const {
                                     </svg>
                                 </a>
                             </div>
-                        </div>
-
-                        <!-- Environmental -->
-                        <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
-                            data-aos="zoom-in">
-                            <div
-                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl">
-                                <i class="bi bi-tree"></i>
-                            </div>
-                            <h3 class="text-xl font-medium mb-3">Environmental</h3>
-                            <p class="mb-5 flex-grow">Sustainable environmental solutions for your business.</p>
-                            <!-- <a href="/services/environmental"
-                                class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition uppercase font-extrabold">
-                                Find Out More
-                            </a> -->
-                            <div class="flex justify-center pt-4">
-                                <a href="/services/environmental"
-                                    class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-6 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
-                                    <span>Find Out More</span>
-                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -250,7 +246,7 @@ const {
                     </div>
                     <div class="lg:w-1/3 text-center lg:text-right">
                         <a href="/contact-us"
-                            class="inline-block bg-white hover:bg-gray-900 text-primary hover:text-white font-medium px-8 py-3 rounded transition">
+                            class="group inline-flex items-center gap-2 bg-white text-primary border-2 border-[#2262ae] hover:bg-gray-800 hover:text-white font-medium px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-md">
                             Get Started
                         </a>
                     </div>

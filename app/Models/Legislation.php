@@ -17,6 +17,7 @@ class Legislation extends Model
         'image',
         'link',
         'is_visible',
+        'display_mode',
     ];
 
     protected $appends = ['image_url'];
