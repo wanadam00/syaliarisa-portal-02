@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AboutUsContentController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ContactInfoController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\LegislationController;
 use App\Http\Controllers\Admin\StandardApplicationController;
 use App\Http\Controllers\Portal\CompanyPortalController;
@@ -63,6 +64,14 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('admin.employees.edit');
     Route::post('/employees/{employee}', [EmployeeController::class, 'update'])->name('admin.employees.update');
     Route::delete('/employees/{employee}', [EmployeeController::class, 'destroy'])->name('admin.employees.destroy');
+    // Positions
+    Route::get('/positions', [PositionController::class, 'index'])->name('admin.positions.index');
+    Route::get('/positions/create', [PositionController::class, 'create'])->name('admin.positions.create');
+    Route::post('/positions', [PositionController::class, 'store'])->name('admin.positions.store');
+    Route::post('/positions/ajax', [PositionController::class, 'storeAjax'])->name('admin.positions.storeAjax');
+    Route::get('/positions/{position}/edit', [PositionController::class, 'edit'])->name('admin.positions.edit');
+    Route::post('/positions/{position}', [PositionController::class, 'update'])->name('admin.positions.update');
+    Route::delete('/positions/{position}', [PositionController::class, 'destroy'])->name('admin.positions.destroy');
     // Contact Info
     Route::get('/contact', [ContactInfoController::class, 'index'])->name('admin.contact-info.index');
     Route::get('/contact/create', [ContactInfoController::class, 'create'])->name('admin.contact-info.create');

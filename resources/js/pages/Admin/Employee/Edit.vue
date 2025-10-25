@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import Swal from 'sweetalert2';
 
 interface Employee {
@@ -13,11 +13,11 @@ interface Employee {
     is_visible: boolean;
 }
 
-const { employee } = usePage().props as unknown as { employee: Employee };
+const { employee, positions } = usePage().props as unknown as { employee: Employee, positions: Array<any> };
 
 const form = useForm({
     name: employee.name ?? '',
-    position: employee.position ?? '',
+    position_id: (employee as any).position_id ?? '',
     department: employee.department ?? '',
     photo: null as File | null,
     is_visible: Boolean(employee.is_visible ?? true),
@@ -25,6 +25,10 @@ const form = useForm({
 
 // 🖼️ preview state
 const preview = ref<string | null>(null);
+const localPositions = reactive(Array.isArray(positions) ? positions.slice() : []);
+const adding = ref(false);
+const creating = ref(false);
+const newPosition = reactive({ name: '', parent_id: '' as number | '', rank: 0 });
 
 function handleFileChange(e: Event) {
     const target = e.target as HTMLInputElement;
@@ -60,6 +64,56 @@ function submit() {
         },
     });
 }
+
+async function createPosition() {
+    if (!newPosition.name.trim()) {
+        Swal.fire({ icon: 'error', title: 'Name required', text: 'Please provide a position name.' });
+        return;
+    }
+
+    if (creating.value) return;
+    creating.value = true;
+
+    try {
+        const res = await fetch(route('admin.positions.storeAjax'), {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+            },
+            body: JSON.stringify({
+                name: newPosition.name,
+                parent_id: newPosition.parent_id || null,
+                rank: Number(newPosition.rank) || 0,
+            }),
+        });
+
+        if (!res.ok) {
+            const text = await res.text();
+            throw new Error(text || 'Request failed');
+        }
+        const created = await res.json();
+
+        // push to local positions and select it by id
+        localPositions.push(created);
+        form.position_id = created.id;
+        // reset add form
+        newPosition.name = '';
+        newPosition.parent_id = '';
+        newPosition.rank = 0;
+        adding.value = false;
+
+        Swal.fire({ icon: 'success', title: 'Added', text: 'New position created and selected.' });
+    } catch (err) {
+        console.error(err);
+        Swal.fire({ icon: 'error', title: 'Failed', text: 'Unable to create position.' });
+    } finally {
+        creating.value = false;
+    }
+}
 </script>
 
 <template>
@@ -94,20 +148,39 @@ function submit() {
                     <div class="flex flex-col space-y-1">
                         <label for="position" class="font-medium">Position<span
                                 class="ml-1 text-red-500">*</span></label>
-                        <select id="position" v-model="form.position"
+                        <select id="position" v-model="form.position_id"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
                             <option value="" disabled>-- Select Position --</option>
-                            <option value="Manager">Manager</option>
-                            <option value="Assistant Manager">Assistant Manager</option>
-                            <option value="Chemist">Chemist</option>
-                            <option value="Admin Executive">Admin Executive</option>
-                            <option value="Environmental Executive">Environmental Executive</option>
-                            <option value="Field Executive">Field Executive</option>
-                            <option value="Field Technician">Field Technician</option>
+                            <option v-for="p in localPositions" :key="p.id" :value="p.id">{{ p.name }}</option>
+                            <option value="__add_new__">+ Add New Position</option>
                         </select>
-                        <span v-if="form.errors.position" class="text-sm text-red-600">
-                            {{ form.errors.position }}
+                        <span v-if="form.errors.position_id" class="text-sm text-red-600">
+                            {{ form.errors.position_id }}
                         </span>
+
+                        <!-- Inline add new -->
+                        <div v-if="form.position_id === '__add_new__' || adding"
+                            class="mt-3 p-3 border rounded-md bg-gray-50">
+                            <div class="flex flex-col space-y-2">
+                                <input v-model="newPosition.name" type="text" placeholder="Position name"
+                                    class="w-full px-3 py-2 border rounded-md" />
+                                <select v-model="newPosition.parent_id" class="w-full px-3 py-2 border rounded-md">
+                                    <option value="">-- No Parent --</option>
+                                    <option v-for="p in localPositions" :key="p.id" :value="p.id">{{ p.name }}</option>
+                                </select>
+                                <input v-model.number="newPosition.rank" type="number"
+                                    placeholder="Rank (lower = higher)" class="w-full px-3 py-2 border rounded-md" />
+                                <div class="flex space-x-2 justify-end">
+                                    <button type="button" @click="adding = false; form.position_id = ''"
+                                        class="px-3 py-1 border rounded-md">Cancel</button>
+                                    <button type="button" @click="createPosition" :disabled="creating"
+                                        :class="['px-3 py-1 rounded-md', creating ? 'bg-gray-300 text-gray-700' : 'bg-blue-600 text-white']">
+                                        <span v-if="creating">Adding...</span>
+                                        <span v-else>Add</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Photo Upload -->

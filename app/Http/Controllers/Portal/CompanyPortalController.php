@@ -65,16 +65,69 @@ class CompanyPortalController extends Controller
     public function companyInfo()
     {
         $companyInfo = CompanyInfo::where('is_visible', true)->first();
-        $employees = Employee::where('is_visible', true)->get()->map(function ($employee) {
-            return [
-                'id' => $employee->id,
-                'name' => $employee->name,
-                'position' => $employee->position,
-                'department' => $employee->department,
-                'is_visible' => $employee->is_visible,
-                'photo' => $employee->photo_url, // send URL to frontend
+        // Eager-load position relation so we can use position id/name/rank on the portal
+        // Build positions-first structure: positions ordered by rank, each with its visible employees
+        $rawPositions = \App\Models\Position::where('is_visible', true)
+            ->orderBy('rank')
+            ->get();
+
+        // Map positions to arrays and attach their visible employees
+        $positionsById = [];
+        foreach ($rawPositions as $position) {
+            $emps = $position->employees()->where('is_visible', true)->get()->map(function ($employee) {
+                return [
+                    'id' => $employee->id,
+                    'name' => $employee->name,
+                    'photo' => $employee->photo_url,
+                    'department' => $employee->department,
+                ];
+            })->toArray();
+
+            $positionsById[$position->id] = [
+                'id' => $position->id,
+                'name' => $position->name,
+                'parent_id' => $position->parent_id,
+                'rank' => $position->rank,
+                'is_visible' => $position->is_visible,
+                'employees' => $emps,
+                'children' => [],
             ];
-        });
+        }
+
+        // Build nested tree
+        $positionsTree = [];
+        foreach ($positionsById as $id => &$pos) {
+            if ($pos['parent_id'] && isset($positionsById[$pos['parent_id']])) {
+                $positionsById[$pos['parent_id']]['children'][] = &$pos;
+            } else {
+                $positionsTree[] = &$pos;
+            }
+        }
+        // Ensure children are ordered by rank
+        $sortChildren = function (&$nodes) use (&$sortChildren) {
+            usort($nodes, function ($a, $b) {
+                return ($a['rank'] ?? 0) <=> ($b['rank'] ?? 0);
+            });
+            foreach ($nodes as &$n) {
+                if (!empty($n['children'])) {
+                    $sortChildren($n['children']);
+                }
+            }
+        };
+        $sortChildren($positionsTree);
+
+        // Employees without a position (fallback)
+        $unassignedEmployees = Employee::whereNull('position_id')
+            ->where('is_visible', true)
+            ->get()
+            ->map(function ($employee) {
+                return [
+                    'id' => $employee->id,
+                    'name' => $employee->name,
+                    'photo' => $employee->photo_url,
+                    'department' => $employee->department,
+                ];
+            });
 
         return Inertia::render('Portal/CompanyInfo', [
             'companyInfo' => [
@@ -83,7 +136,8 @@ class CompanyPortalController extends Controller
                 'mission' => $companyInfo?->mission,
                 'is_visible' => $companyInfo?->is_visible,
             ],
-            'employees' => $employees,
+            'positions' => $positionsTree,
+            'unassignedEmployees' => $unassignedEmployees,
         ]);
     }
 

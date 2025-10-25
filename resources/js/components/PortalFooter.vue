@@ -1,5 +1,5 @@
 <template>
-    <footer class="pt-16 border-t bg-gray-50 dark:bg-gray-900" data-aos="fade-up">
+    <footer class="pt-16 border-t bg-white dark:bg-gray-900" data-aos="fade-up">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Column 1: Company Info -->
@@ -44,19 +44,19 @@
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-6">Quick Links</h3>
                     <ul class="space-y-3">
                         <li><a href="/"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#2262ae] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Home</a>
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Home</a>
                         </li>
                         <li><a href="/about-us/company-info"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#2262ae] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Company
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Company
                                 Info</a></li>
                         <li><a href="/about-us/standards"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#2262ae] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Standards</a>
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Standards</a>
                         </li>
                         <li><a href="/about-us/legislation"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#2262ae] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Legislations</a>
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Legislations</a>
                         </li>
                         <li><a href="/contact-us"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#2262ae] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Contact
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Contact
                                 Us</a></li>
                     </ul>
                 </div>
@@ -67,19 +67,19 @@
                     <ul class="space-y-3">
                         <li>
                             <a href="/services/health-safety"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#2262ae] dark:hover:text-blue-400 transition-colors duration-200 block py-1 break-words">
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1 break-words">
                                 Occupational Safety & Health
                             </a>
                         </li>
                         <li>
                             <a href="/services/environmental"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#2262ae] dark:hover:text-blue-400 transition-colors duration-200 block py-1 break-words">
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1 break-words">
                                 Environmental Monitoring
                             </a>
                         </li>
                         <li>
                             <a href="/services/training"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#2262ae] dark:hover:text-blue-400 transition-colors duration-200 block py-1 break-words">
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1 break-words">
                                 Training Academy
                             </a>
                         </li>
@@ -102,7 +102,7 @@
                         <li v-if="contactInfo.phone" class="flex items-start gap-3">
                             <i class="bi bi-telephone text-xl text-[#2262ae] dark:text-blue-400 flex-shrink-0"></i>
                             <a :href="`tel:${contactInfo.phone}`"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#2262ae] dark:hover:text-blue-400 transition-colors duration-200 break-words">
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 break-words">
                                 {{ contactInfo.phone }}
                             </a>
                         </li>
@@ -131,7 +131,7 @@
                         <li v-if="contactInfo.email" class="flex items-start gap-3">
                             <i class="bi bi-envelope text-xl text-[#2262ae] dark:text-blue-400 flex-shrink-0"></i>
                             <a :href="`mailto:${contactInfo.email}`"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#2262ae] dark:hover:text-blue-400 transition-colors duration-200 break-all">
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 break-all">
                                 {{ contactInfo.email }}
                             </a>
                         </li>

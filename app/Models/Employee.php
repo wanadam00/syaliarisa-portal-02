@@ -12,7 +12,8 @@ class Employee extends Model
 
     protected $fillable = [
         'name',
-        'position',
+        'position', // legacy string (kept for backward compatibility)
+        'position_id',
         'department',
         'photo',
         'is_visible',
@@ -23,5 +24,10 @@ class Employee extends Model
     public function getPhotoUrlAttribute()
     {
         return $this->photo ? Storage::url($this->photo) : null;
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class, 'position_id');
     }
 }

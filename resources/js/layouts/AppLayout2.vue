@@ -60,7 +60,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex flex-col min-h-screen bg-white dark:bg-background text-[#212323] dark:text-white overflow-hidden">
+    <div class="flex flex-col min-h-screen bg-gray-50 dark:bg-background text-[#212323] dark:text-white overflow-hidden">
         <PortalHeader />
         <slot />
         <PortalFooter />

@@ -9,7 +9,7 @@ interface Employee {
     id: number;
     name: string;
     department: string;
-    position: string;
+    position: any;
     photo: string | null;
     is_visible: boolean;
     showMenu?: boolean; // added for dropdown state
@@ -138,7 +138,8 @@ onBeforeUnmount(() => {
                             <td class="px-4 py-2">{{ index + 1 }}</td>
                             <td class="px-4 py-2 w-64 truncate">{{ employee.name }}</td>
                             <td class="px-4 py-2 truncate">{{ employee.department }}</td>
-                            <td class="px-4 py-2 truncate">{{ employee.position }}</td>
+                            <td class="px-4 py-2 truncate">{{ employee.position && employee.position.name ?
+                                employee.position.name : employee.position }}</td>
                             <td class="px-4 py-2 text-center">
                                 <img v-if="employee.photo" :src="employee.photo" alt="Photo"
                                     class="h-10 w-10 rounded-full object-cover mx-auto" />

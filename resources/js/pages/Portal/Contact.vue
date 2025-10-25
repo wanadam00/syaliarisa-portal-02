@@ -109,7 +109,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                             <div class="min-w-0 flex-1">
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Address</h4>
                                                 <p class="text-gray-600 dark:text-gray-300 break-words">{{ info.address
-                                                    }}</p>
+                                                }}</p>
                                             </div>
                                         </div>
 
@@ -181,15 +181,13 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                             <!-- Business Hours -->
                             <div>
                                 <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Business Hours</h3>
-                                <div class="bg-white dark:bg-gray-800">
-                                    <div v-for="info in contactInfo" :key="info.id">
-                                        <div v-if="info.business_hours" class="space-y-3">
-                                            <div v-html="info.business_hours" class="text-gray-600 dark:text-gray-300">
-                                            </div>
+                                <div v-for="info in contactInfo" :key="info.id">
+                                    <div v-if="info.business_hours" class="space-y-3">
+                                        <div v-html="info.business_hours" class="text-gray-600 dark:text-gray-300">
                                         </div>
-                                        <div v-else class="text-gray-500 dark:text-gray-400 italic">
-                                            Business hours not specified
-                                        </div>
+                                    </div>
+                                    <div v-else class="text-gray-500 dark:text-gray-400 italic">
+                                        Business hours not specified
                                     </div>
                                 </div>
                             </div>

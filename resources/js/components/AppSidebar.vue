@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { LayoutGrid, Home, Info, Users, FileText, Gavel, Wrench, Phone, Folder, BookOpen } from 'lucide-vue-next';
+import { LayoutGrid, Home, Info, Users, FileText, Gavel, Wrench, Phone, Folder, BookOpen, Network } from 'lucide-vue-next';
 
 import {
     Sidebar,
@@ -34,6 +34,11 @@ const mainNavItems: NavItem[] = [
         title: 'Organization Chart',
         href: route('admin.employees.index'),
         icon: Users, // Kept Users icon
+    },
+    {
+        title: 'Positions',
+        href: route('admin.positions.index'),
+        icon: Network, // Kept Users icon
     },
     {
         title: 'Standards Applications',
@@ -73,7 +78,8 @@ const footerNavItems: NavItem[] = [
 </script>
 
 <template>
-    <Sidebar collapsible="icon" variant="inset" class="h-screen border-r shadow-sm bg-gradient-to-b from-gray-900 to-gray-800 group-data-[variant=floating]:border-gray-700">
+    <Sidebar collapsible="icon" variant="inset"
+        class="h-screen border-r shadow-sm bg-gradient-to-b from-gray-900 to-gray-800 group-data-[variant=floating]:border-gray-700">
         <!-- Header with Logo -->
         <SidebarHeader>
             <SidebarMenu>
