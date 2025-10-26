@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable()->index();
             $table->integer('rank')->default(0)->index();
             $table->text('description')->nullable();

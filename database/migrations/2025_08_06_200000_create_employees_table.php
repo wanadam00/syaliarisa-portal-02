@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('position');
+            $table->string('name')->nullable();
+            $table->string('position')->nullable();
             $table->string('department')->nullable();
             $table->string('photo')->nullable();
             $table->boolean('is_visible')->default(true);
