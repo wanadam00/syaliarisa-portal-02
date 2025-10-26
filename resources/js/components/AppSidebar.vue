@@ -16,51 +16,8 @@ import NavMain from '@/components/NavMain.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavUser from '@/components/NavUser.vue';
 import AppLogo from './AppLogo.vue';
+import { mainNavItems } from '@/config/nav';
 import { type NavItem } from '@/types';
-
-// Main admin sections
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Home',
-        href: route('admin.home-sections.index'),
-        icon: Home, // Updated to Home icon
-    },
-    {
-        title: 'Company Info',
-        href: route('admin.company-info.index'),
-        icon: Info, // Updated to Info icon
-    },
-    {
-        title: 'Organization Chart',
-        href: route('admin.employees.index'),
-        icon: Users, // Kept Users icon
-    },
-    {
-        title: 'Positions',
-        href: route('admin.positions.index'),
-        icon: Network, // Kept Users icon
-    },
-    {
-        title: 'Standards Applications',
-        href: route('admin.standard-applications.index'),
-        icon: FileText, // Updated to FileText icon
-    },
-    {
-        title: 'Legislations',
-        href: route('admin.legislations.index'),
-        icon: Gavel, // Updated to Gavel icon
-    },
-    {
-        title: 'Services',
-        href: route('admin.services.index'),
-        icon: Wrench, // Updated to Wrench icon
-    },
-    {
-        title: 'Contact Us',
-        href: route('admin.contact-info.index'),
-        icon: Phone, // Kept Phone icon
-    },
-];
 
 // Footer items (external)
 const footerNavItems: NavItem[] = [

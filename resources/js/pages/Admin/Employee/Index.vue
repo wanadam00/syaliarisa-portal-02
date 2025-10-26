@@ -103,7 +103,7 @@ onBeforeUnmount(() => {
                     <div class="truncate">
                         <h1
                             class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-                            Organization Chart Management
+                            Employees Management
                         </h1>
                         <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Manage and organize employee structure
                         </p>
@@ -111,7 +111,7 @@ onBeforeUnmount(() => {
                     <Link :href="route('admin.employees.create')"
                         class="group inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105">
                     <Plus class="size-5 mr-0 sm:mr-2 transition-transform group-hover:rotate-90 duration-300" />
-                    <span class="hidden sm:inline">Add Employee</span>
+                    <span class="hidden sm:inline">New Employee</span>
                     </Link>
                 </div>
             </div>
@@ -120,8 +120,7 @@ onBeforeUnmount(() => {
             <div
                 class="overflow-x-auto rounded-2xl border border-gray-200/50 dark:border-gray-700/50 bg-white/70 dark:bg-gray-900/60 backdrop-blur-xl shadow-lg">
                 <table class="min-w-full text-sm text-left">
-                    <thead
-                        class="bg-gradient-to-r from-gray-100/70 to-gray-200/50 dark:from-gray-800/70 dark:to-gray-700/50 text-gray-700 dark:text-gray-200 uppercase tracking-wide text-xs">
+                    <thead class="bg-gray-200/70 text-gray-700 dark:text-gray-200 uppercase tracking-wide text-xs">
                         <tr>
                             <th class="px-4 py-3">No.</th>
                             <th class="px-4 py-3">Name</th>

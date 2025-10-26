@@ -91,10 +91,11 @@ function submit() {
                         <select id="type" v-model="form.type"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
                             <option value="" disabled>-- Select Position --</option>
-                            <option value="Health & Safety">Health & Safety</option>
-                            <option value="Engineering">Engineering</option>
-                            <option value="Training">Training</option>
-                            <option value="Environmental">Environmental</option>
+                            <option value="Occupational Safety & Health Monitoring">Occupational Safety & Health
+                                Monitoring</option>
+                            <option value="Environmental Monitoring">Environmental Monitoring</option>
+                            <option value="Training Academy">Training Academy</option>
+                            <!-- <option value="Environmental">Environmental</option> -->
                         </select>
                         <span v-if="form.errors.type" class="text-sm text-red-600">
                             {{ form.errors.type }}

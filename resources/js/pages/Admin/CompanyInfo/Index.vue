@@ -101,8 +101,7 @@ function deleteCompany(id: number) {
             <div
                 class="overflow-x-auto rounded-2xl border border-gray-200/50 dark:border-gray-700/50 bg-white/70 dark:bg-gray-900/60 backdrop-blur-xl shadow-lg">
                 <table class="min-w-full text-sm text-left">
-                    <thead
-                        class="bg-gradient-to-r from-gray-100/70 to-gray-200/50 dark:from-gray-800/70 dark:to-gray-700/50 text-gray-700 dark:text-gray-200 uppercase tracking-wide text-xs">
+                    <thead class="bg-gray-200/70 text-gray-700 dark:text-gray-200 uppercase tracking-wide text-xs">
                         <tr>
                             <th class="px-4 py-3">No.</th>
                             <th class="px-4 py-3">Background</th>
