@@ -24,6 +24,20 @@ use Inertia\Inertia;
 //     return Inertia::render('admin/home');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Route::prefix('/')->group(function () {
+Route::get('/', [CompanyPortalController::class, 'home'])->name('portal.home');
+Route::get('/about-us/company-info', [CompanyPortalController::class, 'companyInfo'])->name('portal.company-info');
+Route::get('/about-us/organization', [CompanyPortalController::class, 'aboutUsOrganization'])->name('portal.about-us.organization');
+Route::get('/about-us/standards', [CompanyPortalController::class, 'aboutUsStandards'])->name('portal.about-us.standards');
+Route::get('/about-us/legislation', [CompanyPortalController::class, 'aboutUsLegislation'])->name('portal.about-us.legislation');
+Route::get('/services/safety-health', [CompanyPortalController::class, 'servicesHealthSafety'])->name('portal.services.health-safety');
+Route::get('/services/training', [CompanyPortalController::class, 'servicesTraining'])->name('portal.services.training');
+Route::get('/services/engineering', [CompanyPortalController::class, 'servicesEngineering'])->name('portal.services.engineering');
+Route::get('/services/environmental', [CompanyPortalController::class, 'servicesEnvironmental'])->name('portal.services.environmental');
+Route::get('/contact-us', [CompanyPortalController::class, 'contact'])->name('portal.contact');
+Route::post('/customers', [CompanyPortalController::class, 'submitCustomerForm'])->name('portal.customers.submit');
+// });
+
 // Password update routes
 // Password update routes
 Route::middleware('auth')->group(function () {
@@ -94,20 +108,6 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/standard-applications/{standardApplication}/edit', [StandardApplicationController::class, 'edit'])->name('admin.standard-applications.edit');
     Route::post('/standard-applications/{standardApplication}', [StandardApplicationController::class, 'update'])->name('admin.standard-applications.update');
     Route::delete('/standard-applications/{standardApplication}', [StandardApplicationController::class, 'destroy'])->name('admin.standard-applications.destroy');
-});
-
-Route::prefix('/')->group(function () {
-    Route::get('/', [CompanyPortalController::class, 'home'])->name('portal.home');
-    Route::get('/about-us/company-info', [CompanyPortalController::class, 'companyInfo'])->name('portal.company-info');
-    Route::get('/about-us/organization', [CompanyPortalController::class, 'aboutUsOrganization'])->name('portal.about-us.organization');
-    Route::get('/about-us/standards', [CompanyPortalController::class, 'aboutUsStandards'])->name('portal.about-us.standards');
-    Route::get('/about-us/legislation', [CompanyPortalController::class, 'aboutUsLegislation'])->name('portal.about-us.legislation');
-    Route::get('/services/health-safety', [CompanyPortalController::class, 'servicesHealthSafety'])->name('portal.services.health-safety');
-    Route::get('/services/training', [CompanyPortalController::class, 'servicesTraining'])->name('portal.services.training');
-    Route::get('/services/engineering', [CompanyPortalController::class, 'servicesEngineering'])->name('portal.services.engineering');
-    Route::get('/services/environmental', [CompanyPortalController::class, 'servicesEnvironmental'])->name('portal.services.environmental');
-    Route::get('/contact-us', [CompanyPortalController::class, 'contact'])->name('portal.contact');
-    Route::post('/customers', [CompanyPortalController::class, 'submitCustomerForm'])->name('portal.customers.submit');
 });
 
 // API route to fetch all contact info

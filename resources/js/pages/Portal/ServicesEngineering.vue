@@ -57,7 +57,7 @@ const formatQuillContent = (html: string) => {
     <AppLayout2>
         <!-- Hero Section -->
         <section
-            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32"
+            class="bg-gradient-to-r from-[#133762] to-[#2262AE] dark:bg-background dark:border-b py-12 text-white pt-32"
             data-aos="fade-down">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">

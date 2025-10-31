@@ -103,13 +103,13 @@ const {
                         <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-primary text-3xl">
+                                class="w-20 h-20 bg-[#508FDC] rounded-full flex items-center justify-center mx-auto mb-5 text-gray-100 text-3xl">
                                 <i class="bi bi-shield"></i>
                             </div>
                             <h3 class="text-xl font-medium mb-3">Occupational Safety & Health Monitoring</h3>
                             <p class="mb-5 flex-grow">Explore our professional Health & Safety solutions.</p>
-                            <!-- <a href="/services/health-safety"
-                                class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition">
+                            <!-- <a href="/services/safety-health"
+                                class="inline-block border bg-[#2262ae] hover:bg-[#508FDC] hover:text-white text-white px-4 py-2 rounded transition">
                                 Find Out More
                             </a> -->
                             <div class="flex justify-center pt-4">
@@ -129,13 +129,13 @@ const {
                         <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-primary text-3xl">
+                                class="w-20 h-20 bg-[#508FDC] rounded-full flex items-center justify-center mx-auto mb-5 text-gray-100 text-3xl">
                                 <i class="bi bi-tree"></i>
                             </div>
                             <h3 class="text-xl font-medium mb-3">Environmental Monitoring</h3>
                             <p class="mb-5 flex-grow">Sustainable environmental solutions for your business.</p>
                             <!-- <a href="/services/environmental"
-                                class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition uppercase font-extrabold">
+                                class="inline-block border bg-[#2262ae] hover:bg-[#508FDC] hover:text-white text-white px-4 py-2 rounded transition uppercase font-extrabold">
                                 Find Out More
                             </a> -->
                             <div class="flex justify-center pt-4">
@@ -155,13 +155,13 @@ const {
                         <div class="min-w-[300px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md overflow-hidden p-6 text-center flex flex-col"
                             data-aos="zoom-in">
                             <div
-                                class="w-20 h-20 bg-[#48b2e5] rounded-full flex items-center justify-center mx-auto mb-5 text-primary text-3xl">
+                                class="w-20 h-20 bg-[#508FDC] rounded-full flex items-center justify-center mx-auto mb-5 text-gray-100 text-3xl">
                                 <i class="bi bi-book"></i>
                             </div>
                             <h3 class="text-xl font-medium mb-3">Training Academy</h3>
                             <p class="mb-5 flex-grow">Comprehensive training programs for your team.</p>
                             <!-- <a href="/services/training"
-                                class="inline-block border bg-[#2262ae] hover:bg-[#48b2e5] hover:text-white text-white px-4 py-2 rounded transition">
+                                class="inline-block border bg-[#2262ae] hover:bg-[#508FDC] hover:text-white text-white px-4 py-2 rounded transition">
                                 Find Out More
                             </a> -->
                             <div class="flex justify-center pt-4">

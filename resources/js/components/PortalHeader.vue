@@ -2,26 +2,27 @@
     <header :class="[
         'fixed top-0 w-full shadow-md z-[9999] transition-colors duration-500',
         scrolled
-            ? 'bg-gradient-to-r from-[#48b2e5] to-[#2262ae] opacity-100'
-            : 'bg-gradient-to-r from-[#48b2e5]/80 to-[#2262ae]/80 opacity-90'
+            ? 'bg-gradient-to-r from-[#133762] to-[#2262AE] opacity-100'
+            : 'bg-gradient-to-r from-[#133762]/85 to-[#2262AE]/85 opacity-90'
     ]" data-aos="fade-down">
         <nav class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
-                <a href="/" class="flex items-center">
+                <a href="/" class="flex items-center" @click="handleLogoClick">
                     <!-- Light mode logo (shown by default) -->
-                    <img src="/images/secondary-logo.png" alt="Syaliarisa Services" class="h-16 block dark:hidden" />
+                    <img src="/images/crop-logo-2.png" alt="Syaliarisa Services" class="h-14 block dark:hidden pb-1" />
+                    <span
+                        class="block dark:hidden mx-4 text-white font-bold text-xl uppercase drop-shadow-lg drop-shadow-gray-400 font-mono">Syaliarisa</span>
 
                     <!-- Dark mode logo (hidden by default, shown in dark mode) -->
-                    <img src="/images/secondary-logo.png" alt="Syaliarisa Services" class="h-16 hidden dark:block" />
+                    <img src="/images/secondary-logo.png" alt="Syaliarisa Services" class="h-14 hidden dark:block" />
+                    <span
+                        class="hidden dark:block mx-4 text-white font-bold text-xl uppercase drop-shadow-lg drop-shadow-gray-400 font-mono">Syaliarisa</span>
                 </a>
 
                 <!-- Desktop Menu -->
                 <div class="hidden lg:flex items-center space-x-8">
                     <a href="/"
                         class="text-white hover:text-gray-700 font-medium transition-colors duration-300">Home</a>
-                    <!-- <a href="/company-info"
-                        class="text-gray-700 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 font-medium">Company
-                        Info</a> -->
 
                     <!-- About Us Dropdown -->
                     <div class="relative group inline-block dropdown-container"
@@ -76,7 +77,7 @@
                                 'opacity-100 visible translate-y-0': openDropdown === 'services' || activeDropdown === 'services',
                                 'opacity-100 invisible -translate-y-2': openDropdown !== 'services' && activeDropdown !== 'services'
                             }">
-                            <a href="/services/health-safety"
+                            <a href="/services/safety-health"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">
                                 Occupational Safety & Health Monitoring
                             </a>
@@ -94,10 +95,21 @@
                     <a href="/contact-us"
                         class="text-white hover:text-gray-700 font-medium transition-colors duration-300">Contact
                         Us</a>
+
+                    <!-- Even more hidden admin login link -->
+                    <a href="/login"
+                        class="admin-login-link opacity-0 hover:opacity-100 focus:opacity-100 transition-all duration-300 ease-in-out w-0 hover:w-8 h-8 flex items-center justify-center text-white hover:text-blue-200 border border-transparent hover:border-white/20 rounded bg-white/5 hover:bg-white/10 overflow-hidden"
+                        title="Admin Login" aria-label="Admin Login">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 min-w-5" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </a>
                 </div>
 
                 <!-- Mobile Toggle -->
-                <!-- Mobile Toggle Button - Made more prominent -->
                 <button @click="toggleMobileMenu" class="lg:hidden p-2 focus:outline-none mobile-toggle-button"
                     aria-label="Toggle menu">
                     <div class="w-6 h-6 relative">
@@ -176,15 +188,17 @@
                             leave-active-class="transition-all duration-200 ease-in"
                             leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 -translate-y-2">
                             <div v-if="openDropdown === 'services'" class="pl-4 overflow-hidden">
-                                <a href="/services/health-safety"
-                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Health &
-                                    Safety</a>
-                                <a href="/services/training"
-                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Training</a>
-                                <a href="/services/engineering"
-                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Engineering</a>
+                                <a href="/services/safety-health"
+                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Occupational
+                                    Safety & Health Monitoring</a>
                                 <a href="/services/environmental"
-                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Environmental</a>
+                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Environmental
+                                    Monitoring</a>
+                                <a href="/services/training"
+                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Training
+                                    Academy</a>
+                                <!-- <a href="/services/engineering"
+                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Engineering</a> -->
                             </div>
                         </transition>
                     </div>
@@ -193,6 +207,19 @@
                     <a href="/contact-us" class="block py-2 text-white hover:text-gray-700 font-medium">
                         Contact Us
                     </a>
+
+                    <!-- Hidden Admin Login in Mobile Menu -->
+                    <!-- <a href="/login"
+                        class="admin-login-link-mobile opacity-50 hover:opacity-100 transition-opacity duration-300 w-full text-left py-2 text-white hover:text-blue-200 text-sm flex items-center border-t border-white/10 mt-2 pt-3"
+                        aria-label="Admin Login">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Admin Access
+                    </a> -->
                 </div>
             </div>
         </nav>
@@ -205,7 +232,40 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 const mobileMenuOpen = ref(false);
 const openDropdown = ref('');
 const activeDropdown = ref('');
-const scrolled = ref(false); // 🔹 new state for scroll
+const scrolled = ref(false);
+
+// Triple click detection for logo
+const logoClickCount = ref(0);
+const lastLogoClickTime = ref(0);
+
+const handleLogoClick = (event) => {
+    const currentTime = new Date().getTime();
+    const clickGap = currentTime - lastLogoClickTime.value;
+
+    // Reset if too much time between clicks
+    if (clickGap > 500) {
+        logoClickCount.value = 1;
+    } else {
+        logoClickCount.value++;
+    }
+
+    lastLogoClickTime.value = currentTime;
+
+    // If triple click detected, redirect to login
+    if (logoClickCount.value === 3) {
+        event.preventDefault();
+        window.location.href = '/login';
+        return;
+    }
+
+    // Normal click behavior - allow navigation to home after delay
+    setTimeout(() => {
+        if (logoClickCount.value < 3) {
+            // Single or double click - normal behavior (navigate to home)
+            // The default anchor tag behavior will handle this
+        }
+    }, 300);
+};
 
 const toggleMobileMenu = () => {
     mobileMenuOpen.value = !mobileMenuOpen.value;
@@ -235,12 +295,10 @@ const handleClickOutside = (event) => {
     const isClickOnToggle = mobileToggle && mobileToggle.contains(event.target);
 
     if (window.innerWidth >= 1024) {
-        // Close dropdowns on desktop sizes
         if (!isClickInsideDropdown) {
             openDropdown.value = '';
         }
     } else {
-        // Close mobile menu on mobile sizes if clicking outside the menu and toggle button
         if (!isClickInsideMobileMenu && !isClickOnToggle) {
             mobileMenuOpen.value = false;
             document.body.style.overflow = '';
@@ -248,18 +306,17 @@ const handleClickOutside = (event) => {
     }
 };
 
-// 🔹 scroll handler
 const handleScroll = () => {
-    scrolled.value = window.scrollY > 50; // adjust threshold
+    scrolled.value = window.scrollY > 50;
 };
 
 onMounted(() => {
     document.addEventListener('click', handleClickOutside);
-    window.addEventListener('scroll', handleScroll); // add scroll
+    window.addEventListener('scroll', handleScroll);
 });
 
 onBeforeUnmount(() => {
     document.removeEventListener('click', handleClickOutside);
-    window.removeEventListener('scroll', handleScroll); // cleanup scroll
+    window.removeEventListener('scroll', handleScroll);
 });
 </script>

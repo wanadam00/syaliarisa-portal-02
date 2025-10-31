@@ -11,12 +11,16 @@ class LegislationController extends Controller
 {
     public function index()
     {
-        $legislations = Legislation::all()->map(function ($legislation) {
-            $legislation->image = $legislation->image
-                ? asset('storage/' . $legislation->image)
-                : null;
-            return $legislation;
-        });
+        // Paginate legislations and include image URL
+        $legislations = Legislation::orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->through(function ($legislation) {
+                $legislation->image = $legislation->image
+                    ? asset('storage/' . $legislation->image)
+                    : null;
+                return $legislation;
+            });
+
         return Inertia::render('Admin/Legislation/Index', [
             'legislations' => $legislations,
         ]);

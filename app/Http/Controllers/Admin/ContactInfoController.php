@@ -26,6 +26,10 @@ class ContactInfoController extends Controller
 
     public function store(Request $request)
     {
+        if (ContactInfo::count() > 0) {
+            return redirect()->back()->withErrors(['error' => 'You can only have one Contact Info. Please edit the existing one.']);
+        }
+
         $data = $request->validate([
             'address'        => 'required|string',
             'phone'          => ['required', 'regex:/^\+60\d{8,10}$/'],   // ✅ must start with +60

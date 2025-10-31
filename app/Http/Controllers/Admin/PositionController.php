@@ -11,7 +11,7 @@ class PositionController extends Controller
 {
     public function index()
     {
-        $positions = Position::with('parent')->orderBy('rank', 'asc')->get();
+        $positions = Position::with('parent')->orderBy('rank', 'asc')->paginate(10);
         return Inertia::render('Admin/Position/Index', [
             'positions' => $positions,
         ]);

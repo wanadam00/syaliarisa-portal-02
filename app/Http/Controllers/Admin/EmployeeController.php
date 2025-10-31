@@ -14,23 +14,25 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::with('position')->get()->map(function ($employee) {
-            // expose photo url
-            $employee->photo = $employee->photo
-                ? asset('storage/' . $employee->photo)
-                : null;
+        $employees = Employee::with('position')->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->through(function ($employee) {
+                // expose photo url
+                $employee->photo = $employee->photo
+                    ? asset('storage/' . $employee->photo)
+                    : null;
 
-            // get loaded relation explicitly to avoid collision with legacy 'position' string column
-            $posRelation = $employee->getRelationValue('position');
-            if ($posRelation && is_object($posRelation)) {
-                $employee->position = $posRelation->name;
-            } else {
-                // fall back to legacy string value if present
-                $employee->position = is_string($employee->position) ? $employee->position : null;
-            }
+                // get loaded relation explicitly to avoid collision with legacy 'position' string column
+                $posRelation = $employee->getRelationValue('position');
+                if ($posRelation && is_object($posRelation)) {
+                    $employee->position = $posRelation->name;
+                } else {
+                    // fall back to legacy string value if present
+                    $employee->position = is_string($employee->position) ? $employee->position : null;
+                }
 
-            return $employee;
-        });
+                return $employee;
+            });
 
         return Inertia::render('Admin/Employee/Index', [
             'employees' => $employees,

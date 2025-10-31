@@ -66,7 +66,7 @@
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-6">Our Services</h3>
                     <ul class="space-y-3">
                         <li>
-                            <a href="/services/health-safety"
+                            <a href="/services/safety-health"
                                 class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1 break-words">
                                 Occupational Safety & Health
                             </a>

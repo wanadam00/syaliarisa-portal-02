@@ -27,6 +27,10 @@ class CompanyInfoController extends Controller
 
     public function store(Request $request)
     {
+        if (CompanyInfo::count() > 0) {
+            return redirect()->back()->withErrors(['error' => 'You can only have one Company Info. Please edit the existing one.']);
+        }
+
         $data = $request->validate([
             'background' => 'required|string',
             'vision' => 'required|string',

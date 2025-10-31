@@ -11,12 +11,14 @@ class StandardApplicationController extends Controller
 {
     public function index()
     {
-        $standardApplications = StandardApplication::all()->map(function ($app) {
-            $app->logo = $app->logo
-                ? asset('storage/' . $app->logo)
-                : null;
-            return $app;
-        });
+        $standardApplications = StandardApplication::orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->through(function ($app) {
+                $app->logo = $app->logo
+                    ? asset('storage/' . $app->logo)
+                    : null;
+                return $app;
+            });
         return Inertia::render('Admin/StandardApplication/Index', [
             'standardApplications' => $standardApplications,
         ]);

@@ -25,8 +25,7 @@
             <div
                 class="overflow-x-auto rounded-2xl border border-gray-200/50 dark:border-gray-700/50 bg-white/70 dark:bg-gray-900/60 backdrop-blur-xl shadow-lg">
                 <table class="min-w-full text-sm text-left">
-                    <thead
-                        class="bg-gray-200/70 text-gray-700 dark:text-gray-200 uppercase tracking-wide text-xs">
+                    <thead class="bg-gray-200/70 text-gray-700 dark:text-gray-200 uppercase tracking-wide text-xs">
                         <tr>
                             <th class="px-4 py-3">No.</th>
                             <th class="px-4 py-3">Name</th>
@@ -36,7 +35,7 @@
                         </tr>
                     </thead>
                     <tbody class="text-gray-800 dark:text-gray-100 divide-y divide-gray-200/30 dark:divide-gray-700/30">
-                        <tr v-for="(pos, index) in positions" :key="pos.id"
+                        <tr v-for="(pos, index) in positions.data" :key="pos.id"
                             class="hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors">
                             <td class="px-4 py-2">{{ index + 1 }}</td>
                             <td class="px-4 py-2 w-64 truncate">{{ pos.name }}</td>
@@ -75,6 +74,26 @@
                     </tbody>
                 </table>
             </div>
+            <!-- Pagination -->
+            <div class="py-6 flex justify-center space-x-2">
+                <template v-for="(link, i) in positions.links" :key="i">
+                    <button v-if="link.url" @click="router.visit(link.url)" :class="[
+                        'px-3 py-2 rounded-lg text-sm font-medium transition flex items-center justify-center',
+                        link.active
+                            ? 'bg-blue-600 text-white shadow-lg'
+                            : 'bg-white/70 dark:bg-gray-800/70 text-gray-600 dark:text-gray-300 hover:bg-gray-100/70 dark:hover:bg-gray-700/70 backdrop-blur'
+                    ]">
+                        <ChevronLeft v-if="i === 0" />
+                        <ChevronRight v-else-if="i === positions.links.length - 1" />
+                        <span v-else v-html="link.label"></span>
+                    </button>
+                    <span v-else class="px-3 py-2 rounded-lg text-sm text-gray-400 flex items-center justify-center">
+                        <ChevronLeft v-if="i === 0" />
+                        <ChevronRight v-else-if="i === positions.links.length - 1" />
+                        <span v-else v-html="link.label"></span>
+                    </span>
+                </template>
+            </div>
         </div>
     </AppLayout>
 </template>
@@ -84,7 +103,7 @@ import AppLayout from '@/layouts/AppLayout.vue'
 import { usePage, router, Link } from '@inertiajs/vue3';
 import { reactive, onMounted, onBeforeUnmount } from 'vue';
 import Swal from 'sweetalert2';
-import { Plus } from 'lucide-vue-next';
+import { ChevronRight, ChevronLeft, Plus } from 'lucide-vue-next';
 
 interface Position {
     id: number
@@ -94,8 +113,16 @@ interface Position {
     showMenu?: boolean; // added for dropdown state
 }
 
-const { positions } = usePage().props as unknown as { positions: Position[] }
-positions.forEach(p => (p.showMenu = false));
+const { positions } = usePage().props as unknown as {
+    positions: {
+        data: Position[];
+        links: { url: string | null; label: string; active: boolean }[];
+        from: number;
+        to: number;
+        total: number;
+    };
+}
+positions.data.forEach(p => (p.showMenu = false));
 
 const dropdownPosition = reactive({ top: 0, left: 0 });
 let activePosition: Position | null = null;

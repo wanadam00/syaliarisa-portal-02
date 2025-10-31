@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watchEffect } from 'vue';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import Swal from 'sweetalert2';
@@ -17,7 +17,10 @@ interface ContactInfo {
     is_visible: boolean;
 }
 
-const { contactInfo } = usePage().props as unknown as { contactInfo: ContactInfo };
+const { contactInfo, flash } = usePage().props as unknown as {
+    contactInfo: ContactInfo;
+    flash?: { success?: string; error?: string };
+};
 
 const form = useForm({
     address: contactInfo.address ?? '',
@@ -86,23 +89,47 @@ function formatBusinessHours() {
     form.business_hours = quill.root.innerHTML;
 }
 
+// ✅ Watch for Laravel flash messages (optional but useful)
+watchEffect(() => {
+    if (flash?.success) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: flash.success,
+            confirmButtonColor: '#3085d6',
+        });
+    }
+
+    if (flash?.error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: flash.error,
+            confirmButtonColor: '#d33',
+        });
+    }
+});
+
+// ✅ Form submission with better feedback
 function submit() {
     form.post(route('admin.contact-info.store'), {
         forceFormData: true,
+        preserveScroll: true,
         onSuccess: () => {
             Swal.fire({
                 icon: 'success',
-                title: 'Success!',
-                text: 'New detail added to the contact us.',
+                title: 'Saved Successfully!',
+                text: 'Contact info has been updated or created.',
                 confirmButtonColor: '#3085d6',
             });
-            form.reset();
         },
-        onError: () => {
+        onError: (errors) => {
+            // Laravel validation or business rule errors
+            const firstError = Object.values(errors)[0] as string;
             Swal.fire({
                 icon: 'error',
                 title: 'Failed!',
-                text: 'Unable to add detail to the contact us.',
+                text: firstError || 'Unable to add detail to the contact us.',
                 confirmButtonColor: '#d33',
             });
         },

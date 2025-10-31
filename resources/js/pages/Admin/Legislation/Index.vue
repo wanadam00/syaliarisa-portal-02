@@ -3,7 +3,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { usePage, router, Link } from '@inertiajs/vue3';
 import { reactive, onMounted, onBeforeUnmount } from 'vue';
 import Swal from 'sweetalert2';
-import { Plus } from 'lucide-vue-next';
+import { ChevronRight, ChevronLeft, Plus } from 'lucide-vue-next';
 
 interface Legislation {
     id: number;
@@ -47,8 +47,16 @@ function deleteLegislation(id: number) {
     })
 }
 
-const { legislations } = usePage().props as unknown as { legislations: Legislation[] };
-legislations.forEach(e => (e.showMenu = false));
+const { legislations } = usePage().props as unknown as {
+    legislations: {
+        data: Legislation[];
+        links: { url: string | null; label: string; active: boolean }[];
+        from: number;
+        to: number;
+        total: number;
+    };
+};
+legislations.data.forEach(e => (e.showMenu = false));
 
 const dropdownPosition = reactive({ top: 0, left: 0 });
 let activeLegislation: Legislation | null = null;
@@ -131,7 +139,7 @@ onBeforeUnmount(() => {
                         </tr>
                     </thead>
                     <tbody class="text-gray-800 dark:text-gray-100 divide-y divide-gray-200/30 dark:divide-gray-700/30">
-                        <tr v-for="(legislation, index) in legislations" :key="legislation.id"
+                        <tr v-for="(legislation, index) in legislations.data" :key="legislation.id"
                             class="hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors">
                             <td class="px-4 py-2">{{ index + 1 }}</td>
                             <td class="px-4 py-2">{{ legislation.title }}</td>
@@ -175,6 +183,26 @@ onBeforeUnmount(() => {
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <!-- Pagination -->
+            <div class="py-6 flex justify-center space-x-2">
+                <template v-for="(link, i) in legislations.links" :key="i">
+                    <button v-if="link.url" @click="router.visit(link.url)" :class="[
+                        'px-3 py-2 rounded-lg text-sm font-medium transition flex items-center justify-center',
+                        link.active
+                            ? 'bg-blue-600 text-white shadow-lg'
+                            : 'bg-white/70 dark:bg-gray-800/70 text-gray-600 dark:text-gray-300 hover:bg-gray-100/70 dark:hover:bg-gray-700/70 backdrop-blur'
+                    ]">
+                        <ChevronLeft v-if="i === 0" />
+                        <ChevronRight v-else-if="i === legislations.links.length - 1" />
+                        <span v-else v-html="link.label"></span>
+                    </button>
+                    <span v-else class="px-3 py-2 rounded-lg text-sm text-gray-400 flex items-center justify-center">
+                        <ChevronLeft v-if="i === 0" />
+                        <ChevronRight v-else-if="i === legislations.links.length - 1" />
+                        <span v-else v-html="link.label"></span>
+                    </span>
+                </template>
             </div>
         </div>
     </AppLayout>

@@ -79,7 +79,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
         <AppLayout2>
             <!-- Page Header -->
             <section
-                class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32"
+                class="bg-gradient-to-r from-[#133762] to-[#2262AE] dark:bg-background dark:border-b py-12 text-white pt-32"
                 data-aos="fade-down">
                 <div class="container mx-auto px-4 text-center">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
@@ -109,7 +109,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                             <div class="min-w-0 flex-1">
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Address</h4>
                                                 <p class="text-gray-600 dark:text-gray-300 break-words">{{ info.address
-                                                }}</p>
+                                                    }}</p>
                                             </div>
                                         </div>
 

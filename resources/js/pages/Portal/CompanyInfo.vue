@@ -86,7 +86,7 @@ const HorizontalOrgChart: any = defineComponent({
         return () => h('div', { class: 'flex flex-col items-center' }, [
             // Position Card
             h('div', {
-                class: `relative mb-4 ${props.level === 0 ? 'bg-white' : 'bg-white dark:bg-gray-800'} 
+                class: `relative mb-4 ${props.level === 0 ? 'bg-white' : 'bg-white dark:bg-gray-800'}
             rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 min-w-64 transition-all duration-300 ease-out
             hover:shadow-xl hover:scale-105 cursor-pointer group`,
                 onClick: () => hasChildren.value && toggleNode(props.position.id)
@@ -116,8 +116,8 @@ const HorizontalOrgChart: any = defineComponent({
                                     })
                                     : h('div', {
                                         class: `w-full h-full flex items-center justify-center transition-colors duration-300 ${props.level === 0
-                                                ? 'bg-blue-500 group-hover:bg-blue-600'
-                                                : 'bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500'
+                                            ? 'bg-blue-500 group-hover:bg-blue-600'
+                                            : 'bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500'
                                             }`
                                     }, [
                                         h('i', { class: `bi bi-person text-lg ${props.level === 0 ? 'text-white' : 'text-gray-600 dark:text-gray-300'}` })
@@ -126,8 +126,8 @@ const HorizontalOrgChart: any = defineComponent({
                             // Position Name (Bottom - was employee name)
                             h('p', {
                                 class: `text-xs capitalize font-medium text-center max-w-20 truncate transition-colors duration-300 ${props.level === 0
-                                        ? 'text-gray-600 group-hover:text-blue-600'
-                                        : 'text-gray-700 dark:text-gray-300 group-hover:text-blue-500'
+                                    ? 'text-gray-600 group-hover:text-blue-600'
+                                    : 'text-gray-700 dark:text-gray-300 group-hover:text-blue-500'
                                     }`
                             }, props.position.name)
                         ])
@@ -137,8 +137,8 @@ const HorizontalOrgChart: any = defineComponent({
                 // Expand/Collapse Indicator
                 hasChildren.value ? h('div', {
                     class: `absolute -bottom-7 left-1/2 transform -translate-x-1/2 transition-all duration-500 ease-in-out ${isExpanded.value
-                            ? 'rotate-180 scale-110 text-blue-700'
-                            : 'group-hover:scale-110 group-hover:text-blue-500'
+                        ? 'rotate-180 scale-110 text-blue-700'
+                        : 'group-hover:scale-110 group-hover:text-blue-500'
                         }`
                 }, [
                     h('i', {
@@ -291,7 +291,7 @@ L.Icon.Default.mergeOptions({
     <AppLayout2>
         <!-- Hero Section -->
         <section
-            class="bg-gradient-to-r from-[#2262ae] to-[#48b2e5] dark:bg-background dark:border-b py-12 text-white pt-32"
+            class="bg-gradient-to-r from-[#133762] to-[#2262AE] dark:bg-background dark:border-b py-12 text-white pt-32"
             data-aos="fade-down">
             <div class="container mx-auto px-4 text-center">
                 <h1

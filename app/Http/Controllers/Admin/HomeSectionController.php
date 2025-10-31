@@ -34,6 +34,10 @@ class HomeSectionController extends Controller
 
     public function store(Request $request)
     {
+        if (HomeSection::count() > 0) {
+            return redirect()->back()->withErrors(['error' => 'You can only have one Home Section. Please edit the existing one.']);
+        }
+
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'top_details' => 'required|string',

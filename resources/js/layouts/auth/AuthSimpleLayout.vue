@@ -14,9 +14,11 @@ defineProps<{
             <div class="flex flex-col">
                 <div class="flex flex-col items-center">
                     <Link :href="route('portal.home')" class="flex flex-col items-center gap-2 font-medium">
-                    <a href="/" class="flex items-center">
+                    <a href="/" class="flex flex-col items-center">
                         <!-- Light mode logo (shown by default) -->
-                        <img src="/images/primary-logo.png" alt="Syaliarisa Services" class="h-22 block dark:hidden" />
+                        <img src="/images/crop-logo-2.png" alt="Syaliarisa Services" class="h-22 block dark:hidden" />
+                        <span
+                            class="block dark:hidden my-2 text-[#2262AE] font-extrabold text-2xl uppercase drop-shadow-lg drop-shadow-gray-300 font-mono">Syaliarisa sdn bhd</span>
 
                         <!-- Dark mode logo (hidden by default, shown in dark mode) -->
                         <img src="/images/secondary-logo.png" alt="Syaliarisa Services"
