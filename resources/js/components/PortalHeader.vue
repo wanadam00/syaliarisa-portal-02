@@ -7,7 +7,8 @@
     ]" data-aos="fade-down">
         <nav class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
-                <a href="/" class="flex items-center" @click="handleLogoClick">
+                <a href="/" class="flex items-center" @click.prevent="handleLogoClick"
+                    @touchstart="handleLogoPressStart" @touchend="handleLogoPressEnd" @contextmenu.prevent>
                     <!-- Light mode logo (shown by default) -->
                     <img src="/images/crop-logo-2.png" alt="Syaliarisa Services" class="h-14 block dark:hidden pb-1" />
                     <span
@@ -238,12 +239,41 @@ const scrolled = ref(false);
 const logoClickCount = ref(0);
 const lastLogoClickTime = ref(0);
 
+let logoPressTimer = null;
+const LONG_PRESS_DURATION = 800; // 800 milliseconds is a good standard long-press duration
+
+const handleLogoPressStart = (event) => {
+    // Only run this logic on touch devices or mobile view (if needed)
+    // Clear any existing timer just in case
+    clearTimeout(logoPressTimer);
+
+    logoPressTimer = setTimeout(() => {
+        // Long press detected!
+        event.preventDefault();
+        window.location.href = '/login';
+    }, LONG_PRESS_DURATION);
+};
+
+const handleLogoPressEnd = () => {
+    // Clear the timer if the touch/mouse is released early (before long press)
+    clearTimeout(logoPressTimer);
+};
+
+// Modify handleLogoClick to only run the triple-click logic on non-mobile/mouse devices
 const handleLogoClick = (event) => {
+    // Use the triple-click only if it wasn't a long press event
+    // or if you want to keep triple-click for non-touch devices
+    if (logoPressTimer !== null) {
+        clearTimeout(logoPressTimer);
+        logoPressTimer = null;
+        return; // Long press handled the action
+    }
+
+    // Original Triple-Click Logic (for desktop/mouse users)
     const currentTime = new Date().getTime();
     const clickGap = currentTime - lastLogoClickTime.value;
 
-    // Reset if too much time between clicks
-    if (clickGap > 500) {
+    if (clickGap > 300) {
         logoClickCount.value = 1;
     } else {
         logoClickCount.value++;
@@ -251,20 +281,11 @@ const handleLogoClick = (event) => {
 
     lastLogoClickTime.value = currentTime;
 
-    // If triple click detected, redirect to login
     if (logoClickCount.value === 3) {
         event.preventDefault();
         window.location.href = '/login';
         return;
     }
-
-    // Normal click behavior - allow navigation to home after delay
-    setTimeout(() => {
-        if (logoClickCount.value < 3) {
-            // Single or double click - normal behavior (navigate to home)
-            // The default anchor tag behavior will handle this
-        }
-    }, 300);
 };
 
 const toggleMobileMenu = () => {

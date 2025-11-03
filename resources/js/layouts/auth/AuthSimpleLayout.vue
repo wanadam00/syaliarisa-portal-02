@@ -12,7 +12,7 @@ defineProps<{
     <div class="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
         <div class="w-full max-w-sm">
             <div class="flex flex-col">
-                <div class="flex flex-col items-center">
+                <div class="flex flex-col items-center" data-aos="fade-down">
                     <Link :href="route('portal.home')" class="flex flex-col items-center gap-2 font-medium">
                     <a href="/" class="flex flex-col items-center">
                         <!-- Light mode logo (shown by default) -->
