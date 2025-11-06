@@ -115,7 +115,7 @@ const HorizontalOrgChart: any = defineComponent({
                 }`;
         });
 
-        return () => h('div', { class: 'flex flex-col items-center' }, [
+        return () => h('div', { class: 'flex flex-col items-center pb-4 px-4' }, [
             // Position Card
             h('div', {
                 class: `relative mb-4 ${props.level === 0 ? 'bg-white' : 'bg-white dark:bg-gray-800'}
@@ -145,7 +145,7 @@ const HorizontalOrgChart: any = defineComponent({
 
 
                 // Employees Grid
-                h('div', { class: 'flex flex-wrap justify-center gap-4 mt-3 pb-4' },
+                h('div', { class: 'flex flex-wrap justify-center gap-4 mt-3' },
                     props.position.employees.map(emp =>
                         h('div', {
                             class: 'flex flex-col items-center transition-all duration-300 ease-out hover:scale-110',

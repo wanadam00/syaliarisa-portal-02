@@ -122,7 +122,6 @@ class PositionSeeder extends Seeder
         $hygiene_tech_i->parentsPivot()->attach($asst_mgr_admin->id);
         $hygiene_tech_ii->parentsPivot()->attach($asst_mgr_admin->id);
 
-        $asst_field_tech->parentsPivot()->attach($chra_assessor->id);
         $asst_field_tech->parentsPivot()->attach($hygiene_tech_i->id);
         $asst_field_tech->parentsPivot()->attach($hygiene_tech_ii->id);
     }
