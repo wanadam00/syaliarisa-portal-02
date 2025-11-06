@@ -35,7 +35,8 @@ class ContactInfoController extends Controller
             'phone'          => ['required', 'regex:/^\+60\d{8,10}$/'],   // ✅ must start with +60
             'mobile_phone_1' => ['required', 'regex:/^\+60\d{8,10}$/'],
             'mobile_phone_2' => ['nullable', 'regex:/^\+60\d{8,10}$/'],
-            'email'          => 'required|email',
+            'email_1'          => 'required|email',
+            'email_2'          => 'nullable|email',
             'business_hours' => 'required|string',
             'is_visible'     => 'boolean',
         ], [
@@ -62,7 +63,8 @@ class ContactInfoController extends Controller
             'phone'          => ['required', 'regex:/^\+60\d{8,10}$/'],   // ✅ must start with +60
             'mobile_phone_1' => ['required', 'regex:/^\+60\d{8,10}$/'],
             'mobile_phone_2' => ['nullable', 'regex:/^\+60\d{8,10}$/'],
-            'email'          => 'required|email',
+            'email_1'          => 'required|email',
+            'email_2'          => 'nullable|email',
             'business_hours' => 'required|string',
             'is_visible'     => 'boolean',
         ], [

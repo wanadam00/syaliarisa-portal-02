@@ -5,6 +5,7 @@ import AppLayout2 from '@/layouts/AppLayout2.vue';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+// --- INTERFACES ---
 interface CompanyInfo {
     background: string;
     vision: string;
@@ -22,6 +23,7 @@ interface Position {
     id: number;
     name: string;
     parent_id?: number | null;
+    parent_ids?: number[] | null; // This array must be populated by the backend for M:N display
     rank?: number | null;
     is_visible?: boolean;
     employees: Employee[];
@@ -36,6 +38,21 @@ const { companyInfo, positions, unassignedEmployees } = usePage().props as unkno
 
 const positionsList = computed(() => (positions || []) as Position[]);
 const expandedNodes = ref<Set<number>>(new Set());
+
+// New: Create a flat map of all positions for quick lookup by ID
+const flatPositionsMap = computed(() => {
+    const map = new Map<number, Position>();
+    const traverse = (posArray: Position[]) => {
+        posArray.forEach(pos => {
+            map.set(pos.id, pos);
+            if (pos.children) {
+                traverse(pos.children);
+            }
+        });
+    };
+    traverse(positionsList.value);
+    return map;
+});
 
 // Return true if this position or any descendant has employees
 function hasEmployees(pos: Position): boolean {
@@ -52,18 +69,33 @@ function toggleNode(positionId: number): void {
     }
 }
 
-// Horizontal Organizational Chart Component
+// --- Horizontal Organizational Chart Component (Refactored for M:N parent display) ---
 const HorizontalOrgChart: any = defineComponent({
     name: 'HorizontalOrgChart',
     props: {
         position: { type: Object as () => Position, required: true },
-        level: { type: Number, default: 0 }
+        level: { type: Number, default: 0 },
+        positionsMap: { type: Object as () => Map<number, Position>, required: true }
     },
     setup(props) {
         const isExpanded = computed(() => expandedNodes.value.has(props.position.id));
         const hasChildren = computed(() =>
             props.position.children && props.position.children.filter((c: Position) => hasEmployees(c)).length > 0
         );
+
+        // Get parent names from parent_ids
+        const parentNames = computed(() => {
+            const parentIds = props.position.parent_ids || [];
+            // Filter out the primary parent_id if it's included in the list,
+            // but for visualization purposes, we show all linked parents.
+            return parentIds
+                .map(id => props.positionsMap.get(id)?.name)
+                .filter((name): name is string => !!name);
+        });
+
+        // Check if this position has multiple reporting lines (M:N)
+        const hasMultipleParents = computed(() => parentNames.value && parentNames.value.length > 1);
+
 
         // Advanced transition control
         const containerClasses = computed(() => {
@@ -87,18 +119,33 @@ const HorizontalOrgChart: any = defineComponent({
             // Position Card
             h('div', {
                 class: `relative mb-4 ${props.level === 0 ? 'bg-white' : 'bg-white dark:bg-gray-800'}
-            rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 min-w-64 transition-all duration-300 ease-out
-            hover:shadow-xl hover:scale-105 cursor-pointer group`,
+                rounded-lg shadow-lg border-2 border-gray-200 dark:border-gray-700 p-4 min-w-64 transition-all duration-300 ease-out
+                hover:shadow-xl hover:scale-105 cursor-pointer group`,
                 onClick: () => hasChildren.value && toggleNode(props.position.id)
             }, [
-                // Employee Name (Top - was position name)
+                // M:N Alert Icon
+                hasMultipleParents.value ? h('i', {
+                    class: 'bi bi-share-fill absolute top-2 right-2 text-red-500 text-sm animate-pulse',
+                    title: 'Reports to multiple positions'
+                }) : null,
+
+                // Primary Employee Name (The Role Holder)
                 h('h3', {
-                    class: `font-bold text-center mb-3 capitalize transition-colors duration-300 ${props.level === 0 ? 'text-gray-900 group-hover:text-blue-700' : 'text-gray-900 dark:text-white group-hover:text-blue-600'
+                    class: `font-bold text-center mb-1 capitalize transition-colors duration-300 ${props.level === 0 ? 'text-gray-900 group-hover:text-blue-700' : 'text-gray-900 dark:text-white group-hover:text-blue-600'
                         }`
                 }, props.position.employees.length > 0 ? props.position.employees[0].name : props.position.name),
 
+                // **REFINED M:N Reporting Line Display**
+                // hasMultipleParents.value ? h('div', {
+                //     class: 'text-xs text-center text-red-500 dark:text-red-400 font-semibold mb-3 border-t border-b border-dashed border-red-300 dark:border-red-700 pt-2 pb-2 mt-2 px-1 bg-red-50/50 dark:bg-red-900/10 rounded'
+                // }, [
+                //     h('p', { class: 'mb-1' }, 'Reports to Multiple Positions:'),
+                //     h('p', { class: 'font-normal text-red-700 dark:text-red-300' }, parentNames.value!.join(' & '))
+                // ]) : null,
+
+
                 // Employees Grid
-                h('div', { class: 'flex flex-wrap justify-center gap-3' },
+                h('div', { class: 'flex flex-wrap justify-center gap-4 mt-3 pb-4' },
                     props.position.employees.map(emp =>
                         h('div', {
                             class: 'flex flex-col items-center transition-all duration-300 ease-out hover:scale-110',
@@ -106,7 +153,7 @@ const HorizontalOrgChart: any = defineComponent({
                         }, [
                             // Employee Avatar
                             h('div', {
-                                class: 'w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md mb-1 transition-all duration-300 group-hover:border-blue-200 dark:group-hover:border-blue-800'
+                                class: 'w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md mb-2 transition-all duration-300 group-hover:border-blue-200 dark:group-hover:border-blue-800'
                             }, [
                                 emp.photo
                                     ? h('img', {
@@ -123,9 +170,9 @@ const HorizontalOrgChart: any = defineComponent({
                                         h('i', { class: `bi bi-person text-lg ${props.level === 0 ? 'text-white' : 'text-gray-600 dark:text-gray-300'}` })
                                     ])
                             ]),
-                            // Position Name (Bottom - was employee name)
+                            // Position Name - Updated for 2-line display
                             h('p', {
-                                class: `text-xs capitalize font-medium text-center max-w-20 truncate transition-colors duration-300 ${props.level === 0
+                                class: `text-xs capitalize font-medium text-center max-w-32 transition-colors duration-300 leading-tight break-words ${props.level === 0
                                     ? 'text-gray-600 group-hover:text-blue-600'
                                     : 'text-gray-700 dark:text-gray-300 group-hover:text-blue-500'
                                     }`
@@ -147,30 +194,36 @@ const HorizontalOrgChart: any = defineComponent({
                 ]) : null
             ]),
 
-            // Children Positions with advanced transitions
+            // Children Positions with advanced transitions (Primary Hierarchy Display)
             h('div', {
                 class: containerClasses.value
             }, [
                 isExpanded.value && hasChildren.value ? h('div', {
                     class: 'flex gap-6 mt-4 relative'
                 }, [
-                    // Connecting lines with enhanced transition
+                    // Connecting line (vertical line from parent to horizontal line)
                     h('div', {
-                        class: 'absolute top-0 left-0 right-0 h-4 flex justify-center transition-all duration-700 ease-out'
-                    }, [
-                        h('div', {
-                            class: connectingLineClasses.value,
-                            style: { transformOrigin: 'top center' }
-                        })
-                    ]),
+                        class: 'absolute top-0 left-1/2 transform -translate-x-1/2 w-px h-4 bg-gray-300 dark:bg-gray-600'
+                    }),
+                    // Horizontal line connecting all children
+                    h('div', {
+                        class: 'absolute top-4 left-0 right-0 h-px bg-gray-300 dark:bg-gray-600'
+                    }),
 
-                    // Child nodes
+                    // Child nodes (Recursively call the component)
                     ...props.position.children!.filter((c: Position) => hasEmployees(c)).map((child: Position) =>
-                        h(HorizontalOrgChart, {
-                            position: child,
-                            level: props.level + 1,
-                            key: child.id
-                        })
+                        h('div', { class: 'pt-8' }, [ // Wrapper for vertical connector line
+                            // Vertical line down to the child card
+                            h('div', {
+                                class: 'absolute left-1/2 transform -translate-x-1/2 w-px h-4 bg-gray-300 dark:bg-gray-600'
+                            }),
+                            h(HorizontalOrgChart, {
+                                position: child,
+                                level: props.level + 1,
+                                positionsMap: props.positionsMap,
+                                key: child.id
+                            })
+                        ])
                     )
                 ]) : null
             ])
@@ -178,13 +231,27 @@ const HorizontalOrgChart: any = defineComponent({
     }
 });
 
-// Option 2: Compact Grid View Component
+
+// --- Option 2: Compact Grid View Component ---
 const CompactTeamGrid: any = defineComponent({
     name: 'CompactTeamGrid',
     props: {
-        positions: { type: Array as () => Position[], required: true }
+        positions: { type: Array as () => Position[], required: true },
+        positionsMap: { type: Object as () => Map<number, Position>, required: true }
     },
     setup(props) {
+        const getParentNames = (position: Position) => {
+            if (!position.parent_ids || position.parent_ids.length === 0) return null;
+            return position.parent_ids
+                .map(id => props.positionsMap.get(id)?.name)
+                .filter((name): name is string => !!name);
+        };
+
+        const hasMultipleParents = (position: Position) => {
+            const names = getParentNames(position);
+            return names && names.length > 1;
+        }
+
         return () => h('div', { class: 'space-y-6' },
             props.positions.map(position =>
                 h('div', {
@@ -197,7 +264,11 @@ const CompactTeamGrid: any = defineComponent({
                     }, [
                         h('h3', {
                             class: 'text-xl font-bold capitalize text-gray-800 dark:text-white'
-                        }, position.name)
+                        }, position.name),
+                        // **REFINED M:N Reporting Line Display in Grid Header**
+                        hasMultipleParents(position) ? h('p', {
+                            class: 'text-sm text-red-500 dark:text-red-400 font-medium mt-1'
+                        }, `Reports to Multiple Positions: ${getParentNames(position)!.join(' & ')}`) : null,
                     ]),
 
                     // Employees Grid
@@ -238,7 +309,7 @@ const CompactTeamGrid: any = defineComponent({
                     position.children && position.children.filter((c: Position) => hasEmployees(c)).length > 0
                         ? h('div', { class: 'border-t border-gray-200 dark:border-gray-600' },
                             position.children.filter((c: Position) => hasEmployees(c)).map((child: Position) =>
-                                h(CompactTeamGrid, { positions: [child], key: child.id })
+                                h(CompactTeamGrid, { positions: [child], positionsMap: props.positionsMap, key: child.id })
                             )
                         )
                         : null
@@ -248,14 +319,27 @@ const CompactTeamGrid: any = defineComponent({
     }
 });
 
+
 const visibleTopPositions = computed(() => positionsList.value.filter(p => hasEmployees(p)));
 const activeView = ref<'hierarchical' | 'grid'>('hierarchical');
 
 // Example branch data (you can fetch this from Laravel later)
 const clients = [
-    { id: 1, name: "HQ - Kuala Lumpur", lat: 3.139, lng: 101.6869 },
-    { id: 2, name: "Branch - Penang", lat: 5.4141, lng: 100.3288 },
-    { id: 3, name: "Branch - Johor Bahru", lat: 1.4927, lng: 103.7414 },
+    { id: 1, name: "Perodua Manufacturing Sdn. Bhd.", lat: 3.3706333, lng: 101.5409997 },
+    { id: 2, name: "Selinsing Gold Mine", lat: 4.2581719, lng: 101.7037384 },
+    { id: 3, name: "Branch - Johor Bahru", lat: 2.6844839, lng: 101.9075693 },
+    { id: 4, name: "Kum Hoi Engineering Industries Sdn Bhd", lat: 3.0539604, lng: 101.5133176 },
+    { id: 5, name: "Royal Selangor International Sdn. Bhd", lat: 3.1966613, lng: 101.642032 },
+    { id: 6, name: "Petrofac (Malaysia-Pm304) Limited (West Desaru Mopu)", lat: 3.155923, lng: 101.6275111 },
+    { id: 7, name: "SGS (M) Sdn. Bhd.", lat: 3.2277944, lng: 101.4291594 },
+    { id: 8, name: "Lablink (M) Sdn. Bhd.", lat: 3.2277388, lng: 101.42913 },
+    { id: 9, name: "Rohm-Wako Elelctronic (M) SB", lat: 6.1387528, lng: 102.2193729 },
+    { id: 10, name: "San Soon Seng Food Industries Sdn. Bhd.", lat: 3.1973235, lng: 101.4799408 },
+    { id: 11, name: "Notion Venture Sdn Bhd", lat: 3.2277912, lng: 101.4291611 },
+    { id: 12, name: "Samling Housing Sdn. Bhd.", lat: 3.205349, lng: 101.456431 },
+    { id: 13, name: "SMC Composite Sdn. Bhd.", lat: 3.4864473, lng: 101.8505535 },
+    { id: 14, name: "Herbal Science Sdn. Bhd.", lat: 3.0898669, lng: 101.5271453 },
+    { id: 15, name: "Shinko Electronics (M) SB", lat: 3.0285399, lng: 101.479152 },
 ];
 
 onMounted(() => {
@@ -360,14 +444,15 @@ L.Icon.Default.mergeOptions({
                     <div v-if="activeView === 'hierarchical'" class="overflow-x-auto py-8">
                         <div class="min-w-max flex justify-center">
                             <div class="space-y-8">
-                                <HorizontalOrgChart v-for="pos in visibleTopPositions" :key="pos.id" :position="pos" />
+                                <HorizontalOrgChart v-for="pos in visibleTopPositions" :key="pos.id" :position="pos"
+                                    :positions-map="flatPositionsMap" />
                             </div>
                         </div>
                     </div>
 
                     <!-- Grid View -->
                     <div v-if="activeView === 'grid'" class="space-y-8 py-8">
-                        <CompactTeamGrid :positions="visibleTopPositions" />
+                        <CompactTeamGrid :positions="visibleTopPositions" :positions-map="flatPositionsMap" />
                     </div>
 
                     <!-- View Instructions -->
@@ -384,7 +469,7 @@ L.Icon.Default.mergeOptions({
                 <!-- Client Locations -->
                 <div class="container mx-auto px-4" data-aos="fade-in">
                     <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white text-center">
-                        Our Locations
+                        Client Locations
                     </h2>
                     <div
                         class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
@@ -397,8 +482,26 @@ L.Icon.Default.mergeOptions({
 </template>
 
 <style scoped>
+/* Ensure leaflet renders correctly */
 .leaflet-container {
     border-radius: 0.75rem;
+}
+
+/* Fix for the org chart structure layout */
+/* This style block ensures the lines connecting children visually align when rendered by the VNode setup. */
+.flex>div.pt-8:first-child {
+    /* For the first child in the row, ensure it's positioned correctly relative to the horizontal line */
+    margin-left: 0;
+}
+
+.flex>div.pt-8:last-child {
+    /* For the last child, ensure it's positioned correctly */
+    margin-right: 0;
+}
+
+/* Remove default style to allow better control over VNode rendering */
+.HorizontalOrgChart {
+    flex-grow: 1;
 }
 
 /* Smooth transitions for organizational chart */

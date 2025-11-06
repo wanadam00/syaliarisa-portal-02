@@ -39,7 +39,18 @@
                             class="hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors">
                             <td class="px-4 py-2">{{ index + 1 }}</td>
                             <td class="px-4 py-2 w-64 truncate">{{ pos.name }}</td>
-                            <td class="px-4 py-2 truncate">{{ pos.parent ? pos.parent.name : '—' }}</td>
+                            <td class="px-4 py-2 truncate">
+                                <template v-if="pos.reports_to && pos.reports_to.length">
+                                    <span v-for="(r, ri) in pos.reports_to" :key="r.id"
+                                        class="inline-flex items-center mr-2">
+                                        <span v-if="r.type === 'primary'" class="text-sm font-medium">{{ r.name
+                                            }}</span>
+                                        <span v-else class="text-sm text-gray-500">{{ r.name }}</span>
+                                        <span v-if="ri < pos.reports_to.length - 1" class="text-gray-400 mx-1">•</span>
+                                    </span>
+                                </template>
+                                <template v-else>—</template>
+                            </td>
                             <td class="px-4 py-2 truncate">{{ pos.rank }}</td>
                             <td class="px-4 py-2 text-center relative">
                                 <!-- Vertical Dots -->
@@ -111,6 +122,7 @@ interface Position {
     parent?: { id: number, name: string } | null
     rank: number
     showMenu?: boolean; // added for dropdown state
+    reports_to?: { id: number; name: string; type: string }[]
 }
 
 const { positions } = usePage().props as unknown as {

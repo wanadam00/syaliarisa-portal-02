@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\ContactInfo;
 use App\Models\HomeSection;
 use App\Models\Employee;
+use App\Models\Position;
 use App\Models\StandardApplication;
 use App\Models\Legislation;
 use App\Models\Customer;
@@ -64,17 +65,27 @@ class CompanyPortalController extends Controller
 
     public function companyInfo()
     {
+        // 1. Fetch Company Info
         $companyInfo = CompanyInfo::where('is_visible', true)->first();
-        // Eager-load position relation so we can use position id/name/rank on the portal
-        // Build positions-first structure: positions ordered by rank, each with its visible employees
-        $rawPositions = \App\Models\Position::where('is_visible', true)
+
+        // 2. Fetch Positions and Eager-Load Visible Employees (N+1 fix)
+        // We constrain the eager-loaded 'employees' relationship to only include visible ones.
+        $rawPositions = Position::where('is_visible', true)
+            ->with([
+                'employees' => function ($query) {
+                    $query->where('is_visible', true);
+                },
+                // load additional parents via pivot so frontend can render matrix connectors
+                'parentsPivot'
+            ])
             ->orderBy('rank')
             ->get();
 
-        // Map positions to arrays and attach their visible employees
+        // 3. Map positions to arrays and attach the *already loaded* visible employees
         $positionsById = [];
         foreach ($rawPositions as $position) {
-            $emps = $position->employees()->where('is_visible', true)->get()->map(function ($employee) {
+            // Employees are already loaded here due to the 'with' clause (no new query)
+            $emps = $position->employees->map(function ($employee) {
                 return [
                     'id' => $employee->id,
                     'name' => $employee->name,
@@ -83,10 +94,21 @@ class CompanyPortalController extends Controller
                 ];
             })->toArray();
 
+            // build parent_ids (primary first, then additional parents from pivot)
+            $parentIds = [];
+            if ($position->parent_id) $parentIds[] = $position->parent_id;
+            if ($position->relationLoaded('parentsPivot')) {
+                $additional = $position->parentsPivot->pluck('id')->toArray();
+                foreach ($additional as $ap) {
+                    if (!in_array($ap, $parentIds)) $parentIds[] = $ap;
+                }
+            }
+
             $positionsById[$position->id] = [
                 'id' => $position->id,
                 'name' => $position->name,
                 'parent_id' => $position->parent_id,
+                'parent_ids' => $parentIds,
                 'rank' => $position->rank,
                 'is_visible' => $position->is_visible,
                 'employees' => $emps,
@@ -94,18 +116,23 @@ class CompanyPortalController extends Controller
             ];
         }
 
-        // Build nested tree
+        // 4. Build nested tree structure
         $positionsTree = [];
         foreach ($positionsById as $id => &$pos) {
             if ($pos['parent_id'] && isset($positionsById[$pos['parent_id']])) {
+                // Attach as a child to its parent
                 $positionsById[$pos['parent_id']]['children'][] = &$pos;
             } else {
+                // This is a root node (no parent or missing parent)
                 $positionsTree[] = &$pos;
             }
         }
-        // Ensure children are ordered by rank
+        unset($pos); // Break the reference to avoid unexpected modifications
+
+        // 5. Ensure children are ordered by rank recursively
         $sortChildren = function (&$nodes) use (&$sortChildren) {
             usort($nodes, function ($a, $b) {
+                // Null-safe comparison for rank
                 return ($a['rank'] ?? 0) <=> ($b['rank'] ?? 0);
             });
             foreach ($nodes as &$n) {
@@ -116,7 +143,7 @@ class CompanyPortalController extends Controller
         };
         $sortChildren($positionsTree);
 
-        // Employees without a position (fallback)
+        // 6. Employees without a position (fallback)
         $unassignedEmployees = Employee::whereNull('position_id')
             ->where('is_visible', true)
             ->get()
@@ -129,6 +156,7 @@ class CompanyPortalController extends Controller
                 ];
             });
 
+        // 7. Render with Inertia
         return Inertia::render('Portal/CompanyInfo', [
             'companyInfo' => [
                 'background' => $companyInfo?->background,

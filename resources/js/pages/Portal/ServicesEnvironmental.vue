@@ -61,10 +61,10 @@ const formatQuillContent = (html: string) => {
             data-aos="fade-down">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">
-                    Environmental
+                    Environmental Monitoring
                 </h1>
                 <p class="text-gray-200 text-lg">
-                    Explore our professional Environmental solutions
+                    Comprehensive monitoring solutions to ensure environmental sustainability and compliance.
                 </p>
             </div>
         </section>

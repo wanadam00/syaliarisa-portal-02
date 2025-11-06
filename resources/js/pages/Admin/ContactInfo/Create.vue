@@ -10,7 +10,8 @@ interface ContactInfo {
     id: number;
     address: string;
     phone: string;
-    email: string;
+    email_1: string;
+    email_2: string;
     mobile_phone_1: string | null;
     mobile_phone_2: string | null;
     business_hours: string | null;
@@ -25,7 +26,8 @@ const { contactInfo, flash } = usePage().props as unknown as {
 const form = useForm({
     address: contactInfo.address ?? '',
     phone: contactInfo.phone ?? '',
-    email: contactInfo.email ?? '',
+    email_1: contactInfo.email_1 ?? '',
+    email_2: contactInfo.email_2 ?? '',
     mobile_phone_1: contactInfo.mobile_phone_1 ?? '',
     mobile_phone_2: contactInfo.mobile_phone_2 ?? '',
     business_hours: contactInfo.business_hours ?? '',
@@ -168,7 +170,8 @@ function submit() {
 
                     <!-- Mobile Phone 1 -->
                     <div class="flex flex-col space-y-1">
-                        <label for="mobile_phone_1" class="font-medium">Mobile Phone 1</label>
+                        <label for="mobile_phone_1" class="font-medium">Mobile Phone 1<span
+                                class="ml-1 text-red-500">*</span></label>
                         <input id="mobile_phone_1" v-model="form.mobile_phone_1" type="text"
                             placeholder="Enter mobile phone 1..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
@@ -188,13 +191,23 @@ function submit() {
                         </span>
                     </div>
 
-                    <!-- Email -->
+                    <!-- Email 1 -->
                     <div class="flex flex-col space-y-1">
-                        <label for="email" class="font-medium">Email<span class="ml-1 text-red-500">*</span></label>
-                        <input id="email" v-model="form.email" type="email" placeholder="Enter email..."
+                        <label for="email" class="font-medium">Email 1<span class="ml-1 text-red-500">*</span></label>
+                        <input id="email" v-model="form.email_1" type="email" placeholder="Enter email..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
-                        <span v-if="form.errors.email" class="text-sm text-red-600">
-                            {{ form.errors.email }}
+                        <span v-if="form.errors.email_1" class="text-sm text-red-600">
+                            {{ form.errors.email_1 }}
+                        </span>
+                    </div>
+
+                    <!-- Email 2 -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="email" class="font-medium">Email 2</label>
+                        <input id="email" v-model="form.email_2" type="email" placeholder="Enter email..."
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                        <span v-if="form.errors.email_2" class="text-sm text-red-600">
+                            {{ form.errors.email_2 }}
                         </span>
                     </div>
 

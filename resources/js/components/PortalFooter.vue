@@ -128,11 +128,11 @@
                         </li> -->
 
                         <!-- Email -->
-                        <li v-if="contactInfo.email" class="flex items-start gap-3">
+                        <li v-if="contactInfo.email_1" class="flex items-start gap-3">
                             <i class="bi bi-envelope text-xl text-[#2262ae] dark:text-blue-400 flex-shrink-0"></i>
-                            <a :href="`mailto:${contactInfo.email}`"
+                            <a :href="`mailto:${contactInfo.email_1}`"
                                 class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 break-all">
-                                {{ contactInfo.email }}
+                                {{ contactInfo.email_1 }}
                             </a>
                         </li>
 

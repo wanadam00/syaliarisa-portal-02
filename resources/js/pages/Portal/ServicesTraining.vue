@@ -61,10 +61,10 @@ const formatQuillContent = (html: string) => {
             data-aos="fade-down">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">
-                    Training
+                    Training Academy
                 </h1>
                 <p class="text-gray-200 text-lg">
-                    Explore our professional Training solutions
+                    Empower your workforce with our expert-led training programs and professional development courses.
                 </p>
             </div>
         </section>

@@ -55,7 +55,7 @@ class EmployeeController extends Controller
             'name' => 'required|string|max:255',
             'position_id' => 'required|exists:positions,id',
             'department' => 'required|string|max:255',
-            'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'is_visible' => 'boolean',
         ]);
 

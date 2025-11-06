@@ -9,7 +9,8 @@ interface ContactInfo {
     id: number;
     address: string;
     phone: string;
-    email: string;
+    email_1: string;
+    email_2: string;
     mobile_phone_1: string | null;
     mobile_phone_2: string | null;
     business_hours: string | null;
@@ -109,7 +110,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                             <div class="min-w-0 flex-1">
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Address</h4>
                                                 <p class="text-gray-600 dark:text-gray-300 break-words">{{ info.address
-                                                    }}</p>
+                                                }}</p>
                                             </div>
                                         </div>
 
@@ -160,17 +161,32 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                             </div>
                                         </div>
 
-                                        <!-- Email -->
+                                        <!-- Email 1 -->
                                         <div class="flex items-start gap-4">
                                             <div
                                                 class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800 flex-shrink-0">
                                                 <i class="bi bi-envelope text-yellow-500"></i>
                                             </div>
                                             <div class="min-w-0 flex-1">
-                                                <h4 class="font-medium text-gray-900 dark:text-white">Email</h4>
-                                                <a :href="`mailto:${info.email}`"
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Email (1)</h4>
+                                                <a :href="`mailto:${info.email_1}`"
                                                     class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 transition-colors break-words truncate">
-                                                    {{ info.email }}
+                                                    {{ info.email_1 }}
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <!-- Email 2 -->
+                                        <div class="flex items-start gap-4">
+                                            <div
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800 flex-shrink-0">
+                                                <i class="bi bi-envelope text-yellow-500"></i>
+                                            </div>
+                                            <div class="min-w-0 flex-1">
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Email (2)</h4>
+                                                <a :href="`mailto:${info.email_2}`"
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 transition-colors break-words truncate">
+                                                    {{ info.email_2 }}
                                                 </a>
                                             </div>
                                         </div>
