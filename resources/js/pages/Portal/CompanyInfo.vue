@@ -215,7 +215,7 @@ const HorizontalOrgChart: any = defineComponent({
                         h('div', { class: 'pt-8' }, [ // Wrapper for vertical connector line
                             // Vertical line down to the child card
                             h('div', {
-                                class: 'absolute left-1/2 transform -translate-x-1/2 w-px h-4 bg-gray-300 dark:bg-gray-600'
+                                // class: 'absolute left-1/2 transform -translate-x-1/2 w-px h-4 bg-gray-300 dark:bg-gray-600'
                             }),
                             h(HorizontalOrgChart, {
                                 position: child,

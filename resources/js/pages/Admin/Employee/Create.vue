@@ -189,7 +189,7 @@ async function createPosition() {
 
                     <!-- Photo Upload -->
                     <div class="flex flex-col space-y-1">
-                        <label for="photo" class="font-medium">Photo<span class="ml-1 text-red-500">*</span></label>
+                        <label for="photo" class="font-medium">Photo</label>
                         <input id="photo" type="file" accept="image/*" @change="handleFileChange"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <div v-if="form.errors.photo" class="text-sm text-red-600">

@@ -32,10 +32,10 @@ class DatabaseSeeder extends Seeder
             // HomeSectionSeeder::class,
             // ContactInfoSeeder::class,
             // ServiceSeeder::class,
-            // EmployeeSeeder::class,
             // LegislationSeeder::class,
             // StandardApplicationSeeder::class,
             PositionSeeder::class,
+            EmployeeSeeder::class,
         ]);
     }
 }
