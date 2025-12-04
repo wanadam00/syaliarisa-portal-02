@@ -12,12 +12,12 @@
                     <!-- Light mode logo (shown by default) -->
                     <img src="/images/crop-logo-2.png" alt="Syaliarisa Services" class="h-14 block dark:hidden pb-1" />
                     <span
-                        class="block dark:hidden mx-4 text-white font-bold text-xl uppercase drop-shadow-lg drop-shadow-gray-400 font-mono">Syaliarisa</span>
+                        class="block dark:hidden mx-4 text-white font-bold text-xl uppercase drop-shadow-lg drop-shadow-gray-900 font-mono">Syaliarisa</span>
 
                     <!-- Dark mode logo (hidden by default, shown in dark mode) -->
                     <img src="/images/secondary-logo.png" alt="Syaliarisa Services" class="h-14 hidden dark:block" />
                     <span
-                        class="hidden dark:block mx-4 text-white font-bold text-xl uppercase drop-shadow-lg drop-shadow-gray-400 font-mono">Syaliarisa</span>
+                        class="hidden dark:block mx-4 text-white font-bold text-xl uppercase drop-shadow-lg drop-shadow-gray-900 font-mono">Syaliarisa</span>
                 </a>
 
                 <!-- Desktop Menu -->

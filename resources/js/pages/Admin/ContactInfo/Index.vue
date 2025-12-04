@@ -9,7 +9,7 @@ interface ContactInfo {
     id: number;
     address: string;
     phone: string;
-    email: string;
+    email_1: string;
     map_embed: Text | null;
     business_hours: string | null;
     is_visible: boolean;
@@ -142,7 +142,7 @@ onBeforeUnmount(() => {
                                 </div>
                             </td>
                             <td class="px-4 py-2 truncate">{{ contactInfo.phone }}</td>
-                            <td class="px-4 py-2 truncate">{{ contactInfo.email }}</td>
+                            <td class="px-4 py-2 truncate">{{ contactInfo.email_1 }}</td>
                             <!-- <td class="px-4 py-2 truncate">{{ contactInfo.map_embed }}</td> -->
                             <!-- Business Hours -->
                             <td class="px-4 py-2 w-64 max-w-[16rem]">

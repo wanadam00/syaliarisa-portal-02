@@ -177,7 +177,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                         </div>
 
                                         <!-- Email 2 -->
-                                        <div class="flex items-start gap-4">
+                                        <div v-if="info.email_2" class="flex items-start gap-4">
                                             <div
                                                 class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800 flex-shrink-0">
                                                 <i class="bi bi-envelope text-yellow-500"></i>

@@ -124,7 +124,7 @@ function submit() {
                     <div class="flex flex-col space-y-1">
                         <label for="address" class="font-medium">Address<span class="ml-1 text-red-500">*</span></label>
                         <input id="address" v-model="form.address" type="text"
-                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <span v-if="form.errors.address" class="text-sm text-red-600">
                             {{ form.errors.address }}
                         </span>
@@ -135,7 +135,7 @@ function submit() {
                         <label for="phone" class="font-medium">Office Phone<span
                                 class="ml-1 text-red-500">*</span></label>
                         <input id="phone" v-model="form.phone" type="text"
-                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <span v-if="form.errors.phone" class="text-sm text-red-600">
                             {{ form.errors.phone }}
                         </span>
@@ -146,7 +146,7 @@ function submit() {
                         <label for="mobile_phone_1" class="font-medium">Mobile Phone 1<span
                                 class="ml-1 text-red-500">*</span></label>
                         <input id="mobile_phone_1" v-model="form.mobile_phone_1" type="text"
-                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <span v-if="form.errors.mobile_phone_1" class="text-sm text-red-600">
                             {{ form.errors.mobile_phone_1 }}
                         </span>
@@ -166,7 +166,7 @@ function submit() {
                     <div class="flex flex-col space-y-1">
                         <label for="email" class="font-medium">Email 1<span class="ml-1 text-red-500">*</span></label>
                         <input id="email" v-model="form.email_1" type="email"
-                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <span v-if="form.errors.email_1" class="text-sm text-red-600">
                             {{ form.errors.email_1 }}
                         </span>
@@ -176,7 +176,7 @@ function submit() {
                     <div class="flex flex-col space-y-1">
                         <label for="email" class="font-medium">Email 2</label>
                         <input id="email" v-model="form.email_2" type="email"
-                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <span v-if="form.errors.email_2" class="text-sm text-red-600">
                             {{ form.errors.email_2 }}
                         </span>
