@@ -36,7 +36,7 @@ class StandardApplicationController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'logo' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'logo' => 'required|image|mimes:jpg,jpeg,png,webp',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',
         ]);
@@ -66,7 +66,7 @@ class StandardApplicationController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',
         ]);

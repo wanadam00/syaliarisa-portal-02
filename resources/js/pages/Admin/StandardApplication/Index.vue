@@ -25,6 +25,14 @@ interface StandardApplication {
 //     }
 // }
 
+const formatQuillContent = (html: string) => {
+    if (!html) return "";
+    return html
+        .replace(/<ol>/g, '<ol style="list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem;">')
+        .replace(/<ul>/g, '<ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem;">')
+        .replace(/<p><br><\/p>/g, '');
+};
+
 function deleteStandard(id: number) {
     Swal.fire({
         title: 'Are you sure?',
@@ -133,8 +141,8 @@ onBeforeUnmount(() => {
 
                             <!-- Description with better text handling -->
                             <td class="px-4 py-2 w-64 max-w-[16rem]">
-                                <div class="line-clamp-1 text-ellipsis overflow-hidden" :title="standard.description">
-                                    {{ standard.description }}
+                                <div class="line-clamp-1 text-ellipsis overflow-hidden" :title="standard.description" v-html="formatQuillContent(standard.description)">
+
                                 </div>
                             </td>
 

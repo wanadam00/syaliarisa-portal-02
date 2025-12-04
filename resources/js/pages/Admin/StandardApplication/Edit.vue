@@ -2,6 +2,8 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import Swal from 'sweetalert2';
 
 interface StandardApplication {
@@ -84,9 +86,11 @@ function submit() {
                     <div class="flex flex-col space-y-1">
                         <label for="description" class="font-medium">Description<span
                                 class="ml-1 text-red-500">*</span></label>
-                        <textarea id="description" v-model="form.description" rows="3"
+                        <QuillEditor v-model:content="form.description" content-type="html" theme="snow" toolbar="full"
+                            placeholder="Enter description..." class="border rounded-md" />
+                        <!-- <textarea id="description" v-model="form.description" rows="3"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-                            required></textarea>
+                            required></textarea> -->
                         <span v-if="form.errors.description" class="text-sm text-red-600">
                             {{ form.errors.description }}
                         </span>

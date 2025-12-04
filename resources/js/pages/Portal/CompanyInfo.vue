@@ -39,6 +39,17 @@ const { companyInfo, positions, unassignedEmployees } = usePage().props as unkno
 const positionsList = computed(() => (positions || []) as Position[]);
 const expandedNodes = ref<Set<number>>(new Set());
 
+const formatQuillContent = (html: string) => {
+    if (!html) return "";
+    return html
+        .replace(/<ol>/g, '<ol style="list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem;">')
+        .replace(/<ul>/g, '<ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem;">')
+        .replace(/class="ql-align-center"/g, 'style="text-align: center;"')
+        .replace(/class="ql-align-right"/g, 'style="text-align: right;"')
+        .replace(/class="ql-align-justify"/g, 'style="text-align: justify;"')
+        .replace(/<p><br><\/p>/g, '');
+};
+
 // New: Create a flat map of all positions for quick lookup by ID
 const flatPositionsMap = computed(() => {
     const map = new Map<number, Position>();
@@ -394,20 +405,23 @@ L.Icon.Default.mergeOptions({
                 <!-- Company Background -->
                 <div class="mb-12" data-aos="fade-up">
                     <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">About Us</h2>
-                    <p class="mb-6 text-gray-700 text-justify dark:text-gray-300">{{ companyInfo.background }}</p>
+                    <p class="mb-6 text-gray-700 dark:text-gray-300"
+                        v-html="formatQuillContent(companyInfo.background)"></p>
 
                     <div class="grid md:grid-cols-2 gap-6 mb-8">
                         <div class="bg-white dark:bg-background p-6 rounded-lg shadow-md dark:shadow-white border border-gray-100 dark:border-white"
                             data-aos="zoom-in">
-                            <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Mission
+                            <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Vision
                             </h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-justify">{{ companyInfo.mission }}</p>
+                            <p class="text-gray-700 dark:text-gray-300" v-html="formatQuillContent(companyInfo.vision)">
+                            </p>
                         </div>
                         <div class="bg-white dark:bg-background p-6 rounded-lg shadow-md dark:shadow-white border border-gray-100 dark:border-white"
                             data-aos="zoom-in">
-                            <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Vision
+                            <h3 class="text-xl font-medium mb-4 text-primary dark:text-white">Mission
                             </h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-justify">{{ companyInfo.vision }}</p>
+                            <p class="text-gray-700 dark:text-gray-300"
+                                v-html="formatQuillContent(companyInfo.mission)"></p>
                         </div>
                     </div>
                 </div>

@@ -53,6 +53,14 @@ function handleClickOutside(event: MouseEvent) {
 onMounted(() => document.addEventListener('click', handleClickOutside));
 onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside));
 
+const formatQuillContent = (html: string) => {
+    if (!html) return "";
+    return html
+        .replace(/<ol>/g, '<ol style="list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem;">')
+        .replace(/<ul>/g, '<ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem;">')
+        .replace(/<p><br><\/p>/g, '');
+};
+
 function deleteCompany(id: number) {
     Swal.fire({
         title: 'Are you sure?',
@@ -116,13 +124,14 @@ function deleteCompany(id: number) {
                             class="hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors">
                             <td class="px-4 py-3">{{ index + 1 }}</td>
                             <td class="px-4 py-3 w-64">
-                                <div class="line-clamp-1" :title="info.background">{{ info.background }}</div>
+                                <div class="line-clamp-1" :title="info.background"
+                                    v-html="formatQuillContent(info.background)"></div>
                             </td>
                             <td class="px-4 py-3 w-64">
-                                <div class="line-clamp-1" :title="info.vision">{{ info.vision }}</div>
+                                <div class="line-clamp-1" :title="info.vision" v-html="formatQuillContent(info.vision)"></div>
                             </td>
                             <td class="px-4 py-3 w-64">
-                                <div class="line-clamp-1" :title="info.mission">{{ info.mission }}</div>
+                                <div class="line-clamp-1" :title="info.mission" v-html="formatQuillContent(info.mission)"></div>
                             </td>
                             <td class="px-4 py-3">
                                 <span

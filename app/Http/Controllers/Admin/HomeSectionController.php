@@ -41,9 +41,9 @@ class HomeSectionController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'top_details' => 'required|string',
-            'top_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'top_image' => 'required|image|mimes:jpg,jpeg,png,webp',
             'bottom_details' => 'required|string',
-            'bottom_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'bottom_image' => 'required|image|mimes:jpg,jpeg,png,webp',
         ]);
 
         // Handle top_image upload
@@ -77,9 +77,9 @@ class HomeSectionController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'top_details' => 'required|string|max:255',
-            'top_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'top_image' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'bottom_details' => 'required|string',
-            'bottom_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'bottom_image' => 'nullable|image|mimes:jpg,jpeg,png,webp',
         ]);
 
         // Handle top_image upload

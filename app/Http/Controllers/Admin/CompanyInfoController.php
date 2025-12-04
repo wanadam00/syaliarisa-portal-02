@@ -32,9 +32,21 @@ class CompanyInfoController extends Controller
         }
 
         $data = $request->validate([
-            'background' => 'required|string',
-            'vision' => 'required|string',
-            'mission' => 'required|string',
+            'background' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
+            'vision' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
+            'mission' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'is_visible' => 'boolean',
         ]);
         CompanyInfo::create($data);
@@ -52,9 +64,21 @@ class CompanyInfoController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'background' => 'required|string',
-            'vision' => 'required|string',
-            'mission' => 'required|string',
+            'background' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
+            'vision' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
+            'mission' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'is_visible' => 'boolean',
         ]);
         $companyInfo = CompanyInfo::first();

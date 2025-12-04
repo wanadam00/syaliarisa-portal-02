@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             // LegislationSeeder::class,
             // StandardApplicationSeeder::class,
             PositionSeeder::class,
-            EmployeeSeeder::class,
+            // EmployeeSeeder::class,
         ]);
     }
 }

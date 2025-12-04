@@ -42,10 +42,14 @@ class ServiceController extends Controller
         $data = $request->validate([
             'type' => 'required|string|max:255',
             'title' => 'required|string|max:255',
-            'summary' => 'required|string',
+            'summary' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'details' => 'nullable|string',
             'link' => 'nullable|string|max:500', // ✅ allow video link
-            'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'is_visible' => 'boolean',
             'deleted_images' => 'array',
             'deleted_images.*' => 'integer|exists:service_images,id',
@@ -106,11 +110,15 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'type' => 'required|string|max:255',
             'title' => 'required|string|max:255',
-            'summary' => 'required|string',
+            'summary' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'details' => 'nullable|string',
             'link' => 'nullable|string|max:500', // ✅ allow video link
             'is_visible' => 'boolean',
-            'images.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png',
             'deleted_images' => 'array',
             'deleted_images.*' => 'integer',
         ]);

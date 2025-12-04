@@ -47,6 +47,9 @@ const formatQuillContent = (html: string) => {
     return html
         .replace(/<ol>/g, '<ol style="list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem;">')
         .replace(/<ul>/g, '<ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem;">')
+        .replace(/class="ql-align-center"/g, 'style="text-align: center;"')
+        .replace(/class="ql-align-right"/g, 'style="text-align: right;"')
+        .replace(/class="ql-align-justify"/g, 'style="text-align: justify;"')
         .replace(/<p><br><\/p>/g, '');
 };
 
