@@ -40,9 +40,17 @@ class LegislationController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'type' => 'required|string|max:255',
-            'details' => 'nullable|string',
+            'details' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',
@@ -84,9 +92,17 @@ class LegislationController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'type' => 'required|string|max:255',
-            'details' => 'nullable|string',
+            'details' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',

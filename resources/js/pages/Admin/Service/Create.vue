@@ -35,6 +35,14 @@ const form = useForm({
     is_visible: Boolean(service.is_visible ?? true),
 });
 
+const customToolbar = [
+    ['bold', 'italic', 'underline'],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+    [{ 'align': '' }, { 'align': 'center' }, { 'align': 'right' }, { 'align': 'justify' }],
+    ['link'],
+    ['clean']
+];
+
 const previews = ref<string[]>([]);
 
 function handleFileChange(e: Event) {
@@ -117,7 +125,7 @@ function submit() {
                         <label for="summary" class="font-medium">
                             Summary<span class="ml-1 text-red-500">*</span>
                         </label>
-                        <QuillEditor v-model:content="form.summary" content-type="html" theme="snow" toolbar="full"
+                        <QuillEditor v-model:content="form.summary" content-type="html" theme="snow" :toolbar="customToolbar"
                             placeholder="Enter summary..." class="border rounded-md" />
                         <span v-if="form.errors.summary" class="text-sm text-red-600">
                             {{ form.errors.summary }}
@@ -128,7 +136,7 @@ function submit() {
                     <div class="flex flex-col space-y-1">
                         <label for="details" class="font-medium">
                             Details</label>
-                        <QuillEditor v-model:content="form.details" content-type="html" theme="snow" toolbar="full"
+                        <QuillEditor v-model:content="form.details" content-type="html" theme="snow" :toolbar="customToolbar"
                             placeholder="Enter details..." class="border rounded-md" />
                         <span v-if="form.errors.details" class="text-sm text-red-600">
                             {{ form.errors.details }}

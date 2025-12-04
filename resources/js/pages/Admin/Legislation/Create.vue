@@ -2,6 +2,8 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import Swal from 'sweetalert2';
 
 interface Legislation {
@@ -27,6 +29,14 @@ const form = useForm({
     is_visible: Boolean(legislation.is_visible ?? true),
     display_mode: 'group',
 });
+
+const customToolbar = [
+    ['bold', 'italic', 'underline'],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+    [{ 'align': '' }, { 'align': 'center' }, { 'align': 'right' }, { 'align': 'justify' }],
+    ['link'],
+    ['clean']
+];
 
 // 🖼️ preview state
 const preview = ref<string | null>(null);
@@ -108,9 +118,12 @@ function submit() {
                     <!-- Details -->
                     <div class="flex flex-col space-y-1">
                         <label for="details" class="font-medium">Details</label>
-                        <textarea id="details" v-model="form.details" rows="5"
+                        <QuillEditor v-model:content="form.details" content-type="html" theme="snow"
+                            :toolbar="customToolbar" placeholder="e.g., Section 15, Subsection 3"
+                            class="border rounded-md" />
+                        <!-- <textarea id="details" v-model="form.details" rows="5"
                             placeholder="e.g., Section 15, Subsection 3"
-                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea> -->
                         <span v-if="form.errors.details" class="text-sm text-red-600">
                             {{ form.errors.details }}
                         </span>
@@ -131,9 +144,12 @@ function submit() {
                     <div class="flex flex-col space-y-1">
                         <label for="description" class="font-medium">Description<span
                                 class="ml-1 text-red-500">*</span></label>
-                        <textarea id="description" v-model="form.description" rows="5"
+                        <QuillEditor v-model:content="form.description" content-type="html" theme="snow"
+                            :toolbar="customToolbar" placeholder="Provide a brief description of the legislation"
+                            class="border rounded-md" />
+                        <!-- <textarea id="description" v-model="form.description" rows="5"
                             placeholder="Provide a brief description of the legislation"
-                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea> -->
                         <span v-if="form.errors.description" class="text-sm text-red-600">
                             {{ form.errors.description }}
                         </span>

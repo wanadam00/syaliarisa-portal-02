@@ -47,7 +47,11 @@ class ServiceController extends Controller
                     $fail('The ' . $attribute . ' field is required.');
                 }
             }],
-            'details' => 'nullable|string',
+            'details' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'link' => 'nullable|string|max:500', // ✅ allow video link
             'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'is_visible' => 'boolean',
@@ -115,7 +119,11 @@ class ServiceController extends Controller
                     $fail('The ' . $attribute . ' field is required.');
                 }
             }],
-            'details' => 'nullable|string',
+            'details' => ['nullalbe', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'link' => 'nullable|string|max:500', // ✅ allow video link
             'is_visible' => 'boolean',
             'images.*' => 'nullable|image|mimes:jpg,jpeg,png',

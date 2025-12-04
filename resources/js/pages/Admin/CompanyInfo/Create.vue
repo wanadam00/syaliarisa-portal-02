@@ -20,6 +20,14 @@ const { companyInfo, flash } = usePage().props as unknown as {
     flash?: { success?: string; error?: string };
 };
 
+const customToolbar = [
+    ['bold', 'italic', 'underline'],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+    [{ 'align': '' }, { 'align': 'center' }, { 'align': 'right' }, { 'align': 'justify' }],
+    ['link'],
+    ['clean']
+];
+
 // ✅ Initialize form with existing data (safe defaults)
 const form = useForm({
     background: companyInfo?.background ?? '',
@@ -88,8 +96,9 @@ function submit() {
                     <div class="flex flex-col space-y-1">
                         <label for="background" class="font-medium">Company Background<span
                                 class="ml-1 text-red-500">*</span></label>
-                        <QuillEditor v-model:content="form.background" content-type="html" theme="snow" toolbar="full"
-                            placeholder="Enter company background..." class="border rounded-md" />
+                        <QuillEditor v-model:content="form.background" content-type="html" theme="snow"
+                            :toolbar="customToolbar" placeholder="Enter company background..."
+                            class="border rounded-md" />
                         <!-- <textarea id="text" v-model="form.background" type="text"
                             placeholder="Enter company background..." rows="4"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required /> -->
@@ -101,8 +110,8 @@ function submit() {
                     <!-- Vision -->
                     <div class="flex flex-col space-y-1">
                         <label for="vision" class="font-medium">Vision<span class="ml-1 text-red-500">*</span></label>
-                        <QuillEditor v-model:content="form.vision" content-type="html" theme="snow" toolbar="full"
-                            placeholder="Enter company vision..." class="border rounded-md" />
+                        <QuillEditor v-model:content="form.vision" content-type="html" theme="snow"
+                            :toolbar="customToolbar" placeholder="Enter company vision..." class="border rounded-md" />
                         <!-- <textarea id="vision" v-model="form.vision" type="text" placeholder="Enter company vision..."
                             rows="3" class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
                             required /> -->
@@ -114,8 +123,8 @@ function submit() {
                     <!-- mission -->
                     <div class="flex flex-col space-y-1">
                         <label for="mission" class="font-medium">Mission<span class="ml-1 text-red-500">*</span></label>
-                        <QuillEditor v-model:content="form.mission" content-type="html" theme="snow" toolbar="full"
-                            placeholder="Enter company mission..." class="border rounded-md" />
+                        <QuillEditor v-model:content="form.mission" content-type="html" theme="snow"
+                            :toolbar="customToolbar" placeholder="Enter company mission..." class="border rounded-md" />
                         <!-- <textarea id="mission" v-model="form.mission" type="text" placeholder="Enter company mission..."
                             rows="3" class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
                             required /> -->

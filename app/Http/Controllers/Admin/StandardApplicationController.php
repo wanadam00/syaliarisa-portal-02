@@ -35,7 +35,11 @@ class StandardApplicationController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'logo' => 'required|image|mimes:jpg,jpeg,png,webp',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',
@@ -65,7 +69,11 @@ class StandardApplicationController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (strip_tags($value) === '') {
+                    $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
             'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'link' => 'nullable|url',
             'is_visible' => 'boolean',

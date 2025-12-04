@@ -25,6 +25,14 @@ const form = useForm({
     is_visible: Boolean(standardApplication.is_visible ?? true),
 });
 
+const customToolbar = [
+    ['bold', 'italic', 'underline'],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+    [{ 'align': '' }, { 'align': 'center' }, { 'align': 'right' }, { 'align': 'justify' }],
+    ['link'],
+    ['clean']
+];
+
 // 🖼️ preview state
 const preview = ref<string | null>(null);
 
@@ -86,7 +94,7 @@ function submit() {
                     <div class="flex flex-col space-y-1">
                         <label for="description" class="font-medium">Description<span
                                 class="ml-1 text-red-500">*</span></label>
-                        <QuillEditor v-model:content="form.description" content-type="html" theme="snow" toolbar="full"
+                        <QuillEditor v-model:content="form.description" content-type="html" theme="snow" :toolbar="customToolbar"
                             placeholder="Enter description..." class="border rounded-md" />
                         <!-- <textarea id="description" v-model="form.description" rows="3"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
