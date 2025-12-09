@@ -14,7 +14,7 @@ const isCollapsed = computed(() => sidebar.state.value === "collapsed")
             <div class="flex items-center">
                 <img src="/images/crop-logo-2.png" alt="Syaliarisa Services" class="h-11 block dark:hidden" />
                 <span
-                    class="block dark:hidden mx-4 font-bold text-lg uppercase drop-shadow-md drop-shadow-gray-400 font-mono">Syaliarisa</span>
+                    class="block dark:hidden mx-4 font-bold text-lg uppercase drop-shadow-md drop-shadow-gray-900 font-mono">Syaliarisa</span>
                 <img src="/images/crop-logo-2.png" alt="Syaliarisa Services" class="h-11 hidden dark:block" />
             </div>
         </template>

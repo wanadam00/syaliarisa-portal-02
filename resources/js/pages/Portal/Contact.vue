@@ -190,12 +190,29 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                                 </a>
                                             </div>
                                         </div>
+
+                                        <!-- Business Hours-->
+                                        <div v-if="info.business_hours" class="flex items-start gap-4">
+                                            <div
+                                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800 flex-shrink-0">
+                                                <i class="bi bi-clock text-blue-500"></i>
+                                            </div>
+                                            <div class="min-w-0 flex-1">
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Business Hours
+                                                </h4>
+                                                <div class="text-gray-600 dark:text-gray-300">
+                                                    <div v-html="info.business_hours"
+                                                        class="text-gray-600 dark:text-gray-300">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Business Hours -->
-                            <div>
+                            <!-- <div>
                                 <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Business Hours</h3>
                                 <div v-for="info in contactInfo" :key="info.id">
                                     <div v-if="info.business_hours" class="space-y-3">
@@ -206,7 +223,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                         Business hours not specified
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <!-- Contact Form -->

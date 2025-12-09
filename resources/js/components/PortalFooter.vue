@@ -5,9 +5,17 @@
                 <!-- Column 1: Company Info -->
                 <div class="space-y-4">
                     <a href="/" class="flex items-center">
-                        <img src="/images/primary-logo.png" alt="Syaliarisa Services" class="h-16 block dark:hidden" />
+                        <!-- Light mode logo (shown by default) -->
+                        <img src="/images/crop-logo-2.png" alt="Syaliarisa Services"
+                            class="h-13 block dark:hidden pb-1" />
+                        <span
+                            class="block dark:hidden mx-4 text-[#2262AE] font-extrabold text-xl uppercase drop-shadow-lg drop-shadow-gray-400 font-mono">Syaliarisa</span>
+
+                        <!-- Dark mode logo (hidden by default, shown in dark mode) -->
                         <img src="/images/secondary-logo.png" alt="Syaliarisa Services"
-                            class="h-16 hidden dark:block" />
+                            class="h-13 hidden dark:block" />
+                        <span
+                            class="hidden dark:block mx-4 text-white font-extrabold text-xl uppercase drop-shadow-lg drop-shadow-gray-400 font-mono">Syaliarisa</span>
                     </a>
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-white ml-3">Follow Us</h3>
                     <div class="flex space-x-3 ml-3">
