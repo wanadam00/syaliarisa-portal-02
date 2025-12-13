@@ -67,7 +67,7 @@ function submit() {
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
-                text: 'New detail added to the legislation.',
+                text: 'New detail added to the Guidelines & References.',
                 confirmButtonColor: '#3085d6',
             });
             form.reset();
@@ -76,7 +76,7 @@ function submit() {
             Swal.fire({
                 icon: 'error',
                 title: 'Failed!',
-                text: 'Unable to add detail to the legislation.',
+                text: 'Unable to add detail to the Guidelines & References.',
                 confirmButtonColor: '#d33',
             });
         },
@@ -95,7 +95,7 @@ function submit() {
                 <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
 
                     <!-- Type -->
-                    <div class="flex flex-col space-y-1">
+                    <!-- <div class="flex flex-col space-y-1">
                         <label for="type" class="font-medium">Type of legislation<span
                                 class="ml-1 text-red-500">*</span></label>
                         <select id="type" v-model="form.type"
@@ -113,21 +113,18 @@ function submit() {
                         <span v-if="form.errors.type" class="text-sm text-red-600">
                             {{ form.errors.type }}
                         </span>
-                    </div>
+                    </div> -->
 
                     <!-- Details -->
-                    <div class="flex flex-col space-y-1">
+                    <!-- <div class="flex flex-col space-y-1">
                         <label for="details" class="font-medium">Details</label>
                         <QuillEditor v-model:content="form.details" content-type="html" theme="snow"
                             :toolbar="customToolbar" placeholder="e.g., Section 15, Subsection 3"
                             class="border rounded-md" />
-                        <!-- <textarea id="details" v-model="form.details" rows="5"
-                            placeholder="e.g., Section 15, Subsection 3"
-                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea> -->
                         <span v-if="form.errors.details" class="text-sm text-red-600">
                             {{ form.errors.details }}
                         </span>
-                    </div>
+                    </div> -->
 
                     <!-- Title -->
                     <div class="flex flex-col space-y-1">
@@ -214,7 +211,7 @@ function submit() {
                     </div>
 
                     <!-- Display Mode -->
-                    <div class="flex flex-col space-y-1">
+                    <!-- <div class="flex flex-col space-y-1">
                         <label for="display_mode" class="font-medium">Display Mode</label>
                         <select id="display_mode" v-model="form.display_mode"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500">
@@ -223,7 +220,7 @@ function submit() {
                         </select>
                         <p class="text-sm text-gray-500">Choose whether this legislation appears in a grouped card by
                             type or as its own card.</p>
-                    </div>
+                    </div> -->
 
                     <!-- Submit -->
                     <div class="inline-flex justify-end w-full">

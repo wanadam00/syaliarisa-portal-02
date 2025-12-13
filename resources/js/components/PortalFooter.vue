@@ -58,10 +58,10 @@
                                 class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Company
                                 Info</a></li>
                         <li><a href="/about-us/standards"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Standards</a>
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Regulatory & Industry Standards</a>
                         </li>
                         <li><a href="/about-us/legislation"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Legislations</a>
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Guidelines & References</a>
                         </li>
                         <li><a href="/contact-us"
                                 class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Contact

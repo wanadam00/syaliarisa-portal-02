@@ -7,8 +7,9 @@
             class="bg-gradient-to-r from-[#133762] to-[#2262AE] dark:bg-background dark:border-b py-12 text-white pt-32"
             data-aos="fade-down">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Standards Application</h1>
-                <p class="text-lg opacity-90">Explore our recognized standards and guidelines</p>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Regulatory & Industry Standards</h1>
+                <p class="text-lg opacity-90">Trusted HSE standards and references from recognized regulatory and
+                    professional institutions</p>
             </div>
         </section>
 
@@ -34,7 +35,8 @@
 
                             <!-- Column 3: Description + Link -->
                             <div class="">
-                                <h2 class="text-xl text-center hidden sm:block sm:text-left font-bold text-primary dark:text-white mb-6">
+                                <h2
+                                    class="text-xl text-center hidden sm:block sm:text-left font-bold text-primary dark:text-white mb-6">
                                     {{ standard.title }}
                                 </h2>
                                 <p class="text-gray-700 dark:text-gray-300 mb-3"

@@ -7,84 +7,40 @@
             class="bg-gradient-to-r from-[#133762] to-[#2262AE] dark:bg-background dark:border-b py-12 text-white pt-32"
             data-aos="fade-down">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Legislations</h1>
-                <p class="text-lg opacity-90">Explore our legislative references and resources</p>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Guidelines & References</h1>
+                <p class="text-lg opacity-90">Standardized guidance for completing various HSE assessments effectively
+                </p>
             </div>
         </section>
 
         <!-- Legislations List -->
         <section class="py-16">
-            <div class="container mx-auto px-4 space-y-12">
-                <!-- Group by type -->
-                <div v-for="(laws, type) in groupedLegislations" :key="type" class="space-y-6" data-aos="fade-up">
-
-                    <!-- Type Header -->
-                    <div class="text-center md:text-left mb-6">
-                        <h2 class="text-2xl font-bold text-primary text-center dark:text-white">{{ type }}</h2>
-                        <p v-if="laws[0].details" class="text-gray-600 text-justify dark:text-gray-400 mt-2">
-                            {{ laws[0].details }}
-                        </p>
+            <div class="container mx-auto px-4 space-y-6">
+                <div v-for="law in legislations" :key="law.id"
+                    class="bg-white dark:bg-background rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 flex flex-col md:flex-row gap-6"
+                    data-aos="fade-up">
+                    <div class="md:w-1/3 flex justify-center">
+                        <img v-if="law.image" :src="law.image" :alt="law.title"
+                            class="rounded-lg w-full object-cover" />
+                        <i v-else class="bi bi-file-text text-4xl text-gray-400"></i>
                     </div>
-
-                    <!-- Shared container for all laws of this type -->
-                    <div
-                        class="bg-white dark:bg-background rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 flex flex-col md:flex-row gap-6">
-
-                        <!-- One Image for the whole type -->
-                        <div class="md:w-1/3 flex justify-center">
-                            <img v-if="laws[0].image" :src="laws[0].image" :alt="type"
-                                class="rounded-lg w-full object-cover" />
-                            <i v-else class="bi bi-file-text text-4xl text-gray-400"></i>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-primary dark:text-white mb-2">
+                            {{ law.title }}
+                        </h3>
+                        <div class="text-gray-700 dark:text-gray-300 text-justify mb-3"
+                            v-html="formatQuillContent(law.description)">
                         </div>
-
-                        <!-- All Titles under this type -->
-                        <div class="flex-1 space-y-6">
-                            <div v-for="law in laws" :key="law.id" class="border-b pb-4 last:border-0 last:pb-0"
-                                data-aos="fade-up">
-                                <h3 class="text-lg font-semibold text-primary dark:text-white mb-2">
-                                    {{ law.title }}
-                                </h3>
-                                <p class="text-gray-700 dark:text-gray-300 text-justify mb-3">
-                                    {{ law.description }}
-                                </p>
-                                <div class="flex pt-4 justify-end">
-                                    <a v-if="law.link" :href="law.link" target="_blank"
-                                        class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
-                                        <span>Learn More</span>
-                                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Individual Legislations (separate cards) -->
-                <div v-if="individualLegislations.length" class="space-y-6" data-aos="fade-up">
-                    <div class="text-center md:text-left mb-6">
-                        <h2 class="text-2xl font-bold text-primary text-center dark:text-white">Other Legislations</h2>
-                        <p class="text-gray-600 dark:text-gray-400 mt-2">Legislations shown as individual cards.</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div v-for="law in individualLegislations" :key="law.id"
-                            class="bg-white dark:bg-background rounded-lg shadow-md p-6 flex flex-col">
-                            <div class="mb-4">
-                                <img v-if="law.image" :src="law.image" :alt="law.title"
-                                    class="w-full h-40 object-cover rounded-md" />
-                                <i v-else class="bi bi-file-text text-3xl text-gray-400"></i>
-                            </div>
-                            <h3 class="text-lg font-semibold text-primary dark:text-white mb-2">{{ law.title }}</h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-sm flex-1">{{ law.description }}</p>
-                            <div class="mt-4 flex justify-end">
-                                <a v-if="law.link" :href="law.link" target="_blank"
-                                    class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
-                                    <span>Learn More</span>
-                                </a>
-                            </div>
+                        <div class="flex justify-end">
+                            <a v-if="law.link" :href="law.link" target="_blank"
+                                class="group inline-flex items-center gap-2 bg-[#2262ae] text-white border-2 border-[#2262ae] hover:bg-white hover:text-[#2262ae] font-medium px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-md">
+                                <span>Learn More</span>
+                                <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -114,16 +70,14 @@ const { aboutUsLegislations } = usePage().props as unknown as {
 
 const legislations = aboutUsLegislations
 
-// Separate grouped and individual display modes
-const groupedLegislations = legislations
-    .filter((l) => (l.display_mode ?? 'group') === 'group')
-    .reduce((groups: Record<string, AboutUsLegislation[]>, law) => {
-        if (!groups[law.type]) {
-            groups[law.type] = []
-        }
-        groups[law.type].push(law)
-        return groups
-    }, {})
-
-const individualLegislations = legislations.filter((l) => (l.display_mode ?? 'group') === 'individual')
+const formatQuillContent = (html: string) => {
+    if (!html) return "";
+    return html
+        .replace(/<ol>/g, '<ol style="list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem;">')
+        .replace(/<ul>/g, '<ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem;">')
+        .replace(/class="ql-align-center"/g, 'style="text-align: center;"')
+        .replace(/class="ql-align-right"/g, 'style="text-align: right;"')
+        .replace(/class="ql-align-justify"/g, 'style="text-align: justify;"')
+        .replace(/<p><br><\/p>/g, '');
+};
 </script>

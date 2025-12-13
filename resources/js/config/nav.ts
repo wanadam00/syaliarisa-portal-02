@@ -13,8 +13,8 @@ export const mainNavItems: NavItem[] = [
             { title: "Positions", href: route("admin.positions.index") },
         ],
     },
-    { title: "Standards Applications", href: route("admin.standard-applications.index"), icon: FileText },
-    { title: "Legislations", href: route("admin.legislations.index"), icon: Gavel },
+    { title: "Regulatory & Industry Standards", href: route("admin.standard-applications.index"), icon: FileText },
+    { title: "Guidelines & References", href: route("admin.legislations.index"), icon: Gavel },
     { title: "Services", href: route("admin.services.index"), icon: Wrench },
     { title: "Contact Us", href: route("admin.contact-info.index"), icon: Phone },
 ];

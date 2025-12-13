@@ -40,13 +40,13 @@ class LegislationController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => ['nullable', 'string', function ($attribute, $value, $fail) {
+            'description' => ['required', 'string', function ($attribute, $value, $fail) {
                 if (strip_tags($value) === '') {
                     $fail('The ' . $attribute . ' field is required.');
                 }
             }],
-            'type' => 'required|string|max:255',
-            'details' => ['required', 'string', function ($attribute, $value, $fail) {
+            'type' => 'nullable|string|max:255',
+            'details' => ['nullable', 'string', function ($attribute, $value, $fail) {
                 if (strip_tags($value) === '') {
                     $fail('The ' . $attribute . ' field is required.');
                 }
@@ -92,13 +92,13 @@ class LegislationController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => ['nullable', 'string', function ($attribute, $value, $fail) {
+            'description' => ['required', 'string', function ($attribute, $value, $fail) {
                 if (strip_tags($value) === '') {
                     $fail('The ' . $attribute . ' field is required.');
                 }
             }],
-            'type' => 'required|string|max:255',
-            'details' => ['required', 'string', function ($attribute, $value, $fail) {
+            'type' => 'nullable|string|max:255',
+            'details' => ['nullable', 'string', function ($attribute, $value, $fail) {
                 if (strip_tags($value) === '') {
                     $fail('The ' . $attribute . ' field is required.');
                 }

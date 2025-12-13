@@ -55,7 +55,7 @@ function submit() {
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
-                text: 'Standard application updated.',
+                text: 'Regulatory & Industry Standards updated.',
                 confirmButtonColor: '#3085d6',
             });
             form.reset();
@@ -64,7 +64,7 @@ function submit() {
             Swal.fire({
                 icon: 'error',
                 title: 'Failed!',
-                text: 'Unable to update standard aplication.',
+                text: 'Unable to update Regulatory & Industry Standards.',
                 confirmButtonColor: '#d33',
             });
         },
@@ -75,7 +75,7 @@ function submit() {
 <template>
     <AppLayout>
         <div class="p-6 w-full mx-auto">
-            <!-- <h1 class="text-2xl font-bold mb-6">Edit Standard Applications</h1> -->
+            <!-- <h1 class="text-2xl font-bold mb-6">Edit Regulatory & Industry Standards</h1> -->
             <div
                 class="overflow-y-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 mb-6 shadow-xl border border-gray-200/50 dark:border-gray-700/50">
 

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('legislations', function (Blueprint $table) {
             // add display_mode: 'group' or 'individual' (default to group for backward compatibility)
-            $table->enum('display_mode', ['group', 'individual'])->default('group')->after('link');
+            $table->enum('display_mode', ['group', 'individual'])->default('individual')->after('link');
         });
     }
 

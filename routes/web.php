@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
         ->name('password.forceUpdate'); // use unique name
 
     Route::post('/password/update', [PasswordController::class, 'update'])
-        ->name('password.forceUpdate.store'); // use PUT
+        ->name('password.forceUpdate.store'); // use POST
 });
 
 

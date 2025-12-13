@@ -46,7 +46,7 @@ function deleteStandard(id: number) {
         if (result.isConfirmed) {
             router.delete(route('admin.standard-applications.destroy', id), {
                 onSuccess: () => {
-                    Swal.fire('Deleted!', 'The standard application has been deleted.', 'success')
+                    Swal.fire('Deleted!', 'The Regulatory & Industry Standards has been deleted.', 'success')
                     router.visit(route('admin.standard-applications.index'))
                 },
             })
@@ -100,15 +100,15 @@ onBeforeUnmount(() => {
                     <div class="truncate">
                         <h1
                             class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-                            Standard Applications Management
+                            Regulatory & Industry Standards Management
                         </h1>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Create and manage standard applications
+                        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Create and manage regulatory & industry standards
                         </p>
                     </div>
                     <Link :href="route('admin.standard-applications.create')"
                         class="group inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105">
                     <Plus class="size-5 mr-0 sm:mr-2 transition-transform group-hover:rotate-90 duration-300" />
-                    <span class="hidden sm:inline">New Application</span>
+                    <span class="hidden sm:inline">New standard</span>
                     </Link>
                 </div>
             </div>

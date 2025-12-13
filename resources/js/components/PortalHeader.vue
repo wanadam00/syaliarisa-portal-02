@@ -52,9 +52,9 @@
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">Company
                                 Info</a>
                             <a href="/about-us/standards"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">Standards Applications</a>
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">Regulatory & Industry Standards</a>
                             <a href="/about-us/legislation"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">Legislations</a>
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-700 transition-colors">Guidelines & References</a>
                         </div>
                     </div>
 
@@ -162,9 +162,9 @@
                                     class="block py-2 text-white dark:text-gray-200 hover:text-primary">Company
                                     Info</a>
                                 <a href="/about-us/standards"
-                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Standards</a>
+                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Regulatory & Industry Standards</a>
                                 <a href="/about-us/legislation"
-                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Legislation</a>
+                                    class="block py-2 text-white dark:text-gray-200 hover:text-primary">Guidelines & References</a>
                             </div>
                         </transition>
                     </div>
