@@ -136,7 +136,8 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                                 <i class="bi bi-whatsapp text-green-500"></i>
                                             </div>
                                             <div class="min-w-0 flex-1">
-                                                <h4 class="font-medium text-gray-900 dark:text-white">Whatsapp (1)</h4>
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Whatsapp (Admin)
+                                                </h4>
                                                 <a :href="`https://wa.me/${info.mobile_phone_1.replace('+', '')}`"
                                                     target="_blank"
                                                     class="text-gray-600 dark:text-gray-300 hover:text-green-500 transition-colors break-words">
@@ -152,7 +153,8 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                                 <i class="bi bi-whatsapp text-green-500"></i>
                                             </div>
                                             <div class="min-w-0 flex-1">
-                                                <h4 class="font-medium text-gray-900 dark:text-white">Whatsapp (2)</h4>
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Whatsapp
+                                                    (Marketing)</h4>
                                                 <a :href="`https://wa.me/${info.mobile_phone_2.replace('+', '')}`"
                                                     target="_blank"
                                                     class="text-gray-600 dark:text-gray-300 hover:text-green-500 transition-colors break-words">
@@ -168,7 +170,7 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                                 <i class="bi bi-envelope text-yellow-500"></i>
                                             </div>
                                             <div class="min-w-0 flex-1">
-                                                <h4 class="font-medium text-gray-900 dark:text-white">Email (1)</h4>
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Main Email</h4>
                                                 <a :href="`mailto:${info.email_1}`"
                                                     class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 transition-colors break-words truncate">
                                                     {{ info.email_1 }}
@@ -183,7 +185,8 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                                 <i class="bi bi-envelope text-yellow-500"></i>
                                             </div>
                                             <div class="min-w-0 flex-1">
-                                                <h4 class="font-medium text-gray-900 dark:text-white">Email (2)</h4>
+                                                <h4 class="font-medium text-gray-900 dark:text-white">Secondary Email
+                                                </h4>
                                                 <a :href="`mailto:${info.email_2}`"
                                                     class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 transition-colors break-words truncate">
                                                     {{ info.email_2 }}

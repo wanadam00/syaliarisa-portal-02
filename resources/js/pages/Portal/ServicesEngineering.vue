@@ -121,7 +121,7 @@ const formatQuillContent = (html: string) => {
                                 </button>
 
                                 <div class="mt-2 text-gray-600 text-justify dark:text-gray-300 text-md leading-relaxed overflow-hidden transition-all duration-500"
-                                    :style="{ maxHeight: openDetailsMap[service.id] ? '1000px' : '0px', opacity: openDetailsMap[service.id] ? 1 : 0 }">
+                                    :style="{ maxHeight: openDetailsMap[service.id] ? '5000px' : '0px', opacity: openDetailsMap[service.id] ? 1 : 0 }">
                                     <div v-html="formatQuillContent(service.details)" class="px-0 py-2"></div>
 
                                     <!-- Watch Video Button -->

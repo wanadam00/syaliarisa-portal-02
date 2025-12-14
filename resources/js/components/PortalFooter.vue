@@ -3,7 +3,7 @@
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Column 1: Company Info -->
-                <div class="space-y-4">
+                <div class="space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
                     <a href="/" class="flex items-center">
                         <!-- Light mode logo (shown by default) -->
                         <img src="/images/crop-logo-2.png" alt="Syaliarisa Services"
@@ -48,7 +48,7 @@
                 </div>
 
                 <!-- Column 2: Quick Links -->
-                <div>
+                <div class="text-center md:text-left">
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-6">Quick Links</h3>
                     <ul class="space-y-3">
                         <li><a href="/"
@@ -58,10 +58,12 @@
                                 class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Company
                                 Info</a></li>
                         <li><a href="/about-us/standards"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Regulatory & Industry Standards</a>
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Regulatory
+                                & Industry Standards</a>
                         </li>
                         <li><a href="/about-us/legislation"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Guidelines & References</a>
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Guidelines
+                                & References</a>
                         </li>
                         <li><a href="/contact-us"
                                 class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 block py-1">Contact
@@ -70,7 +72,7 @@
                 </div>
 
                 <!-- Column 3: Services -->
-                <div>
+                <div class="text-center md:text-left">
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-6">Our Services</h3>
                     <ul class="space-y-3">
                         <li>
@@ -95,22 +97,25 @@
                 </div>
 
                 <!-- Column 4: Contact Info (Improved for long content) -->
-                <div>
+                <div class="text-center md:text-left">
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-6">Contact Info</h3>
                     <ul class="space-y-4">
                         <!-- Address -->
-                        <li v-if="contactInfo.address" class="flex items-start gap-3">
+                        <li v-if="contactInfo.address"
+                            class="flex flex-col items-center md:flex-row md:items-start md:gap-3">
                             <i class="bi bi-geo-alt text-xl text-[#2262ae] dark:text-blue-400 flex-shrink-0"></i>
-                            <span class="text-gray-600 dark:text-gray-300 break-words leading-relaxed min-w-0">
+                            <span
+                                class="text-gray-600 dark:text-gray-300 break-words leading-relaxed min-w-0 text-center md:text-left">
                                 {{ contactInfo.address }}
                             </span>
                         </li>
 
                         <!-- Phone -->
-                        <li v-if="contactInfo.phone" class="flex items-start gap-3">
+                        <li v-if="contactInfo.phone"
+                            class="flex flex-col items-center md:flex-row md:items-start md:gap-3">
                             <i class="bi bi-telephone text-xl text-[#2262ae] dark:text-blue-400 flex-shrink-0"></i>
                             <a :href="`tel:${contactInfo.phone}`"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 break-words">
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 break-words text-center md:text-left">
                                 {{ contactInfo.phone }}
                             </a>
                         </li>
@@ -136,18 +141,20 @@
                         </li> -->
 
                         <!-- Email -->
-                        <li v-if="contactInfo.email_1" class="flex items-start gap-3">
+                        <li v-if="contactInfo.email_1"
+                            class="flex flex-col items-center md:flex-row md:items-start md:gap-3">
                             <i class="bi bi-envelope text-xl text-[#2262ae] dark:text-blue-400 flex-shrink-0"></i>
                             <a :href="`mailto:${contactInfo.email_1}`"
-                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 break-all">
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] dark:hover:text-blue-400 transition-colors duration-200 break-all text-center md:text-left">
                                 {{ contactInfo.email_1 }}
                             </a>
                         </li>
 
                         <!-- Business Hours -->
-                        <li v-if="contactInfo.business_hours" class="flex items-start gap-3">
+                        <li v-if="contactInfo.business_hours"
+                            class="flex flex-col items-center md:flex-row md:items-start md:gap-3">
                             <i class="bi bi-clock text-xl text-[#2262ae] dark:text-blue-400 flex-shrink-0"></i>
-                            <div class="text-gray-600 dark:text-gray-300 break-words leading-relaxed min-w-0"
+                            <div class="text-gray-600 dark:text-gray-300 break-words leading-relaxed min-w-0 text-center md:text-left"
                                 v-html="contactInfo.business_hours"></div>
                         </li>
                     </ul>

@@ -99,7 +99,7 @@ function submit() {
                                 class="ml-1 text-red-500">*</span></label>
                         <select id="type" v-model="form.type"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
-                            <option value="" disabled>-- Select Position --</option>
+                            <option value="" disabled>-- Select Type --</option>
                             <option value="Occupational Safety & Health Monitoring">Occupational Safety & Health
                                 Monitoring</option>
                             <option value="Environmental Monitoring">Environmental Monitoring</option>

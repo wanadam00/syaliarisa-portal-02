@@ -170,7 +170,7 @@ function submit() {
 
                     <!-- Mobile Phone 1 -->
                     <div class="flex flex-col space-y-1">
-                        <label for="mobile_phone_1" class="font-medium">Mobile Phone 1<span
+                        <label for="mobile_phone_1" class="font-medium">Whatsapp (Admin)<span
                                 class="ml-1 text-red-500">*</span></label>
                         <input id="mobile_phone_1" v-model="form.mobile_phone_1" type="text"
                             placeholder="Enter mobile phone 1..."
@@ -182,7 +182,7 @@ function submit() {
 
                     <!-- Mobile Phone 2 -->
                     <div class="flex flex-col space-y-1">
-                        <label for="mobile_phone_2" class="font-medium">Mobile Phone 2</label>
+                        <label for="mobile_phone_2" class="font-medium">Whatsapp (Marketing)</label>
                         <input id="mobile_phone_2" v-model="form.mobile_phone_2" type="text"
                             placeholder="Enter mobile phone 2..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
@@ -193,7 +193,7 @@ function submit() {
 
                     <!-- Email 1 -->
                     <div class="flex flex-col space-y-1">
-                        <label for="email" class="font-medium">Email 1<span class="ml-1 text-red-500">*</span></label>
+                        <label for="email" class="font-medium">Main Email<span class="ml-1 text-red-500">*</span></label>
                         <input id="email" v-model="form.email_1" type="email" placeholder="Enter email..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <span v-if="form.errors.email_1" class="text-sm text-red-600">
@@ -203,7 +203,7 @@ function submit() {
 
                     <!-- Email 2 -->
                     <div class="flex flex-col space-y-1">
-                        <label for="email" class="font-medium">Email 2</label>
+                        <label for="email" class="font-medium">Secondary Email</label>
                         <input id="email" v-model="form.email_2" type="email" placeholder="Enter email..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         <span v-if="form.errors.email_2" class="text-sm text-red-600">
