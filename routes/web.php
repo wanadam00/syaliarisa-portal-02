@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\LegislationController;
 use App\Http\Controllers\Admin\StandardApplicationController;
+use App\Http\Controllers\Admin\CompetentPersonController;
 use App\Http\Controllers\Portal\CompanyPortalController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Models\ContactInfo;
@@ -108,6 +109,14 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/standard-applications/{standardApplication}/edit', [StandardApplicationController::class, 'edit'])->name('admin.standard-applications.edit');
     Route::post('/standard-applications/{standardApplication}', [StandardApplicationController::class, 'update'])->name('admin.standard-applications.update');
     Route::delete('/standard-applications/{standardApplication}', [StandardApplicationController::class, 'destroy'])->name('admin.standard-applications.destroy');
+
+    // Competent Persons
+    Route::get('/competent-persons', [CompetentPersonController::class, 'index'])->name('admin.competent-persons.index');
+    Route::get('/competent-persons/create', [CompetentPersonController::class, 'create'])->name('admin.competent-persons.create');
+    Route::post('/competent-persons', [CompetentPersonController::class, 'store'])->name('admin.competent-persons.store');
+    Route::get('/competent-persons/{competentPerson}/edit', [CompetentPersonController::class, 'edit'])->name('admin.competent-persons.edit');
+    Route::put('/competent-persons/{competentPerson}', [CompetentPersonController::class, 'update'])->name('admin.competent-persons.update');
+    Route::delete('/competent-persons/{competentPerson}', [CompetentPersonController::class, 'destroy'])->name('admin.competent-persons.destroy');
 });
 
 // API route to fetch all contact info

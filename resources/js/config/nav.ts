@@ -13,6 +13,7 @@ export const mainNavItems: NavItem[] = [
             { title: "Positions", href: route("admin.positions.index") },
         ],
     },
+    { title: "Competent Persons", href: route("admin.competent-persons.index"), icon: Users },
     { title: "Regulatory & Industry Standards", href: route("admin.standard-applications.index"), icon: FileText },
     { title: "Guidelines & References", href: route("admin.legislations.index"), icon: Gavel },
     { title: "Services", href: route("admin.services.index"), icon: Wrench },

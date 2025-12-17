@@ -94,7 +94,7 @@ function submit() {
 
                     <!-- Type -->
                     <div class="flex flex-col space-y-1">
-                        <label for="type" class="font-medium">Type of services<span
+                        <label for="type" class="font-medium">Type of Services<span
                                 class="ml-1 text-red-500">*</span></label>
                         <select id="type" v-model="form.type"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
@@ -112,7 +112,8 @@ function submit() {
 
                     <!-- Title -->
                     <div class="flex flex-col space-y-1">
-                        <label for="title" class="font-medium">Type of assessment<span class="ml-1 text-red-500">*</span></label>
+                        <label for="title" class="font-medium">Type of Assessment<span
+                                class="ml-1 text-red-500">*</span></label>
                         <input id="title" v-model="form.title" type="text" placeholder="Enter assessment..."
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
                         <span v-if="form.errors.title" class="text-sm text-red-600">
@@ -123,10 +124,10 @@ function submit() {
                     <!-- Summary -->
                     <div class="flex flex-col space-y-1">
                         <label for="summary" class="font-medium">
-                            Description<span class="ml-1 text-red-500">*</span>
+                            Definition<span class="ml-1 text-red-500">*</span>
                         </label>
-                        <QuillEditor v-model:content="form.summary" content-type="html" theme="snow" :toolbar="customToolbar"
-                            placeholder="Enter summary..." class="border rounded-md" />
+                        <QuillEditor v-model:content="form.summary" content-type="html" theme="snow"
+                            :toolbar="customToolbar" placeholder="Enter summary..." class="border rounded-md" />
                         <span v-if="form.errors.summary" class="text-sm text-red-600">
                             {{ form.errors.summary }}
                         </span>
@@ -135,9 +136,9 @@ function submit() {
                     <!-- Details -->
                     <div class="flex flex-col space-y-1">
                         <label for="details" class="font-medium">
-                            Objective</label>
-                        <QuillEditor v-model:content="form.details" content-type="html" theme="snow" :toolbar="customToolbar"
-                            placeholder="Enter details..." class="border rounded-md" />
+                            More Details</label>
+                        <QuillEditor v-model:content="form.details" content-type="html" theme="snow"
+                            :toolbar="customToolbar" placeholder="Enter details..." class="border rounded-md" />
                         <span v-if="form.errors.details" class="text-sm text-red-600">
                             {{ form.errors.details }}
                         </span>

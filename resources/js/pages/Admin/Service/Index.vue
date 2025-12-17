@@ -118,7 +118,7 @@ onBeforeUnmount(() => {
                         <tr>
                             <th class="px-4 py-3">No.</th>
                             <th class="px-4 py-3">Type</th>
-                            <th class="px-4 py-3">Title</th>
+                            <th class="px-4 py-3">Assessment</th>
                             <th class="px-4 py-3">Visible</th>
                             <th class="px-4 py-3 text-center">Actions</th>
                         </tr>

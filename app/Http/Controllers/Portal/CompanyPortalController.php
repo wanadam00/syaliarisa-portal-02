@@ -10,6 +10,7 @@ use App\Models\ContactInfo;
 use App\Models\HomeSection;
 use App\Models\Employee;
 use App\Models\Position;
+use App\Models\CompetentPerson;
 use App\Models\StandardApplication;
 use App\Models\Legislation;
 use App\Models\Customer;
@@ -80,6 +81,9 @@ class CompanyPortalController extends Controller
             ])
             ->orderBy('rank')
             ->get();
+
+        $competentPersons = CompetentPerson::with('employee')->where('is_active', true)->get();
+        // dd($competentPersons->pluck('employee.name'));
 
         // 3. Map positions to arrays and attach the *already loaded* visible employees
         $positionsById = [];
@@ -166,6 +170,7 @@ class CompanyPortalController extends Controller
             ],
             'positions' => $positionsTree,
             'unassignedEmployees' => $unassignedEmployees,
+            'competentPersons' => $competentPersons,
         ]);
     }
 

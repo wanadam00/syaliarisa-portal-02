@@ -16,4 +16,12 @@ class CompanyInfo extends Model
         'mission',
         'is_visible',
     ];
+
+    /**
+     * Relationship: CompanyInfo has many CompetentPersons
+     */
+    public function competentPersons()
+    {
+        return $this->hasMany(CompetentPerson::class);
+    }
 }

@@ -2,8 +2,7 @@
 import { Head, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, defineComponent, h, ref } from 'vue';
 import AppLayout2 from '@/layouts/AppLayout2.vue';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+// Leaflet removed: replacing client map with Competent Persons UI
 
 // --- INTERFACES ---
 interface CompanyInfo {
@@ -19,6 +18,15 @@ interface Employee {
     department?: string | null;
 }
 
+interface CompetentPerson {
+    id: number;
+    name: string;
+    dosh_numbers: string | null;
+    competencies: string | null;
+    employee_id?: number | null;
+    is_active: boolean;
+}
+
 interface Position {
     id: number;
     name: string;
@@ -30,10 +38,11 @@ interface Position {
     children?: Position[];
 }
 
-const { companyInfo, positions, unassignedEmployees } = usePage().props as unknown as {
+const { companyInfo, positions, unassignedEmployees, competentPersons } = usePage().props as unknown as {
     companyInfo: CompanyInfo;
     positions: Position[];
     unassignedEmployees: Employee[];
+    competentPersons: CompetentPerson[];
 };
 
 const positionsList = computed(() => (positions || []) as Position[]);
@@ -334,49 +343,44 @@ const CompactTeamGrid: any = defineComponent({
 const visibleTopPositions = computed(() => positionsList.value.filter(p => hasEmployees(p)));
 const activeView = ref<'hierarchical' | 'grid'>('hierarchical');
 
-// Example branch data (you can fetch this from Laravel later)
-const clients = [
-    { id: 1, name: "Perodua Manufacturing Sdn. Bhd.", lat: 3.3706333, lng: 101.5409997 },
-    { id: 2, name: "Selinsing Gold Mine", lat: 4.2581719, lng: 101.7037384 },
-    { id: 3, name: "Branch - Johor Bahru", lat: 2.6844839, lng: 101.9075693 },
-    { id: 4, name: "Kum Hoi Engineering Industries Sdn Bhd", lat: 3.0539604, lng: 101.5133176 },
-    { id: 5, name: "Royal Selangor International Sdn. Bhd", lat: 3.1966613, lng: 101.642032 },
-    { id: 6, name: "Petrofac (Malaysia-Pm304) Limited (West Desaru Mopu)", lat: 3.155923, lng: 101.6275111 },
-    { id: 7, name: "SGS (M) Sdn. Bhd.", lat: 3.2277944, lng: 101.4291594 },
-    { id: 8, name: "Lablink (M) Sdn. Bhd.", lat: 3.2277388, lng: 101.42913 },
-    { id: 9, name: "Rohm-Wako Elelctronic (M) SB", lat: 6.1387528, lng: 102.2193729 },
-    { id: 10, name: "San Soon Seng Food Industries Sdn. Bhd.", lat: 3.1973235, lng: 101.4799408 },
-    { id: 11, name: "Notion Venture Sdn Bhd", lat: 3.2277912, lng: 101.4291611 },
-    { id: 12, name: "Samling Housing Sdn. Bhd.", lat: 3.205349, lng: 101.456431 },
-    { id: 13, name: "SMC Composite Sdn. Bhd.", lat: 3.4864473, lng: 101.8505535 },
-    { id: 14, name: "Herbal Science Sdn. Bhd.", lat: 3.0898669, lng: 101.5271453 },
-    { id: 15, name: "Shinko Electronics (M) SB", lat: 3.0285399, lng: 101.479152 },
-];
+// Compute a flat list of all employees (from positions tree + unassigned)
+const allEmployees = computed((): Employee[] => {
+    const list: Employee[] = [];
 
-onMounted(() => {
-    const map = L.map('client-map').setView([3.139, 101.6869], 6); // default Malaysia view
+    const collect = (pos: Position) => {
+        if (pos.employees && pos.employees.length > 0) {
+            pos.employees.forEach(e => list.push(e));
+        }
+        if (pos.children && pos.children.length > 0) {
+            pos.children.forEach(child => collect(child));
+        }
+    };
 
-    // OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+    positionsList.value.forEach(root => collect(root));
+    if (unassignedEmployees && unassignedEmployees.length > 0) {
+        unassignedEmployees.forEach(e => list.push(e));
+    }
 
-    // Add markers for each branch
-    clients.forEach(client => {
-        L.marker([client.lat, client.lng])
-            .addTo(map)
-        // .bindPopup(`<b>${client.name}</b>`);
-    });
+    // Deduplicate by id just in case
+    const dedup = new Map<number, Employee>();
+    list.forEach(e => dedup.set(e.id, e));
+    return Array.from(dedup.values());
 });
 
-// Fix default icon paths
-delete (L.Icon.Default.prototype as any)._getIconUrl;
+const selectedCompetent = ref<number | null>(null);
 
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: new URL('leaflet/dist/images/marker-icon.png', import.meta.url).toString(),
-    iconUrl: new URL('leaflet/dist/images/marker-icon.png', import.meta.url).toString(),
-    shadowUrl: new URL('leaflet/dist/images/marker-shadow.png', import.meta.url).toString(),
-});
+function findPositionNameForEmployee(empId: number): string | null {
+    for (const pos of flatPositionsMap.value.values()) {
+        if (pos.employees && pos.employees.some(e => e.id === empId)) return pos.name;
+    }
+    return null;
+}
+
+function setCompetent(emp: Employee) {
+    // Local-only selection for now. Backend hookup can be added later.
+    selectedCompetent.value = emp.id;
+    console.log('Selected competent person:', emp);
+}
 
 </script>
 
@@ -480,14 +484,58 @@ L.Icon.Default.mergeOptions({
                     </div>
                 </div>
 
-                <!-- Client Locations -->
+                <!-- Competent Persons -->
                 <div class="container mx-auto px-4" data-aos="fade-in">
-                    <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white text-center">
-                        Client Locations
+                    <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
+                        Competent Persons
                     </h2>
-                    <div
-                        class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                        <div id="client-map" class="leaflet-container h-96"></div>
+
+                    <div v-if="competentPersons && competentPersons.length > 0" class="overflow-auto">
+                        <div class="flex space-x-4 py-2 px-1">
+                            <div v-for="person in competentPersons" :key="person.id" class="flex-none w-56">
+                                <div
+                                    class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md p-6 text-center flex flex-col">
+                                    <!-- Name -->
+                                    <div class="text-md font-bold text-gray-900 dark:text-white mb-2">
+                                        {{ person.employee ? person.employee.name : person.name }}
+                                    </div>
+
+                                    <!-- DOSH Number -->
+                                    <div class="mb-3 text-sm">
+                                        <div class="text-gray-600 dark:text-gray-400 font-medium">DOSH Number:</div>
+                                        <div
+                                            class="text-gray-800 dark:text-gray-200 font-mono bg-white dark:bg-gray-700 px-2 py-1 rounded">
+                                            {{ person.dosh_numbers ? (typeof person.dosh_numbers === 'string' ?
+                                                person.dosh_numbers : JSON.stringify(person.dosh_numbers)) : '—' }}
+                                        </div>
+                                    </div>
+
+                                    <!-- Competencies -->
+                                    <div class="text-sm">
+                                        <div class="text-gray-600 dark:text-gray-400 font-medium mb-2">Competencies:
+                                        </div>
+                                        <div v-if="person.competencies" class="flex flex-wrap gap-2 justify-center">
+                                            <span
+                                                v-for="(comp, idx) in person.competencies.split(',').map(c => c.trim()).filter(c => c)"
+                                                :key="idx"
+                                                class="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded-full max-w-full">
+                                                {{ comp }}
+                                            </span>
+                                        </div>
+                                        <div v-else class="text-gray-500 dark:text-gray-400 italic">No competencies
+                                            listed
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-else
+                        class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 p-6 text-center">
+                        <p class="text-gray-500 dark:text-gray-400">
+                            <i class="bi bi-info-circle mr-2"></i>No competent persons have been added yet.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -496,9 +544,9 @@ L.Icon.Default.mergeOptions({
 </template>
 
 <style scoped>
-/* Ensure leaflet renders correctly */
-.leaflet-container {
-    border-radius: 0.75rem;
+/* Competent Persons card tweaks */
+.flex.space-x-4.overflow-x-auto>div {
+    flex: 0 0 auto;
 }
 
 /* Fix for the org chart structure layout */
