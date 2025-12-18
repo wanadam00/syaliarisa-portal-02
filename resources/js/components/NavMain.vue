@@ -43,7 +43,7 @@ const openItems = ref<Record<string, boolean>>({});
                         <SidebarMenuSub class="py-1">
                             <SidebarMenuSubItem v-for="child in item.children" :key="child.title">
                                 <SidebarMenuSubButton as-child :is-active="child.href === page.url">
-                                    <Link :href="child.href" class="text-white hover:text-gray-900">
+                                    <Link :href="child.href" class="text-white hover:text-gray-900 transition-transform hover:translate-x-2 duration-300 ease-in-out">
                                     <span >{{ child.title }}</span>
                                     </Link>
                                 </SidebarMenuSubButton>
