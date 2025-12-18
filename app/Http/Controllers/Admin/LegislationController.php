@@ -39,14 +39,14 @@ class LegislationController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => ['required', 'string', function ($attribute, $value, $fail) {
+            'type' => 'nullable|string|max:255',
+            'details' => ['nullable', 'string', function ($attribute, $value, $fail) {
                 if (strip_tags($value) === '') {
                     $fail('The ' . $attribute . ' field is required.');
                 }
             }],
-            'type' => 'nullable|string|max:255',
-            'details' => ['nullable', 'string', function ($attribute, $value, $fail) {
+            'title' => 'required|string|max:255',
+            'description' => ['required', 'string', function ($attribute, $value, $fail) {
                 if (strip_tags($value) === '') {
                     $fail('The ' . $attribute . ' field is required.');
                 }
@@ -91,14 +91,14 @@ class LegislationController extends Controller
     public function update(Request $request, Legislation $legislation)
     {
         $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => ['required', 'string', function ($attribute, $value, $fail) {
+            'type' => 'nullable|string|max:255',
+            'details' => ['nullable', 'string', function ($attribute, $value, $fail) {
                 if (strip_tags($value) === '') {
                     $fail('The ' . $attribute . ' field is required.');
                 }
             }],
-            'type' => 'nullable|string|max:255',
-            'details' => ['nullable', 'string', function ($attribute, $value, $fail) {
+            'title' => 'required|string|max:255',
+            'description' => ['required', 'string', function ($attribute, $value, $fail) {
                 if (strip_tags($value) === '') {
                     $fail('The ' . $attribute . ' field is required.');
                 }

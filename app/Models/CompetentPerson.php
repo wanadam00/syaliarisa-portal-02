@@ -17,6 +17,7 @@ class CompetentPerson extends Model
         'name',
         'dosh_numbers',
         'competencies',
+        'bio',
         'employee_id',
         'is_active',
     ];

@@ -209,7 +209,7 @@ function submit() {
                     </div>
 
                     <!-- Display Mode -->
-                    <div class="flex flex-col space-y-1">
+                    <!-- <div class="flex flex-col space-y-1">
                         <label for="display_mode" class="font-medium">Display Mode</label>
                         <select id="display_mode" v-model="form.display_mode"
                             class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500">
@@ -218,7 +218,7 @@ function submit() {
                         </select>
                         <p class="text-sm text-gray-500">Choose whether this legislation appears in a grouped card by
                             type or as its own card.</p>
-                    </div>
+                    </div> -->
 
                     <!-- Submit -->
                     <div class="inline-flex justify-end w-full">

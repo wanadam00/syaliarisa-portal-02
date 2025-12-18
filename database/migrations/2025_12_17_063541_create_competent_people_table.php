@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->text('dosh_numbers')->nullable();
             $table->text('competencies')->nullable();
+            $table->text('bio')->nullable();
             $table->foreignId('employee_id')->nullable()->constrained()->onDelete('cascade');
             $table->boolean('is_active')->default(true);
             $table->timestamps();

@@ -82,8 +82,21 @@ class CompanyPortalController extends Controller
             ->orderBy('rank')
             ->get();
 
-        $competentPersons = CompetentPerson::with('employee')->where('is_active', true)->get();
-        // dd($competentPersons->pluck('employee.name'));
+        $competentPersons = CompetentPerson::with('employee')->where('is_active', true)->get()->map(function ($person) {
+            return [
+                'id' => $person->id,
+                'name' => $person->name,
+                'dosh_numbers' => $person->dosh_numbers,
+                'competencies' => $person->competencies,
+                'bio' => $person->bio,
+                'is_active' => $person->is_active,
+                'employee' => $person->employee ? [
+                    'id' => $person->employee->id,
+                    'name' => $person->employee->name,
+                    'photo' => $person->employee->photo_url,
+                ] : null,
+            ];
+        });
 
         // 3. Map positions to arrays and attach the *already loaded* visible employees
         $positionsById = [];

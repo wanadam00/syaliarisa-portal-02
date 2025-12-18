@@ -23,8 +23,10 @@ interface CompetentPerson {
     name: string;
     dosh_numbers: string | null;
     competencies: string | null;
+    bio: string | null;
     employee_id?: number | null;
     is_active: boolean;
+    employee?: { id: number; name: string; photo: string | null };
 }
 
 interface Position {
@@ -183,11 +185,11 @@ const HorizontalOrgChart: any = defineComponent({
                                     })
                                     : h('div', {
                                         class: `w-full h-full flex items-center justify-center transition-colors duration-300 ${props.level === 0
-                                            ? 'bg-blue-500 group-hover:bg-blue-600'
+                                            ? 'bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500'
                                             : 'bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500'
                                             }`
                                     }, [
-                                        h('i', { class: `bi bi-person text-lg ${props.level === 0 ? 'text-white' : 'text-gray-600 dark:text-gray-300'}` })
+                                        h('i', { class: `bi bi-person text-lg ${props.level === 0 ? 'text-gray-600 dark:text-gray-300' : 'text-gray-600 dark:text-gray-300'}` })
                                     ])
                             ]),
                             // Position Name - Updated for 2-line display
@@ -490,40 +492,94 @@ function setCompetent(emp: Employee) {
                         Competent Persons
                     </h2>
 
-                    <div v-if="competentPersons && competentPersons.length > 0" class="overflow-auto">
-                        <div class="flex space-x-4 py-2 px-1">
-                            <div v-for="person in competentPersons" :key="person.id" class="flex-none w-56">
+                    <div v-if="competentPersons && competentPersons.length > 0" class="overflow-x-auto scrollbar-hide">
+                        <div class="flex gap-6 pb-4 px-1">
+                            <div v-for="person in competentPersons" :key="person.id" class="flex-none w-72">
+                                <!-- Card Container -->
                                 <div
-                                    class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-md p-6 text-center flex flex-col">
-                                    <!-- Name -->
-                                    <div class="text-md font-bold text-gray-900 dark:text-white mb-2">
-                                        {{ person.employee ? person.employee.name : person.name }}
+                                    class="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 h-full">
+
+                                    <!-- Background Accent -->
+                                    <div
+                                        class="absolute top-0 right-0 w-32 h-32 bg-blue-100 dark:bg-blue-900/30 rounded-full -mr-16 -mt-16 transition-transform duration-300 group-hover:scale-110">
                                     </div>
 
-                                    <!-- DOSH Number -->
-                                    <div class="mb-3 text-sm">
-                                        <div class="text-gray-600 dark:text-gray-400 font-medium">DOSH Number:</div>
+                                    <!-- Content -->
+                                    <div class="relative p-6 flex flex-col h-full">
+
+                                        <!-- Photo Section -->
+                                        <div class="mb-4 flex justify-center">
+                                            <div
+                                                class="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-500 shadow-lg">
+                                                <img v-if="person.employee?.photo" :src="person.employee.photo"
+                                                    :alt="person.employee.name"
+                                                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
+                                                <div v-else
+                                                    class="w-full h-full flex items-center justify-center bg-gray-100">
+                                                    <i class="bi bi-person text-4xl text-gray-500"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Name -->
                                         <div
-                                            class="text-gray-800 dark:text-gray-200 font-mono bg-white dark:bg-gray-700 px-2 py-1 rounded">
-                                            {{ person.dosh_numbers ? (typeof person.dosh_numbers === 'string' ?
-                                                person.dosh_numbers : JSON.stringify(person.dosh_numbers)) : '—' }}
+                                            class="text-md font-bold text-gray-900 dark:text-white text-center mb-5 line-clamp-2">
+                                            {{ person.employee ? person.employee.name : person.name }}
                                         </div>
-                                    </div>
 
-                                    <!-- Competencies -->
-                                    <div class="text-sm">
-                                        <div class="text-gray-600 dark:text-gray-400 font-medium mb-2">Competencies:
+                                        <!-- No. of Certificates Section -->
+                                        <div class="mb-4">
+                                            <p
+                                                class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-2">
+                                                <i class="bi bi-file-text mr-1 text-blue-600 dark:text-blue-400"></i>
+                                                No. of Certificates
+                                            </p>
+                                            <div v-if="person.dosh_numbers"
+                                                class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-2 text-center">
+                                                <p
+                                                    class="font-mono text-sm text-blue-700 dark:text-blue-300 line-clamp-2">
+                                                    {{ typeof person.dosh_numbers === 'string' ? person.dosh_numbers :
+                                                        JSON.stringify(person.dosh_numbers) }}
+                                                </p>
+                                            </div>
+                                            <div v-else
+                                                class="text-gray-500 dark:text-gray-400 text-sm italic text-center py-2">
+                                                Not specified
+                                            </div>
                                         </div>
-                                        <div v-if="person.competencies" class="flex flex-wrap gap-2 justify-center">
-                                            <span
-                                                v-for="(comp, idx) in person.competencies.split(',').map(c => c.trim()).filter(c => c)"
-                                                :key="idx"
-                                                class="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded-full max-w-full">
-                                                {{ comp }}
-                                            </span>
+
+                                        <!-- Competencies Section -->
+                                        <div class="flex-1">
+                                            <p
+                                                class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-2">
+                                                <i class="bi bi-star mr-1 text-blue-600 dark:text-blue-400"></i>
+                                                Competencies
+                                            </p>
+                                            <div v-if="person.competencies" class="flex flex-wrap gap-2">
+                                                <span
+                                                    v-for="(comp, idx) in person.competencies.split(',').map(c => c.trim()).filter(c => c)"
+                                                    :key="idx"
+                                                    class="inline-flex items-center bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-xs px-3 py-1 rounded-full transition-all duration-200 cursor-default whitespace-nowrap">
+                                                    <i class="bi bi-check-lg mr-1"></i> {{ comp }}
+                                                </span>
+                                            </div>
+                                            <div v-else class="text-gray-500 dark:text-gray-400 text-sm italic">
+                                                No competencies listed
+                                            </div>
                                         </div>
-                                        <div v-else class="text-gray-500 dark:text-gray-400 italic">No competencies
-                                            listed
+                                        <!-- Bio Section -->
+                                        <div v-if="person.bio && formatQuillContent(person.bio).trim()" class="mt-4">
+                                            <div
+                                                class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-2">
+                                                <i class="bi bi-info-circle mr-1 text-blue-600 dark:text-blue-400"></i>
+                                                Bio
+                                            </div>
+                                            <div class="text-sm text-gray-700 dark:text-gray-300 line-clamp-4"
+                                                v-html="formatQuillContent(person.bio)">
+                                            </div>
+                                            <!-- <div v-else class="text-gray-500 dark:text-gray-400 text-sm italic">
+                                                No bio available
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -532,9 +588,10 @@ function setCompetent(emp: Employee) {
                     </div>
 
                     <div v-else
-                        class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 p-6 text-center">
-                        <p class="text-gray-500 dark:text-gray-400">
-                            <i class="bi bi-info-circle mr-2"></i>No competent persons have been added yet.
+                        class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl shadow-lg overflow-hidden border border-blue-200 dark:border-blue-800 p-8 text-center">
+                        <i class="bi bi-info-circle text-3xl text-blue-600 dark:text-blue-400 mb-3 block"></i>
+                        <p class="text-gray-600 dark:text-gray-300 font-medium">
+                            No competent persons have been added yet.
                         </p>
                     </div>
                 </div>

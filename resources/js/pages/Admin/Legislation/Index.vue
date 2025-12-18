@@ -8,6 +8,7 @@ import { ChevronRight, ChevronLeft, Plus } from 'lucide-vue-next';
 interface Legislation {
     id: number;
     title: string;
+    description: string;
     type: string;
     is_visible: boolean;
     showMenu?: boolean; // added for dropdown state
@@ -93,6 +94,14 @@ function handleClickOutside(event: MouseEvent) {
     }
 }
 
+const formatQuillContent = (html: string) => {
+    if (!html) return "";
+    return html
+        .replace(/<ol>/g, '<ol style="list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem;">')
+        .replace(/<ul>/g, '<ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem;">')
+        .replace(/<p><br><\/p>/g, '');
+};
+
 onMounted(() => {
     document.addEventListener('click', handleClickOutside);
 });
@@ -115,12 +124,13 @@ onBeforeUnmount(() => {
                             class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
                             Guidelines & References Management
                         </h1>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Create and manage guidelines & references</p>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Create and manage guidelines &
+                            references</p>
                     </div>
                     <Link :href="route('admin.legislations.create')"
                         class="group inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105">
-                    <Plus class="size-5 mr-0 sm:mr-2 transition-transform group-hover:rotate-90 duration-300" />
-                    <span class="hidden sm:inline">New guideline</span>
+                        <Plus class="size-5 mr-0 sm:mr-2 transition-transform group-hover:rotate-90 duration-300" />
+                        <span class="hidden sm:inline">New guideline</span>
                     </Link>
                 </div>
             </div>
@@ -132,8 +142,8 @@ onBeforeUnmount(() => {
                         <tr>
                             <th class="px-4 py-3">No.</th>
                             <th class="px-4 py-3">Title</th>
-                            <th class="px-4 py-3">Type</th>
-                            <th class="px-4 py-3">Display</th>
+                            <th class="px-4 py-3">Description</th>
+                            <!-- <th class="px-4 py-3">Display</th> -->
                             <th class="px-4 py-3">Visible</th>
                             <th class="px-4 py-3 text-center">Actions</th>
                         </tr>
@@ -143,8 +153,15 @@ onBeforeUnmount(() => {
                             class="hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors">
                             <td class="px-4 py-2">{{ index + 1 }}</td>
                             <td class="px-4 py-2">{{ legislation.title }}</td>
-                            <td class="px-4 py-2">{{ legislation.type }}</td>
-                            <td class="px-4 py-2">{{ legislation.display_mode ?? 'group' }}</td>
+                            <!-- Description with better text handling -->
+                            <td class="px-4 py-2 w-64 max-w-[16rem]">
+                                <div class="line-clamp-1 text-ellipsis overflow-hidden" :title="legislation.description"
+                                    v-html="formatQuillContent(legislation.description)">
+
+                                </div>
+                            </td>
+                            <!-- <td class="px-4 py-2">{{ legislation.description }}</td> -->
+                            <!-- <td class="px-4 py-2">{{ legislation.display_mode ?? 'group' }}</td> -->
                             <td class="px-4 py-2">
                                 <span
                                     :class="legislation.is_visible ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">

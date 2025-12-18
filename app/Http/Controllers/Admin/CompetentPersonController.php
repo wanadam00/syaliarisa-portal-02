@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\CompetentPerson;
 use App\Models\CompanyInfo;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -27,7 +28,7 @@ class CompetentPersonController extends Controller
      */
     public function create()
     {
-        $employees = \App\Models\Employee::where('is_visible', true)->get();
+        $employees = Employee::where('is_visible', true)->orderBy('name', 'asc')->get();
 
         return Inertia::render('Admin/CompetentPersons/Form', [
             'competentPerson' => null,
@@ -40,7 +41,7 @@ class CompetentPersonController extends Controller
      */
     public function edit(CompetentPerson $competentPerson)
     {
-        $employees = \App\Models\Employee::where('is_visible', true)->get();
+        $employees = Employee::where('is_visible', true)->get();
 
         return Inertia::render('Admin/CompetentPersons/Form', [
             'competentPerson' => $competentPerson,
@@ -55,9 +56,11 @@ class CompetentPersonController extends Controller
     {
         $validated = $request->validate([
             'name' => 'nullable|string|max:255',
-            'dosh_numbers' => 'nullable|string',
-            'competencies' => 'nullable|string',
-            'employee_id' => 'nullable|exists:employees,id',
+            'dosh_numbers' => 'required|string',
+            'competencies' => 'required|string',
+            'bio' => 'nullable|string',
+            'employee_id' => 'required|exists:employees,id',
+            'is_active' => 'boolean',
         ]);
 
         CompetentPerson::create($validated);
@@ -72,10 +75,11 @@ class CompetentPersonController extends Controller
     {
         $validated = $request->validate([
             'name' => 'nullable|string|max:255',
-            'dosh_numbers' => 'nullable|string',
-            'competencies' => 'nullable|string',
-            'employee_id' => 'nullable|exists:employees,id',
-            'is_active' => 'nullable|boolean',
+            'dosh_numbers' => 'required|string',
+            'competencies' => 'required|string',
+            'bio' => 'nullable|string',
+            'employee_id' => 'required|exists:employees,id',
+            'is_active' => 'boolean',
         ]);
 
         $competentPerson->update($validated);

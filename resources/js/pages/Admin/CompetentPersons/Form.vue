@@ -2,6 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useForm, usePage, router } from '@inertiajs/vue3';
 import { ref, watchEffect, computed } from 'vue';
+import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import Swal from 'sweetalert2';
 import { Plus } from 'lucide-vue-next';
@@ -11,6 +12,7 @@ interface CompetentPerson {
     name: string;
     dosh_numbers: string | null;
     competencies: string | null;
+    bio: string | null;
     is_active: boolean;
     employee_id?: string;
 }
@@ -26,6 +28,14 @@ const props = withDefaults(defineProps<Props>(), {
     competentPerson: null,
 });
 
+const customToolbar = [
+    ['bold', 'italic', 'underline'],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+    [{ 'align': '' }, { 'align': 'center' }, { 'align': 'right' }, { 'align': 'justify' }],
+    ['link'],
+    ['clean']
+];
+
 const isEditing = computed(() => !!props.competentPerson);
 const pageTitle = computed(() => isEditing.value ? 'Edit Competent Person' : 'Add Competent Person');
 
@@ -34,6 +44,7 @@ const form = useForm({
     name: props.competentPerson?.name || '',
     dosh_numbers: props.competentPerson?.dosh_numbers || '',
     competencies: props.competentPerson?.competencies || '',
+    bio: props.competentPerson?.bio || '',
     employee_id: props.competentPerson?.employee_id || '',
     is_active: props.competentPerson?.is_active !== false,
 });
@@ -169,10 +180,11 @@ function submitForm() {
                         <!-- <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             <i class="bi bi-file-text mr-2"></i> DOSH Numbers (one or more)
                         </label> -->
-                        <label for="dosh" class="font-medium">DOSH Numbers<span
+                        <label for="dosh" class="font-medium">No. of Certificate<span
                                 class="ml-1 text-red-500">*</span></label>
                         <div class="flex gap-2 mb-3">
-                            <input v-model="newDosh" type="text" placeholder="Add a DOSH number (e.g., DOSH/2024/001)"
+                            <input v-model="newDosh" type="text"
+                                placeholder="Add a certificate number (e.g., DOSH/2024/001)"
                                 class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                                 @keyup.enter="addDosh" />
                             <button type="button" @click="addDosh"
@@ -232,6 +244,17 @@ function submitForm() {
                         <p v-if="form.errors.competencies" class="mt-1 text-sm text-red-600 dark:text-red-400">
                             {{ form.errors.competencies }}
                         </p>
+                    </div>
+
+                    <!-- Bio -->
+                    <div class="flex flex-col space-y-1">
+                        <label for="bio" class="font-medium">Biodata</label>
+                        <QuillEditor v-model:content="form.bio" content-type="html" theme="snow"
+                            :toolbar="customToolbar" placeholder="Enter a brief bio or description..."
+                            class="border rounded-md" />
+                        <span v-if="form.errors.bio" class="text-sm text-red-600">
+                            {{ form.errors.bio }}
+                        </span>
                     </div>
 
                     <!-- Visible Checkbox -->
