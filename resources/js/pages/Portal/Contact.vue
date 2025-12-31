@@ -109,8 +109,11 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                             </div>
                                             <div class="min-w-0 flex-1">
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Address</h4>
-                                                <p class="text-gray-600 dark:text-gray-300 break-words">{{ info.address
-                                                }}</p>
+                                                <a :href="`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(info.address)}`"
+                                                    target="_blank"
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-red-500 transition-colors break-words">
+                                                    {{ info.address }}
+                                                </a>
                                             </div>
                                         </div>
 
@@ -118,12 +121,12 @@ const formatBusinessHours = (hoursHtml: string | null) => {
                                         <div class="flex items-start gap-4">
                                             <div
                                                 class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300 dark:bg-gray-800 flex-shrink-0">
-                                                <i class="bi bi-telephone text-gray-500"></i>
+                                                <i class="bi bi-telephone text-gray-800"></i>
                                             </div>
                                             <div class="min-w-0 flex-1">
                                                 <h4 class="font-medium text-gray-900 dark:text-white">Office Phone</h4>
                                                 <a :href="`tel:${info.phone}`"
-                                                    class="text-gray-600 dark:text-gray-300 hover:text-gray-700 transition-colors break-words">
+                                                    class="text-gray-600 dark:text-gray-300 hover:text-gray-800 transition-colors break-words">
                                                     {{ info.phone }}
                                                 </a>
                                             </div>

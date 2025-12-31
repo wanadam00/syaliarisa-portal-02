@@ -104,10 +104,11 @@
                         <li v-if="contactInfo.address"
                             class="flex flex-col items-center md:flex-row md:items-start md:gap-3">
                             <i class="bi bi-geo-alt text-xl text-[#2262ae] dark:text-blue-400 flex-shrink-0"></i>
-                            <span
-                                class="text-gray-600 dark:text-gray-300 break-words leading-relaxed min-w-0 text-center md:text-left">
+                            <a :href="`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(contactInfo.address)}`"
+                                target="_blank"
+                                class="text-gray-600 dark:text-gray-300 hover:text-[#48b2e5] break-words leading-relaxed min-w-0 text-center md:text-left">
                                 {{ contactInfo.address }}
-                            </span>
+                            </a>
                         </li>
 
                         <!-- Phone -->
