@@ -119,7 +119,7 @@ class ServiceController extends Controller
                     $fail('The ' . $attribute . ' field is required.');
                 }
             }],
-            'details' => ['nullalbe', 'string', function ($attribute, $value, $fail) {
+            'details' => ['nullable', 'string', function ($attribute, $value, $fail) {
                 if (strip_tags($value) === '') {
                     $fail('The ' . $attribute . ' field is required.');
                 }
