@@ -28,7 +28,7 @@ class CompetentPersonController extends Controller
      */
     public function create()
     {
-        $employees = Employee::where('is_visible', true)->orderBy('name', 'asc')->get();
+        $employees = Employee::orderBy('name', 'asc')->get();
 
         return Inertia::render('Admin/CompetentPersons/Form', [
             'competentPerson' => null,
@@ -41,7 +41,7 @@ class CompetentPersonController extends Controller
      */
     public function edit(CompetentPerson $competentPerson)
     {
-        $employees = Employee::where('is_visible', true)->get();
+        $employees = Employee::orderBy('name', 'asc')->get();
 
         return Inertia::render('Admin/CompetentPersons/Form', [
             'competentPerson' => $competentPerson,
