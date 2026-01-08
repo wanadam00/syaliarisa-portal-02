@@ -693,7 +693,7 @@ const closeBioModal = () => {
 
                                             <!-- Read More -->
                                             <button
-                                                v-if="person.bio.length > 200"
+                                                v-if="person.bio.length > 115"
                                                 class="group mt-3 inline-flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400"
                                                 @click="openBioModal(person)"
                                             >
