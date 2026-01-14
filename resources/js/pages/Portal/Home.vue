@@ -54,7 +54,7 @@ const {
 
 <template>
 
-    <Head title="Syaliarisa - Home" />
+    <!-- <Head title="Home" /> -->
     <AppLayout2>
 
         <!-- Hero -->

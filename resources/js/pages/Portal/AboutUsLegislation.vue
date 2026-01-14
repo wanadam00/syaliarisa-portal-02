@@ -1,6 +1,6 @@
 <template>
 
-    <Head title="Legislation" />
+    <Head title="Guidelines" />
     <AppLayout2>
         <!-- Hero Section -->
         <section
